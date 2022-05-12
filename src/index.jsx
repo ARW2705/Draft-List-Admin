@@ -1,7 +1,8 @@
 import React from 'react'
 import * as ReactDOMClient from 'react-dom/client'
-import './styles/style.css'
-import App from './App'
+
+import Router from './routing/Router/Router'
+
 import reportWebVitals from './reportWebVitals'
 
 const container = document.querySelector('#root')
@@ -9,7 +10,7 @@ const root = ReactDOMClient.createRoot(container)
 
 root.render(
   <React.StrictMode>
-    <App />
+    <Router />
   </React.StrictMode>
 )
 
