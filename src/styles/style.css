@@ -11,7 +11,7 @@ body {
   left: 0;
   right: -20px;
   bottom: -20px;
-  overflow: scroll;
+  overflow-y: scroll;
 }
 
 .route {

@@ -7,8 +7,14 @@ import './styles/style.css'
 
 import reportWebVitals from './reportWebVitals'
 
+
 const container = document.querySelector('#root')
 const root = ReactDOMClient.createRoot(container)
+// Removing scrollbar obliterates scroll event on window, but can be caught on root element
+// Catch the event and reemit the scrollable container as detail
+container.addEventListener('scroll', event => {
+  window.dispatchEvent(new CustomEvent('scroll', { detail: container }))
+})
 
 root.render(
   <React.StrictMode>

@@ -1,12 +1,12 @@
 function throttle(cb, delay) {
   let shouldWait
 
-  return () => {
+  return event => {
     if (shouldWait) return
 
     shouldWait = true
     setTimeout(() => {
-      cb()
+      cb(event)
       shouldWait = false
     }, delay)
   }

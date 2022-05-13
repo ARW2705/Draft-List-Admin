@@ -11,9 +11,9 @@ function Header() {
   const [ scrollClass, setScrollClass ] = useState({ className: '' })
 
   let previousScrollPosition
-  const handleScrollEvent = () => {
-    console.log('scroll event')
-    const currentScrollPosition = window.scrollY || window.pageYOffset
+  const handleScrollEvent = event => {
+    if (event.detail.scrollTop === undefined) return
+    const currentScrollPosition = event.detail.scrollTop
     if (currentScrollPosition > previousScrollPosition) {
       setScrollClass({ className: 'scroll-down' })
     } else if (currentScrollPosition < previousScrollPosition) {
