@@ -1,4 +1,20 @@
+@import './colors.css';
+
 body {
-  margin: 0;
   overflow: hidden;
+  margin: 0;
+}
+
+#root {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: -20px;
+  bottom: -20px;
+  overflow: scroll;
+}
+
+.route {
+  min-height: 75vh;
+  flex-grow: 1;
 }
