@@ -1,3 +1,31 @@
 .Header {
-  
+  position: sticky;
+  top: 0;
+  height: 10vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2%;
+  color: var(--text-dark);
+  font-family: 'Roboto', sans-serif;
+  background-color: var(--primary);
+  transition: top 500ms ease-in-out;
+}
+
+.Header.scroll-up {
+  top: 0;
+}
+
+.Header.scroll-down {
+  top: -100%;
+}
+
+.Header.scroll-up,
+.Header:focus-within {
+  top: 0;
+}
+
+.Header > h1 {
+  margin: 0;
+  font-size: 2.25rem;
 }
