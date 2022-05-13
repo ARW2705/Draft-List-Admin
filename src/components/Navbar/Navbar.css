@@ -1,3 +1,27 @@
 .Navbar {
-  
+  height: 10vh;
+  width: 50%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+}
+
+.Navbar > a {
+  height: 100%;
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+  align-items: center;
+}
+
+.Navbar > a,
+.Navbar > a:visited,
+.Navbar > a:active {
+  text-decoration: none;
+  color: inherit;
+}
+
+.Navbar > a:hover {
+  background-color: var(--primary-light);
 }
