@@ -3,9 +3,9 @@ import React from 'react'
 
 function User() {
   return (
-    <div className="User">
+    <main className="route User">
       Test User
-    </div>
+    </main>
   )
 }
 

@@ -1,11 +1,15 @@
 import React from 'react'
 
+import './Manage.css'
+
 
 function Manage() {
   return (
-    <div className="Manage">
-      Test Manage
-    </div>
+    <main className="route Manage">
+      <div>Test Manage</div>
+      <div className="enlarge">Test</div>
+      <div>Scroll to text</div>
+    </main>
   )
 }
 
