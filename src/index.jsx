@@ -3,6 +3,8 @@ import * as ReactDOMClient from 'react-dom/client'
 
 import Router from './routing/Router/Router'
 
+import './styles/style.css'
+
 import reportWebVitals from './reportWebVitals'
 
 const container = document.querySelector('#root')
