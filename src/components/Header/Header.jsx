@@ -10,9 +10,10 @@ import './Header.css'
 function Header() {
   const [ scrollClass, setScrollClass ] = useState({ className: '' })
 
-  let previousScrollPosition
+  let previousScrollPosition = 0
   const handleScrollEvent = event => {
     if (event.detail.scrollTop === undefined) return
+
     const currentScrollPosition = event.detail.scrollTop
     if (currentScrollPosition > previousScrollPosition) {
       setScrollClass({ className: 'scroll-down' })
