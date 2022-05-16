@@ -50,4 +50,6 @@ class User {
   }
 }
 
-export default User
+const user = new User()
+
+export default user
