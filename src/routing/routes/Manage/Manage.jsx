@@ -1,14 +1,23 @@
 import React from 'react'
 
+import DeviceCallout from '../../../components/DeviceCallout/DeviceCallout'
+
 import './Manage.css'
+
+// list of current drafts across all devices
+// need a draft card
+
+// drafts are grouped by device, but can be sorted by quantity remaing
+// or possibly more options in the future
+// devices can have a side callout and border
+
+// it will be filterable in the future
 
 
 function Manage() {
   return (
     <main className="route Manage">
-      <div>Test Manage</div>
-      <div className="enlarge">Test</div>
-      <div>Scroll to text</div>
+
     </main>
   )
 }
