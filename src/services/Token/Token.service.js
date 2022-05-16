@@ -6,7 +6,7 @@ class Token {
   }
 
   init() {
-    this.accessToken = JSON.parse(localStorage.getItem(this.storageKey))
+    this.accessToken = localStorage.getItem(this.storageKey)
   }
 
   getToken() {
