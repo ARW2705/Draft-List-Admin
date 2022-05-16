@@ -1,5 +1,6 @@
 import axios from 'axios'
-import getClientURL from './utilities/client-url'
+
+import * as URL from './utilities/get-url.js'
 
 
 class HttpClient {
@@ -12,22 +13,36 @@ class HttpClient {
     return axios(config).then(response => response.data)
   }
 
-  requestWithData(method, endpoint, data) {
+  requestWithData(method, url, data) {
     return this.request({
       data,
       method,
-      url: getClientURL(endpoint)
+      url
     })
   }
 
-  requestWithoutData(method, endpoint) {
+  requestWithoutData(method, url) {
     return this.request({
       method,
-      url: getClientURL(endpoint)
+      url
     })
   }
 
-  get(endpoint) {
-    return this.requestWithoutData('get', endpoint)
+  get(url) {
+    return this.requestWithoutData('get', url)
+  }
+
+  post(url, data) {
+    return this.requestWithData('post', url, data)
+  }
+
+  getUser() {
+    return this.requestWithoutData('get', URL.getUserURL())
+  }
+
+  postUser(endpoint, data) {
+    return this.requestWithData('post', URL.getUserURL(endpoint), data)
   }
 }
+
+export default HttpClient
