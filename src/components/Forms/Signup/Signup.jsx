@@ -28,7 +28,6 @@ class SignupForm extends Component {
   }
 
   handleFormChange(event) {
-    console.log('input change event', event)
     const { target } = event
     const value = target.type === 'checkbox' ? target.checked : target.value
     const { name } = target
@@ -38,7 +37,7 @@ class SignupForm extends Component {
         ...this.state.formValues,
         [name]: value
       }
-    }, () => console.log(this.state.formValues))
+    })
   }
 
   handleViewChange(event) {
@@ -60,10 +59,9 @@ class SignupForm extends Component {
     return (
       <form
         onSubmit={ this.handleSubmit }
-        autocomplete='off'
-        novalidate
+        autoComplete='off'
       >
-        <label for='username'>
+        <label htmlFor='username'>
           Username
           <input
             id='username'
@@ -71,9 +69,12 @@ class SignupForm extends Component {
             type='text'
             value={ this.state.formValues.username }
             onChange={ this.handleFormChange }
+            required='required'
+            minLength='6'
+            maxLength='20'
           />
         </label>
-        <label for='password'>
+        <label htmlFor='password'>
           Password
           <input
             id='password'
@@ -81,9 +82,12 @@ class SignupForm extends Component {
             type={ this.state.showPassword ? 'text' : 'password' }
             value={ this.state.formValues.password }
             onChange={ this.handleFormChange }
+            required='required'
+            minLength='12'
+            maxLength='30'
           />
         </label>
-        <label for='confirm-password'>
+        <label htmlFor='confirm-password'>
           Confirm Password
           <input
             id='confirm-password'
@@ -93,7 +97,7 @@ class SignupForm extends Component {
             onChange={ this.handleFormChange }
           />
         </label>
-        <label for='email'>
+        <label htmlFor='email'>
           Email
           <input
             id='email'
@@ -103,7 +107,7 @@ class SignupForm extends Component {
             onChange={ this.handleFormChange }
           />
         </label>
-        <label for='show-password'>
+        <label htmlFor='show-password'>
           Show Password
           <input
             id='show-password'
@@ -113,7 +117,7 @@ class SignupForm extends Component {
             onChange={ this.handleViewChange }
           />
         </label>
-        <label for='remember'>
+        <label htmlFor='remember'>
           Remember Me
           <input
             id='remember'
