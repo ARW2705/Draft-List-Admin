@@ -1,0 +1,49 @@
+.form-input-container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.form-input {
+  margin: 15px 0;
+}
+
+.placeholder-default {
+  position: absolute;
+  top: 15px;
+  left: 10px;
+  opacity: 0.7;
+  font-size: 1rem;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.placeholder-aside {
+  position: absolute;
+  top: -20px;
+  left: 0;
+  opacity: 1;
+  font-size: 0.9rem;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+input[type=text],
+input[type=password],
+input[type=email] {
+  padding: 0.75rem;
+  margin: 15px 0;
+  border: 2px solid var(--text-medium);
+  border-radius: 10px;
+  box-shadow: 0 3px 5px var(--accent-light);
+  background-image: none;
+  font-size: 1rem;
+}
+
+input[type=text]:hover,
+input[type=password]:hover,
+input[type=email]:hover {
+  border: 2px solid var(--text-dark);
+}

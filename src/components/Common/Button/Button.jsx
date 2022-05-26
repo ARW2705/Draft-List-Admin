@@ -1,13 +1,19 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import './Button.css'
 
 
-function Button(props) {
-  const { button } = props
-  const { text, disabled } = button
+function Button({ text, customClass, isDisabled }) {
+  const [ isButtonDisabled, setIsButtonDisabled ] = useState(isDisabled)
+  useEffect(() => {
+    setIsButtonDisabled(() => isDisabled)
+  }, [ isDisabled ])
+
   return (
-    <button disabled={ disabled }>
+    <button
+      className={ `button ${customClass || ''}` }
+      disabled={ isButtonDisabled }
+    >
       { text }
     </button>
   )

@@ -1,0 +1,11 @@
+.form-group {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  min-height: 75vh;
+  margin: 3%;
+}
+
+.form-button {
+  font-size: 1.5rem;
+}
