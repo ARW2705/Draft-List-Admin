@@ -1,0 +1,5 @@
+.form-error-container {
+  display: flex;
+  flex-direction: column;
+  color: var(--error);
+}
