@@ -2,9 +2,11 @@
   --primary: #ffe657;
   --primary-light: #ffee8a;
   --accent: #7540f7;
-  --accent-light: #9066f8;
+  --accent-light: #a888f7;
   --accent-dark: #4607e2;
   --background: #fcf8e0;
   --text-light: #fff;
+  --text-medium: #747b87;
   --text-dark: #282c34;
+  --error: #fa1f0f;
 }
