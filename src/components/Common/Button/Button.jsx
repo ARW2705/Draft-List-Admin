@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import './Button.css'
 
 
-function Button({ text, customClass, isDisabled }) {
+function Button({ text, customClass, isDisabled, name }) {
   const [ isButtonDisabled, setIsButtonDisabled ] = useState(isDisabled)
   useEffect(() => {
     setIsButtonDisabled(() => isDisabled)
@@ -13,6 +13,7 @@ function Button({ text, customClass, isDisabled }) {
     <button
       className={ `button ${customClass || ''}` }
       disabled={ isButtonDisabled }
+      name={ name ?? text }
     >
       { text }
     </button>

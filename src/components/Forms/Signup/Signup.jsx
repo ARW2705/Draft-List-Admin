@@ -2,9 +2,6 @@ import React, { Component } from 'react'
 
 import userService from '../../../services/User/User.service'
 
-import Button from '../../Common/Button/Button'
-import FormInput from '../../Common/Form/Input/Input'
-import FormCheckbox from '../../Common/Form/Checkbox/Checkbox'
 import FormGroup from '../../Common/Form/FormGroup/FormGroup'
 
 import createForm from '../../../shared/form/create-form'
@@ -69,10 +66,7 @@ function SignupForm() {
 
   const handleSubmit = ({ username, password, email, remember }) => {
     userService.signup({ username, password, email, remember })
-      .then(() => {
-        console.log('successful signup - try navigate')
-        // TODO handle post-signup
-      })
+      .then(() => console.log('signup complete'))
       .catch(error => {
         // TODO handle error feedback
       })
