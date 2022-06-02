@@ -30,10 +30,28 @@ class User {
 
   login(credentials) {
     return httpClient.postUser('login', credentials)
-      .then(user => this.setUser(user))
+      .then(loginRes => {
+        if (loginRes.success) {
+          const { user } = loginRes
+          const newUser = {
+            _id: user._id,
+            username: user.username,
+            email: user.email
+          }
+          this.setUser(newUser)
+          tokenService.setToken(user.token)
+
+          if (credentials.remember) {
+            this.storeUser(newUser)
+          }
+
+          return null
+        }
+        throw new Error('Error on login')
+      })
       .catch(error => {
         console.error('error on login', error)
-        // TODO handle user feedback
+        throw error
       })
   }
 
@@ -41,12 +59,14 @@ class User {
     return httpClient.postUser('signup', userData)
       .then(signupRes => {
         if (signupRes.success) {
+          const { user } = signupRes
           const newUser = {
-            username: userData.username,
-            email: userData.email
+            _id: user._id,
+            username: user.username,
+            email: user.email
           }
           this.setUser(newUser)
-          tokenService.setToken(signupRes.token)
+          tokenService.setToken(user.token)
 
           if (userData.remember) {
             this.storeUser(newUser)
