@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+import userService from '../../../services/User/User.service'
+
 import Button from '../../Common/Button/Button'
 import FormInput from '../../Common/Form/Input/Input'
 import FormCheckbox from '../../Common/Form/Checkbox/Checkbox'
@@ -11,7 +13,7 @@ import { PASSWORD_PATTERN } from '../../../shared/constants/password-pattern'
 import { EMAIL_PATTERN } from '../../../shared/constants/email-pattern'
 
 
-function SignupForm(props) {
+function SignupForm() {
   const form = createForm({
     fields: {
       username: {
@@ -65,8 +67,15 @@ function SignupForm(props) {
     }
   })
 
-  const handleSubmit = event => {
-    console.log('submit event', event)
+  const handleSubmit = ({ username, password, email, remember }) => {
+    userService.signup({ username, password, email, remember })
+      .then(() => {
+        console.log('successful signup - try navigate')
+        // TODO handle post-signup
+      })
+      .catch(error => {
+        // TODO handle error feedback
+      })
   }
 
   return (
