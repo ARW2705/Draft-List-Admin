@@ -1,6 +1,7 @@
 import { BehaviorSubject } from 'rxjs'
 
 import httpClient from '../HttpClient/HttpClient.service'
+import tokenService from '../Token/Token.service'
 
 
 class User {
@@ -28,7 +29,7 @@ class User {
   }
 
   login(credentials) {
-    httpClient.postUser('login', credentials)
+    return httpClient.postUser('login', credentials)
       .then(user => this.setUser(user))
       .catch(error => {
         console.error('error on login', error)
@@ -37,11 +38,27 @@ class User {
   }
 
   signup(userData) {
-    httpClient.postUser('signup', userData)
-      .then(user => this.setUser(user))
+    return httpClient.postUser('signup', userData)
+      .then(signupRes => {
+        if (signupRes.success) {
+          const newUser = {
+            username: userData.username,
+            email: userData.email
+          }
+          this.setUser(newUser)
+          tokenService.setToken(signupRes.token)
+
+          if (userData.remember) {
+            this.storeUser(newUser)
+          }
+
+          return null
+        }
+        throw new Error('Error on signup')
+      })
       .catch(error => {
         console.error('error on signup', error)
-        // TODO handle user feedback
+        throw error
       })
   }
 
