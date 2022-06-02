@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { Route, Routes, useNavigate } from 'react-router-dom'
+import { Route, Routes, useNavigate, useLocation } from 'react-router-dom'
 
 import userService from '../../../services/User/User.service'
 
 import SignupForm from '../../../components/Forms/Signup/Signup'
+import Login from '../../../components/Forms/Login/Login'
 import LoginSignupButtons from '../../../components/LoginSignupButtons/LoginSignupButtons'
 
 
@@ -11,18 +12,18 @@ function User() {
   const [ showButtons, setShowButtons ] = useState(false)
   const [ user, setUser ] = useState(null)
 
+  const location = useLocation()
   const navigate = useNavigate()
   const navToComponent = name => {
-    console.log(name)
     switch (name.toLowerCase()) {
       case 'login':
         setShowButtons(false)
-
+        navigate(`${location.pathname}/login`)
         break
       case 'signup':
         console.log('naving to signup')
         setShowButtons(false)
-        navigate('/user/signup')
+        navigate(`${location.pathname}/signup`)
         break
       case 'profile':
         setShowButtons(true)
@@ -33,7 +34,6 @@ function User() {
   }
 
   const handleClick = event => {
-    console.log(event.target.name)
     event.preventDefault()
     navToComponent(event.target.name)
   }
@@ -50,16 +50,21 @@ function User() {
             setShowButtons(true)
           }
         },
-        error => console.log('user error', error)
+        error => console.error('user error', error)
       )
 
     return () => subscription.unsubscribe()
   }, [])
 
+  useEffect(() => {
+    setShowButtons(!RegExp(/login|signup/).test(location.pathname))
+  }, [location])
+
   return (
     <main className="route user">
       <Routes>
-        <Route path='/signup' element={ <SignupForm />} />
+        <Route path='/signup' element={ <SignupForm /> } />
+        <Route path='/login' element={ <Login /> } />
       </Routes>
       {
         showButtons &&
