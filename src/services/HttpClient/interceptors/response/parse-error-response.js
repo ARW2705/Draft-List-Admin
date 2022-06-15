@@ -1,4 +1,4 @@
-const parseErrorResponse = axiosRef => {
+function parseErrorResponse(axiosRef) {
   axiosRef.interceptors.response.use(
     response => response,
     error => {

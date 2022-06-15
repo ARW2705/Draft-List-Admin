@@ -1,4 +1,4 @@
-const appendAuthorizationHeader = axiosRef => {
+function appendAuthorizationHeader(axiosRef) {
   axiosRef.interceptors.request.use(
     config => {
       const jwt = localStorage.getItem('accessToken')

@@ -1,4 +1,4 @@
-const appendContentTypeHeader = axiosRef => {
+function appendContentTypeHeader(axiosRef) {
   axiosRef.interceptors.request.use(
     config => {
       config.headers['Content-Type'] = 'application/json'
