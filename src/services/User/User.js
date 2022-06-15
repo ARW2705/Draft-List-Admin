@@ -1,7 +1,8 @@
 import { BehaviorSubject } from 'rxjs'
 
 import httpClient from '../HttpClient/HttpClient.service'
-import tokenService from '../Token/Token.service'
+import beverageService from '../Beverage/Beverage.service'
+import tokenService from '../Token/Token'
 
 
 class User {
@@ -16,6 +17,18 @@ class User {
     return this.user$
   }
 
+  getUserId() {
+    return this.user$.value._id
+  }
+
+  getAuthoredList() {
+    return this.getUser().value.authoredList
+  }
+
+  getPreviousList() {
+    return this.getUser().value.previousList
+  }
+
   setUser(user) {
     this.user$.next(user)
   }
@@ -28,24 +41,27 @@ class User {
     this.user$.next(user)
   }
 
+  handleUserResponse(user, remember) {
+    const newUser = {
+      _id: user._id,
+      username: user.username,
+      email: user.email
+    }
+    this.setUser(newUser)
+    beverageService.init(user.authoredList, user.previousList)
+    tokenService.setToken(user.token)
+
+    if (remember) {
+      this.storeUser(newUser)
+    }
+  }
+
   login(credentials) {
     return httpClient.postUser('login', credentials)
       .then(loginRes => {
         if (loginRes.success) {
-          const { user } = loginRes
-          const newUser = {
-            _id: user._id,
-            username: user.username,
-            email: user.email
-          }
-          this.setUser(newUser)
-          tokenService.setToken(user.token)
-
-          if (credentials.remember) {
-            this.storeUser(newUser)
-          }
-
-          return null
+          this.handleUserResponse(loginRes.user, credentials.remember)
+          return
         }
         throw new Error('Error on login')
       })
@@ -59,20 +75,8 @@ class User {
     return httpClient.postUser('signup', userData)
       .then(signupRes => {
         if (signupRes.success) {
-          const { user } = signupRes
-          const newUser = {
-            _id: user._id,
-            username: user.username,
-            email: user.email
-          }
-          this.setUser(newUser)
-          tokenService.setToken(user.token)
-
-          if (userData.remember) {
-            this.storeUser(newUser)
-          }
-
-          return null
+          this.handleUserResponse(signupRes.user, userData.remember)
+          return
         }
         throw new Error('Error on signup')
       })
@@ -80,6 +84,11 @@ class User {
         console.error('error on signup', error)
         throw error
       })
+  }
+
+  logout() {
+    this.setUser(null)
+    localStorage.removeItem(this.storageKey)
   }
 
   storeUser(user) {
