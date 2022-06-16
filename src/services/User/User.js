@@ -1,8 +1,8 @@
 import { BehaviorSubject } from 'rxjs'
 
-import httpClient from '../HttpClient/HttpClient.service'
-import beverageService from '../Beverage/Beverage.service'
-import tokenService from '../Token/Token'
+import { post } from '../HttpClient/HttpClient'
+import token from '../Token/Token'
+import { BASE_URL } from '../../shared/constants/base-url'
 
 
 class User {
@@ -11,6 +11,7 @@ class User {
     User._instance = this
     this.storageKey = 'user'
     this.user$ = new BehaviorSubject(null)
+    this.baseRoute = `${BASE_URL}/users`
   }
 
   getUser() {
@@ -48,8 +49,7 @@ class User {
       email: user.email
     }
     this.setUser(newUser)
-    beverageService.init(user.authoredList, user.previousList)
-    tokenService.setToken(user.token)
+    token.setToken(user.token)
 
     if (remember) {
       this.storeUser(newUser)
@@ -57,7 +57,7 @@ class User {
   }
 
   login(credentials) {
-    return httpClient.postUser('login', credentials)
+    return post(`${this.baseRoute}/login`, credentials)
       .then(loginRes => {
         if (loginRes.success) {
           this.handleUserResponse(loginRes.user, credentials.remember)
@@ -72,7 +72,8 @@ class User {
   }
 
   signup(userData) {
-    return httpClient.postUser('signup', userData)
+    console.log(`${this.baseRoute}/signup`)
+    return post(`${this.baseRoute}/signup`, userData)
       .then(signupRes => {
         if (signupRes.success) {
           this.handleUserResponse(signupRes.user, userData.remember)

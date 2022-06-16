@@ -1,6 +1,6 @@
 import React from 'react'
 
-import userService from '../../../services/User/User.service'
+import user from '../../../services/User/User'
 
 import FormGroup from '../../Common/Form/FormGroup/FormGroup'
 
@@ -65,7 +65,7 @@ function SignupForm() {
   })
 
   const handleSubmit = ({ username, password, email, remember }) => {
-    userService.signup({ username, password, email, remember })
+    user.signup({ username, password, email, remember })
       .then(() => console.log('signup complete'))
       .catch(error => {
         // TODO handle error feedback
