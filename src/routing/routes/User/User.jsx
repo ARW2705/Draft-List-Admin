@@ -5,6 +5,7 @@ import user from '../../../services/User/User'
 
 import SignupForm from '../../../components/Forms/Signup/Signup'
 import Login from '../../../components/Forms/Login/Login'
+import Profile from '../../../components/Profile/Profile'
 import LoginSignupButtons from '../../../components/LoginSignupButtons/LoginSignupButtons'
 
 
@@ -15,27 +16,20 @@ function User() {
   const location = useLocation()
   const navigate = useNavigate()
   const navToComponent = name => {
-    switch (name.toLowerCase()) {
-      case 'login':
-        setShowButtons(false)
-        navigate(`${location.pathname}/login`)
-        break
-      case 'signup':
-        console.log('naving to signup')
-        setShowButtons(false)
-        navigate(`${location.pathname}/signup`)
-        break
-      case 'profile':
-        setShowButtons(true)
-        break
-      default:
-        break
+    if (name === 'login') {
+      setShowButtons(false)
+      navigate(`${location.pathname}/login`)
+    } else if (name === 'signup') {
+      setShowButtons(false)
+      navigate(`${location.pathname}/signup`)
+    } else if (name === 'logout') {
+      user.logout()
     }
   }
 
   const handleClick = event => {
     event.preventDefault()
-    navToComponent(event.target.name)
+    navToComponent(event.target.name.toLowerCase())
   }
 
   useEffect(() => {
@@ -43,12 +37,11 @@ function User() {
       .subscribe({
         next: user => {
           console.log('user update', user)
-          if (user) {
-            setDisplayUser(user)
-            navToComponent('profile')
-          } else {
-            setShowButtons(true)
-          }
+          setDisplayUser(user)
+          setShowButtons(true)
+          let route = '/user'
+          if (user) route += '/profile'
+          navigate(route)
         },
         error: error => console.error('user error', error)
       })
@@ -65,6 +58,7 @@ function User() {
       <Routes>
         <Route path='/signup' element={ <SignupForm /> } />
         <Route path='/login' element={ <Login /> } />
+        <Route path='/profile' element={ <Profile user={ displayUser } /> } />
       </Routes>
       {
         showButtons &&
