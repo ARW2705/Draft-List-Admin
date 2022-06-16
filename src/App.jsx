@@ -1,8 +1,8 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
 
-import tokenService from './services/Token/Token.service'
-import userService from './services/User/User.service'
+import token from './services/Token/Token'
+import user from './services/User/User'
 
 import Header from './components/Header/Header'
 import Footer from './components/Footer/Footer'
@@ -11,8 +11,8 @@ import './App.css'
 
 
 function App() {
-  tokenService.init()
-  userService.init()
+  token.init()
+  user.init()
 
   return (
     <div className="App">
