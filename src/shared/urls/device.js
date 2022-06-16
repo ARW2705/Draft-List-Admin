@@ -1,3 +1,3 @@
-import { BASE_URL } from './base-url'
+// import { BASE_URL } from './base-url'
 
-export const deviceRouteURL = `${BASE_URL}/devices/admin`
+// export const deviceRouteURL = `${BASE_URL}/devices/admin`

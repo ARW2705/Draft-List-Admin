@@ -1,3 +1,3 @@
-import { BASE_URL } from './base-url'
+// import { BASE_URL } from './base-url'
 
-export const imageRouteURL = `${BASE_URL}/images/client`
+// export const imageRouteURL = `${BASE_URL}/images/client`
