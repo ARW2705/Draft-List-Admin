@@ -1,12 +1,17 @@
 import { get } from '../../HttpClient/HttpClient'
-import { beverageRouteURL } from '../../shared/urls/beverage'
+import { beverageRouteURL } from './beverage-route-url'
 
 
 function getBeverageById(id) {
   return get(`${beverageRouteURL}/${id}`)
 }
 
+function getBeveragesByIdList(ids) {
+  return get(`${beverageRouteURL}/query`, {}, { ids })
+}
+
 
 export {
-  getBeverageById
+  getBeverageById,
+  getBeveragesByIdList
 }

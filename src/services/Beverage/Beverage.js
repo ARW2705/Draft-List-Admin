@@ -1,20 +1,14 @@
-import { getBeverageById } from './Http/BeverageHttp'
+import { getBeveragesByIdList } from './Http/BeverageHttp'
 import beverageStore from './Store/BeverageStore'
 import user from '../User/User'
 import getPaginated from '../../shared/utilities/get-paginated'
 
 
-function buildRequests(idList, storedBeverages) {
-  return idList
-    .map(id => {
-      if (!storedBeverages.find(beverage => id === beverage._id)) {
-        return getBeverageById(id)
-          .then(beverages => ({ status: 'fulfilled', value: beverages }))
-          .catch(error => ({ status: 'rejected', reason: error }))
-      }
-      return null
-    })
-    .filter(request => request !== null)
+function buildRequest(idList, storedBeverages) {
+  const idsToRequest = idList
+    .map(id => storedBeverages.find(beverage => id === beverage._id) ? null : id)
+    .filter(id => id !== null)
+  return getBeveragesByIdList(idsToRequest)
 }
 
 async function getBeverageListByIds(idList) {
@@ -23,7 +17,7 @@ async function getBeverageListByIds(idList) {
     return { beverages: storedBeverages, errors: [] }
   }
 
-  const responses = await Promise.all(buildRequests(idList, storedBeverages))
+  const responses = await Promise.all(buildRequest(idList, storedBeverages))
   let beverages = [], errors = []
   responses.forEach(response => {
     if (response.status === 'fulfilled') {
