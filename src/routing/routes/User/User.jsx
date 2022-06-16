@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Route, Routes, useNavigate, useLocation } from 'react-router-dom'
 
-import userService from '../../../services/User/User.service'
+import user from '../../../services/User/User'
 
 import SignupForm from '../../../components/Forms/Signup/Signup'
 import Login from '../../../components/Forms/Login/Login'
@@ -10,7 +10,7 @@ import LoginSignupButtons from '../../../components/LoginSignupButtons/LoginSign
 
 function User() {
   const [ showButtons, setShowButtons ] = useState(false)
-  const [ user, setUser ] = useState(null)
+  const [ displayUser, setDisplayUser ] = useState(null)
 
   const location = useLocation()
   const navigate = useNavigate()
@@ -39,19 +39,19 @@ function User() {
   }
 
   useEffect(() => {
-    const subscription = userService.getUser()
-      .subscribe(
-        user => {
+    const subscription = user.getUser()
+      .subscribe({
+        next: user => {
           console.log('user update', user)
           if (user) {
-            setUser(user)
+            setDisplayUser(user)
             navToComponent('profile')
           } else {
             setShowButtons(true)
           }
         },
-        error => console.error('user error', error)
-      )
+        error: error => console.error('user error', error)
+      })
 
     return () => subscription.unsubscribe()
   }, [])
@@ -70,7 +70,7 @@ function User() {
         showButtons &&
         <LoginSignupButtons
           handleClick={ handleClick }
-          isLoggedIn={ !!user }
+          isLoggedIn={ !!displayUser }
         />
       }
     </main>
