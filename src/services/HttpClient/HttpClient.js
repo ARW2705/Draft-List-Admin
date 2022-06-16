@@ -6,12 +6,11 @@ import intercept from './interceptors/interceptors'
 intercept(axios) // apply interceptors to axios instance
 
 async function request(config) {
-  const response = await axios(config)
-  return response.data
+  return await axios(config).data
 }
 
-function get(url, params = {}) {
-  return request({ method: 'get', url, params })
+function get(url, params = {}, data = {}) {
+  return request({ method: 'get', url, params, data })
 }
 
 function post(url, data) {
