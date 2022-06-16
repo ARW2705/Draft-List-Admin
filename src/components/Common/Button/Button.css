@@ -2,9 +2,9 @@
   min-height: 48px;
   border-radius: 10px;
   box-shadow: 0 2px 3px var(--text-dark);
-  border: 1px solid var(--accent-dark);
+  border: 1px solid var(--accent);
   color: var(--background);
-  background-color: var(--accent-dark);
+  background-color: var(--accent);
   transition: all linear 10ms;
 }
 
