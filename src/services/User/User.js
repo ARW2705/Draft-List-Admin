@@ -2,7 +2,8 @@ import { BehaviorSubject } from 'rxjs'
 
 import { post } from '../HttpClient/HttpClient'
 import token from '../Token/Token'
-import { BASE_URL } from '../../shared/constants/base-url'
+
+import { userRouteURL } from './user-route-url'
 
 
 class User {
@@ -10,24 +11,25 @@ class User {
     if (User._instance) return User._instance
     User._instance = this
     this.storageKey = 'user'
-    this.user$ = new BehaviorSubject(null)
-    this.baseRoute = `${BASE_URL}/users`
+    this.user$ = new BehaviorSubject({
+      _id: null,
+      username: null,
+      email: null,
+      authoredList: [],
+      previousList: []
+    })
   }
 
   getUser() {
     return this.user$
   }
 
-  getUserId() {
-    return this.user$.value._id
-  }
-
   getAuthoredList() {
-    return this.getUser().value.authoredList
+    return this.user$.value.authoredList
   }
 
   getPreviousList() {
-    return this.getUser().value.previousList
+    return this.user$.value.previousList
   }
 
   setUser(user) {
@@ -37,19 +39,21 @@ class User {
   init() {
     if (this._isInitializing) return
     this._isInitializing = true
-    const user = JSON.parse(localStorage.getItem(this.storageKey))
-    console.log('got user from storage', user)
-    this.user$.next(user)
+    const storedUser = JSON.parse(localStorage.getItem(this.storageKey))
+    console.log('got user from storage', storedUser)
+    this.setUser(storedUser)
   }
 
   handleUserResponse(user, remember) {
     const newUser = {
       _id: user._id,
       username: user.username,
-      email: user.email
+      email: user.email,
+      authoredList: user.authoredList,
+      previousList: user.previousList
     }
     this.setUser(newUser)
-    token.setToken(user.token)
+    token.setToken(user.token, remember)
 
     if (remember) {
       this.storeUser(newUser)
@@ -57,7 +61,7 @@ class User {
   }
 
   login(credentials) {
-    return post(`${this.baseRoute}/login`, credentials)
+    return post(`${userRouteURL}/login`, credentials)
       .then(loginRes => {
         if (loginRes.success) {
           this.handleUserResponse(loginRes.user, credentials.remember)
@@ -72,8 +76,7 @@ class User {
   }
 
   signup(userData) {
-    console.log(`${this.baseRoute}/signup`)
-    return post(`${this.baseRoute}/signup`, userData)
+    return post(`${userRouteURL}/signup`, userData)
       .then(signupRes => {
         if (signupRes.success) {
           this.handleUserResponse(signupRes.user, userData.remember)
@@ -88,7 +91,14 @@ class User {
   }
 
   logout() {
-    this.setUser(null)
+    this.setUser({
+      _id: null,
+      username: null,
+      email: null,
+      authoredList: [],
+      previousList: []
+    })
+    token.removeToken()
     localStorage.removeItem(this.storageKey)
   }
 
