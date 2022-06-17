@@ -6,19 +6,20 @@ import intercept from './interceptors/interceptors'
 intercept(axios) // apply interceptors to axios instance
 
 async function request(config) {
-  return await axios(config).data
+  const response = await axios(config)
+  return response.data
 }
 
-function get(url, params = {}, data = {}) {
-  return request({ method: 'get', url, params, data })
+async function get(url, params = {}, data = {}) {
+  return await request({ method: 'get', url, params, data })
 }
 
-function post(url, data) {
-  return request({ method: 'post', url, data })
+async function post(url, data) {
+  return await request({ method: 'post', url, data })
 }
 
-function patch(url, data) {
-  return request({ method: 'patch', url, data })
+async function patch(url, data) {
+  return await request({ method: 'patch', url, data })
 }
 
 export {
