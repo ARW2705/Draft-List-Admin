@@ -36,7 +36,6 @@ function User() {
     const subscription = user.getUser()
       .subscribe({
         next: user => {
-          console.log('user update', user)
           setDisplayUser(user)
           setShowButtons(true)
           let route = '/user'
