@@ -16,7 +16,6 @@ function buildRequests(idList, storedBeverages) {
 }
 
 async function getBeverageListByIds(idList) {
-  console.log(idList)
   let storedBeverages = beverageStore.getBeverages(idList)
   if (idList.length === storedBeverages.length) {
     console.log('got beverages from store')
