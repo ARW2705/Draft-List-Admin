@@ -36,10 +36,14 @@ function User() {
     const subscription = user.getUser()
       .subscribe({
         next: user => {
-          setDisplayUser(user)
-          setShowButtons(true)
           let route = '/user'
-          if (user) route += '/profile'
+          if (user._id) {
+            route += '/profile'
+            setDisplayUser(user)
+          } else {
+            setDisplayUser(null)
+          }
+          setShowButtons(true)
           navigate(route)
         },
         error: error => console.error('user error', error)
