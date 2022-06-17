@@ -11,7 +11,7 @@ import hasValue from '../../../../shared/utilities/has-value'
 
 
 function FormInput(props) {
-  const { config, validators, handleOnChange } = props
+  const { config, validators, handleOnChange, customClass } = props
   const { name, value, type, label } = config
 
   const [ attrs, setAttrs ] = useState({
@@ -20,7 +20,8 @@ function FormInput(props) {
     value,
     type: type || 'text',
     label: toTitleCase(label || name),
-    id: hyphenify(`form-input-${name}`)
+    id: hyphenify(`form-input-${name}`),
+    customClass: customClass || ''
   })
   const [ touchStatus, setTouchStatus ] = useState({
     focus: false,
@@ -92,7 +93,7 @@ function FormInput(props) {
   const placeholderClass = pristine || isEmpty ? 'default' : 'aside'
 
   return (
-    <div className="form-input-container">
+    <div className={`form-input-container ${customClass}`}>
       <label
         className={ `form-input placeholder-${placeholderClass}` }
         htmlFor={ attrs.id }

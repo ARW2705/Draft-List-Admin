@@ -1,0 +1,13 @@
+.SearchBar {
+  display: flex;
+  padding: 2%;
+}
+
+.search-input {
+  flex-grow: 1;
+  margin-right: 10px;
+}
+
+.search-button {
+  margin: 15px 0;
+}
