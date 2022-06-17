@@ -16,7 +16,8 @@ class User {
       username: null,
       email: null,
       authoredList: [],
-      previousList: []
+      previousList: [],
+      deviceList: []
     })
   }
 
@@ -41,7 +42,7 @@ class User {
     this._isInitializing = true
     const storedUser = JSON.parse(localStorage.getItem(this.storageKey))
     console.log('got user from storage', storedUser)
-    this.setUser(storedUser)
+    if (storedUser) this.setUser(storedUser)
   }
 
   handleUserResponse(user, remember) {
@@ -96,7 +97,8 @@ class User {
       username: null,
       email: null,
       authoredList: [],
-      previousList: []
+      previousList: [],
+      deviceList: []
     })
     token.removeToken()
     localStorage.removeItem(this.storageKey)

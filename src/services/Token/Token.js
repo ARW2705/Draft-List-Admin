@@ -13,9 +13,11 @@ class Token {
     return this.accessToken
   }
 
-  setToken(token) {
+  setToken(token, remember) {
     this.accessToken = token
-    localStorage.setItem(this.storageKey, token)
+    if (remember) {
+      localStorage.setItem(this.storageKey, token)
+    }
   }
 
   removeToken() {

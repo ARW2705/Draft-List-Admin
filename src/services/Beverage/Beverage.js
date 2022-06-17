@@ -1,29 +1,36 @@
-import { getBeveragesByIdList } from './Http/BeverageHttp'
+import { getBeverageById } from './Http/BeverageHttp'
 import beverageStore from './Store/BeverageStore'
 import user from '../User/User'
 import getPaginated from '../../shared/utilities/get-paginated'
 
 
-function buildRequest(idList, storedBeverages) {
-  const idsToRequest = idList
-    .map(id => storedBeverages.find(beverage => id === beverage._id) ? null : id)
+function buildRequests(idList, storedBeverages) {
+  return idList
+    .map(id => {
+      if (!storedBeverages.find(beverage => id === beverage._id)) {
+        return getBeverageById(id)
+      }
+      return null
+    })
     .filter(id => id !== null)
-  return getBeveragesByIdList(idsToRequest)
 }
 
 async function getBeverageListByIds(idList) {
+  console.log(idList)
   let storedBeverages = beverageStore.getBeverages(idList)
   if (idList.length === storedBeverages.length) {
+    console.log('got beverages from store')
     return { beverages: storedBeverages, errors: [] }
   }
 
-  const responses = await Promise.all(buildRequest(idList, storedBeverages))
+  const responses = await Promise.allSettled(buildRequests(idList, storedBeverages))
+  console.log('got beverages from server')
   let beverages = [], errors = []
   responses.forEach(response => {
     if (response.status === 'fulfilled') {
-      beverages = [...beverages, ...response.value]
+      beverages = [...beverages, response.value]
     } else {
-      errors = [...errors, ...response.reason]
+      errors = [...errors, response.reason]
     }
   })
 

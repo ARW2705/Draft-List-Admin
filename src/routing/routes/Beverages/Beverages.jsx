@@ -15,7 +15,7 @@ function Beverages() {
       setBeverageList(beverages)
     }
     getAuthored()
-  }, [ authoredListPage, pageCount ])
+  }, [authoredListPage, pageCount])
 
   return (
     <main className="route Beverages">
