@@ -10,6 +10,7 @@
   font-family: 'Roboto', sans-serif;
   background-color: var(--primary);
   transition: top 500ms ease-in-out;
+  z-index: 10;
 }
 
 .Header.scroll-up {
