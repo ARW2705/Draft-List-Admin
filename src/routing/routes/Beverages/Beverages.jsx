@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import { getAuthoredBeverages } from '../../../services/Beverage/Beverage'
 
+import SearchBar from '../../../components/Common/SearchBar/SearchBar'
 import Beverage from '../../../components/Beverage/Beverage'
 
 
@@ -28,8 +29,13 @@ function Beverages() {
     getAuthored()
   }, [authoredListPage, pageCount])
 
+  const handleOnSubmit = event => {
+    console.log('bevs', event)
+  }
+
   return (
     <main className="route Beverages">
+      <SearchBar handleOnSubmit={ handleOnSubmit } />
       { components }
     </main>
   )
