@@ -20,4 +20,4 @@ function Button({ text, customClass, isDisabled, name }) {
   )
 }
 
-export default Button
+export default React.memo(Button)

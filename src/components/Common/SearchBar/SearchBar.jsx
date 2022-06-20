@@ -6,12 +6,12 @@ import FormInput from '../Form/Input/Input'
 import './SearchBar.css'
 
 
-function SearchBar({ handleOnSubmit }) {
+function SearchBar({ label, handleOnSubmit }) {
   const [ config, setConfig ] = useState({
     name: 'search',
     value: '',
     type: 'text',
-    label: 'Name, source, or style'
+    label: label || 'Search...'
   })
 
   const handleOnChange = (name, value) => {

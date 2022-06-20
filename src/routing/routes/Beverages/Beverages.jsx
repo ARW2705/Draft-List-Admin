@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import { getAuthoredBeverages } from '../../../services/Beverage/Beverage'
 
+import BeverageCategory from '../../../components/BeverageCategory/BeverageCategory'
 import SearchBar from '../../../components/Common/SearchBar/SearchBar'
 import Beverage from '../../../components/Beverage/Beverage'
 
@@ -30,12 +31,20 @@ function Beverages() {
   }, [authoredListPage, pageCount])
 
   const handleOnSubmit = event => {
-    console.log('bevs', event)
+    console.log('bevs handle submit', event)
+  }
+
+  const handleSelectCategory = event => {
+    console.log('bevs handle select', event)
   }
 
   return (
     <main className="route Beverages">
-      <SearchBar handleOnSubmit={ handleOnSubmit } />
+      <BeverageCategory handleSelectCategory= { handleSelectCategory } />
+      <SearchBar
+        handleOnSubmit={ handleOnSubmit }
+        label='Search By Name, Source, Or Style'
+      />
       { components }
     </main>
   )
