@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 
 import Navbar from '../Navbar/Navbar'
 
@@ -11,22 +11,24 @@ function Header() {
   const [ scrollClass, setScrollClass ] = useState({ className: '' })
 
   let previousScrollPosition = 0
-  const handleScrollEvent = event => {
-    if (event.detail.scrollTop === undefined) return
+  const handleScrollEvent = useCallback(
+    event => {
+      if (event.detail.scrollTop === undefined) return
 
-    const currentScrollPosition = event.detail.scrollTop
-    if (currentScrollPosition > previousScrollPosition) {
-      setScrollClass({ className: 'scroll-down' })
-    } else if (currentScrollPosition < previousScrollPosition) {
-      setScrollClass({ className: 'scroll-up' })
-    }
-    previousScrollPosition = currentScrollPosition
-  }
+      const currentScrollPosition = event.detail.scrollTop
+      if (currentScrollPosition > previousScrollPosition) {
+        setScrollClass({ className: 'scroll-down' })
+      } else if (currentScrollPosition < previousScrollPosition) {
+        setScrollClass({ className: 'scroll-up' })
+      }
+      previousScrollPosition = currentScrollPosition
+    }, []
+  )
 
   useEffect(() => {
     window.addEventListener('scroll', throttle(handleScrollEvent, 250))
     return () => window.removeEventListener('scroll', throttle)
-  }, [])
+  }, [handleScrollEvent])
 
   return (
     <header className={`Header ${scrollClass.className}`}>

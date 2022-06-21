@@ -5,7 +5,11 @@ import intercept from './interceptors/interceptors'
 
 intercept(axios) // apply interceptors to axios instance
 
-async function request(config) {
+async function request(request) {
+  const config = {
+    ...request,
+    validateStatus: status => status < 400
+  }
   return (await axios(config)).data
 }
 

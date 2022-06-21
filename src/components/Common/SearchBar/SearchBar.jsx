@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import Button from '../Button/Button'
 import FormInput from '../Form/Input/Input'
@@ -27,6 +27,12 @@ function SearchBar({ label, handleOnSubmit }) {
       handleOnSubmit(config.value)
     }
   }
+
+  useEffect(() => {
+    setConfig(prevProps => {
+      return { ...prevProps, label}
+    })
+  }, [label])
 
   return (
     <section

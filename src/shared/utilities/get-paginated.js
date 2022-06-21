@@ -1,6 +1,6 @@
 function getPaginated(collection, pageNum, count) {
   const start = pageNum * count
-  if (start >= collection.length) return []
+  if (!collection || start >= collection.length) return []
   
   const expectedEnd = start + count
   const end = expectedEnd < collection.length ? expectedEnd : collection.length

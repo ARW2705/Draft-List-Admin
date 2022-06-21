@@ -38,7 +38,8 @@ function FormInput(props) {
       setAttrs(prevProps => {
         return {
           ...prevProps,
-          type: props.config.type
+          type: props.config.type,
+          label: props.config.label
         }
       })
     }

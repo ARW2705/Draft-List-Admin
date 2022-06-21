@@ -6,6 +6,19 @@ async function getBeverageById(id) {
   return await get(`${beverageRouteURL}/${id}`)
 }
 
+async function queryBeverages(type, term, page, count) {
+  return await get(
+    `${beverageRouteURL}/query`,
+    {
+      page,
+      count,
+      [type]: term
+    }
+  )
+}
+
+
 export {
-  getBeverageById
+  getBeverageById,
+  queryBeverages
 }
