@@ -4,7 +4,10 @@ import { getAuthoredBeverages, getPreviousBeverages } from '../../../services/Be
 
 import BeverageCategory from '../../../components/BeverageCategory/BeverageCategory'
 import SearchBar from '../../../components/Common/SearchBar/SearchBar'
+import DropDown from '../../../components/Common/DropDown/DropDown'
 import Beverage from '../../../components/Beverage/Beverage'
+
+import './Beverages.css'
 
 
 function Beverages() {
@@ -40,10 +43,10 @@ function Beverages() {
 
   useEffect(() => {
     if (selectedPage === 'authored') {
-      setSearchLabel('Search by authored by user')
+      setSearchLabel('Search authored by user')
       setListComponents(getAuthoredBeverages(authoredListPage, pageCount))
     } else if (selectedPage === 'previous') {
-      setSearchLabel('Search by previously used')
+      setSearchLabel('Search previously used')
       setListComponents(getPreviousBeverages(previousListPage, pageCount))
     } else if (selectedPage === 'search') {
       // TODO: write search logic
@@ -53,8 +56,13 @@ function Beverages() {
     }
   }, [selectedPage, authoredListPage, previousListPage, pageCount, setListComponents])
 
-  const handleSearchOnSubmit = event => {
-    console.log('bevs handle submit', event)
+  const handleSearchOnSubmit = () => {
+    console.log('bevs handle submit')
+  }
+
+  const handleSearchOnSelect = selectionName => {
+    console.log('bevs handle select', selectionName)
+    setSearchLabel(`Search by ${selectionName}`)
   }
 
   const handleSelectCategory = page => {
@@ -63,15 +71,29 @@ function Beverages() {
   }
 
   return (
-    <main className="route Beverages">
+    <main className='route Beverages'>
       <BeverageCategory handleSelectCategory= { handleSelectCategory } />
-      <SearchBar
-        handleOnSubmit={ handleSearchOnSubmit }
-        label={ searchLabel }
-      />
+      <div className='search-container'>
+        {
+          selectedPage === 'search'
+          && (
+            <DropDown
+              customClass='search-by-menu'
+              title='Search By'
+              items={ ['Name', 'Source', 'Style'] }
+              handleOnSelect={ handleSearchOnSelect }
+            />
+          )
+        }
+        <SearchBar
+          handleOnSubmit={ handleSearchOnSubmit }
+          label={ searchLabel }
+        />
+      </div>
       { components }
     </main>
   )
 }
+
 
 export default Beverages

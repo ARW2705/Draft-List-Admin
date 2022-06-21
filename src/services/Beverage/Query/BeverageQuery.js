@@ -1,4 +1,4 @@
-import { getPaginated } from '../../shared/utilities/get-paginated'
+import getPaginated from '../../../shared/utilities/get-paginated'
 
 
 class BeverageQuery {

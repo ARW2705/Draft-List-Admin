@@ -1,6 +1,6 @@
 .SearchBar {
   display: flex;
-  padding: 2%;
+  flex-grow: 1;
 }
 
 .search-input {
