@@ -1,71 +1,32 @@
-import React, { useEffect, useState, useCallback } from 'react'
-
-import { getAuthoredBeverages, getPreviousBeverages, getBeveragesByQuery } from '../../../services/Beverage/Beverage'
+import React, { useState } from 'react'
 
 import BeverageCategory from '../../../components/BeverageComponents/BeverageCategory/BeverageCategory'
-import Beverage from '../../../components/BeverageComponents/Beverage/Beverage'
-import DropDown from '../../../components/Common/DropDown/DropDown'
-import SearchBar from '../../../components/Common/SearchBar/SearchBar'
-import FormError from '../../../components/Common/Form/FormError/FormError'
+import BeverageList     from '../../../components/BeverageComponents/BeverageList/BeverageList'
+import DropDown         from '../../../components/Common/DropDown/DropDown'
+import FormError        from '../../../components/Common/Form/FormError/FormError'
+import SearchBar        from '../../../components/Common/SearchBar/SearchBar'
 
 import './Beverages.css'
 
 
 function Beverages() {
-  const [ pageNum, setPageNum ] = useState(0)
-  const [ pageCount, setPageCount ] = useState(10)
-  const [ selectedPage, setSelectedPage ] = useState('authored')
-  const [ searchType, setSearchType ] = useState(null)
   const [ searchLabel, setSearchLabel ] = useState('Search...')
   const [ searchError, setSearchError ] = useState(null)
-  const [ components, setComponents ] = useState([])
+  const [ listConfig, setListConfig ] = useState({
+    listType: 'authored',
+    pageNum: 0,
+    pageCount: 25,
+    searchType: '',
+    searchTerm: ''
+  })
 
-  const buildComponents = beverages => {
-    return beverages.map(beverage => {
-      return (
-        <Beverage
-          className='beverage-container'
-          key={ beverage._id }
-          beverage={ beverage }
-        />
-      )
-    })
-  }
-
-  const setListComponents = useCallback(
-    async beverageList => {
-      const { beverages, errors } = await beverageList
-      // TODO: decide what to do with errors at this point
-      if (beverages.length) {
-        setComponents(buildComponents(beverages))
-      }
-      console.log(beverages)
-    }, []
-  )
-
-  useEffect(() => {
-    if (selectedPage === 'authored') {
-      setSearchLabel('Search authored by user')
-      setListComponents(getAuthoredBeverages(pageNum, pageCount))
-    } else if (selectedPage === 'previous') {
-      setSearchLabel('Search previously used')
-      setListComponents(getPreviousBeverages(pageNum, pageCount))
-    } else if (selectedPage === 'search') {
-      // TODO: write search logic
-      setSearchLabel('name, source, or style')
-    } else {
-      throw new Error(`Unknown beverage category: ${selectedPage}`)
-    }
-  }, [selectedPage, pageNum, pageCount, setListComponents])
-
-  const handleSearchOnSubmit = async value => {
-    console.log('bevs handle submit', value, searchType)
+  const handleSearchOnSubmit = async searchTerm => {
     let errors = {}
-    if (!value.length) {
-      errors = { value: 'Please enter a search term' }
+    if (!searchTerm.length) {
+      errors = { searchTerm: 'Please enter a search term' }
     }
 
-    if (!searchType) {
+    if (!listConfig.searchType.length) {
       errors = { ...errors, type: 'Please select a query type' }
     }
 
@@ -73,17 +34,17 @@ function Beverages() {
       setSearchError(errors)
     } else {
       setSearchError(null)
-      setListComponents(getBeveragesByQuery(searchType, value, pageNum, pageCount))
+      setListConfig(prevProps => ({ ...prevProps, searchTerm }))
     }
   }
 
-  const handleSearchOnSelect = selectionName => {
-    setSearchLabel(`Search by ${selectionName}`)
-    setSearchType(selectionName)
+  const handleSearchOnSelect = searchType => {
+    setSearchLabel(`Search by ${searchType}`)
+    setListConfig(prevProps => ({ ...prevProps, searchType }))
   }
 
-  const handleSelectCategory = page => {
-    setSelectedPage(page)
+  const handleSelectCategory = listType => {
+    setListConfig(prevProps => ({ ...prevProps, listType }))
   }
 
   return (
@@ -91,7 +52,7 @@ function Beverages() {
       <BeverageCategory handleSelectCategory= { handleSelectCategory } />
       <div className='search-container'>
         {
-          selectedPage === 'search'
+          listConfig.listType === 'search'
           && (
             <DropDown
               customClass='search-by-menu'
@@ -116,7 +77,7 @@ function Beverages() {
           )
         }
       </div>
-      { components }
+      <BeverageList listConfig={ listConfig } />
     </main>
   )
 }
