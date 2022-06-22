@@ -11,7 +11,7 @@ function buildMessage(name, key, errors) {
   if (errorMessages.hasOwnProperty(key)) {
     message = errorMessages[key](toTitleCase(name), errors[key])
   } else {
-    message = `Error: ${key}`
+    message = `Error: ${errors[key]}`
   }
   return (
     <span
@@ -23,7 +23,7 @@ function buildMessage(name, key, errors) {
   )
 }
 
-function Error({ name, errors }) {
+function Error({ customClass, name, errors }) {
   const [ messages, setMessages ] = useState([])
   useEffect(() => {
     setMessages(() => {
@@ -36,7 +36,7 @@ function Error({ name, errors }) {
   }, [ name, errors ])
 
   return (
-    <div className="form-error-container">
+    <div className={ `form-error-container ${customClass || ''}` }>
       { messages }
     </div>
   )

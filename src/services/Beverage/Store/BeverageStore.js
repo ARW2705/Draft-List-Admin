@@ -2,6 +2,7 @@ class BeverageStore {
   constructor() {
     if (BeverageStore._instance) return BeverageStore._instance
     BeverageStore._instance = this
+    this.storageKey = 'beverages'
     this.beverages = {} // core beverage defs
   }
 
@@ -19,6 +20,19 @@ class BeverageStore {
 
   setBeverages(beverages) {
     this.setBeverage(beverages.reduce((acc, curr) => ({ ...acc, [curr._id]: curr}), {}))
+  }
+
+  clearBeverages() {
+    this.beverages = {}
+    this.storeBeverages()
+  }
+
+  loadBeverages() {
+    this.beverages = JSON.parse(localStorage.getItem(this.storageKey))
+  }
+
+  storeBeverages() {
+    localStorage.setItem(this.storageKey, JSON.stringify(this.beverages))
   }
 }
 

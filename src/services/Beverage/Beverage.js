@@ -59,11 +59,18 @@ async function getBeveragesByQuery(type, term, page, count) {
   if (fromCache.length === count) {
     return getBeverageListByIds(fromCache)
   }
+
   const fromServer = await queryBeveragesFromServer(type, term, page, count - fromCache.length)
-  return {
-    beverages: [...fromCache, ...(fromServer.beverages)],
-    errors: [fromServer.error]
+  const isErrorResponse = !Array.isArray(fromServer)
+  let beverages = fromCache
+  let errors = []
+  if (isErrorResponse) {
+    errors = [fromServer]
+  } else {
+    beverages = [...fromCache, ...fromServer]
   }
+
+  return { beverages, errors }
 }
 
 

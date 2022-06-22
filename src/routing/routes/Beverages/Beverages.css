@@ -1,6 +1,7 @@
 .Beverages {
   
 }
+<<<<<<< HEAD
 
 .Beverages > .search-container {
   display: flex;
@@ -8,6 +9,18 @@
 }
 
 .search-by-menu {
+=======
+<<<<<<< Updated upstream
+=======
+
+.Beverages > .search-container {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0.5rem;
+}
+
+.Beverages .search-by-menu {
+>>>>>>> wip-feature-beverage-component
   color: var(--background);
   background-color: var(--accent);
   border: 2px solid var(--text-medium);
@@ -18,3 +31,11 @@
   align-self: center;
   min-height: 48px;
 }
+<<<<<<< HEAD
+=======
+
+.Beverages .search-bar-error {
+  min-width: 100%;
+}
+>>>>>>> Stashed changes
+>>>>>>> wip-feature-beverage-component
