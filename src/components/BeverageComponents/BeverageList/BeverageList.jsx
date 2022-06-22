@@ -12,7 +12,7 @@ function BeverageList({ listConfig }) {
   const [ components, setComponents ] = useState([])
 
   const buildComponents = beverages => {
-    if (!beverages.length) return <p className=''>Nothing here...</p>
+    if (!beverages.length) return <p className='empty-list'>Nothing here...</p>
 
     return beverages.map(beverage => {
       return (
