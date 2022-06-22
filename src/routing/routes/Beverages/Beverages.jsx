@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
+import { Route, Routes, useNavigate, useLocation } from 'react-router-dom'
 
 import BeverageCategory from '../../../components/BeverageComponents/BeverageCategory/BeverageCategory'
 import BeverageList     from '../../../components/BeverageComponents/BeverageList/BeverageList'
 import DropDown         from '../../../components/Common/DropDown/DropDown'
 import FormError        from '../../../components/Common/Form/FormError/FormError'
 import SearchBar        from '../../../components/Common/SearchBar/SearchBar'
+import BeverageForm     from '../../../components/Forms/Beverage/Beverage'
 
 import './Beverages.css'
 
@@ -49,35 +51,45 @@ function Beverages() {
 
   return (
     <main className="route Beverages">
-      <BeverageCategory handleSelectCategory= { handleSelectCategory } />
-      <div className='search-container'>
-        {
-          listConfig.listType === 'search'
-          && (
-            <DropDown
-              customClass='search-by-menu'
-              title='Search By'
-              items={ ['Name', 'Source', 'Style'] }
-              handleOnSelect={ handleSearchOnSelect }
-            />
-          )
-        }
-        <SearchBar
-          handleOnSubmit={ handleSearchOnSubmit }
-          label={ searchLabel }
+      <Routes>
+        <Route
+          path='/'
+          element={
+            <>
+              <BeverageCategory handleSelectCategory= { handleSelectCategory } />
+              <div className='search-container'>
+                {
+                  listConfig.listType === 'search'
+                  && (
+                    <DropDown
+                      customClass='search-by-menu'
+                      title='Search By'
+                      items={ ['Name', 'Source', 'Style'] }
+                      handleOnSelect={ handleSearchOnSelect }
+                    />
+                  )
+                }
+                <SearchBar
+                  handleOnSubmit={ handleSearchOnSubmit }
+                  label={ searchLabel }
+                />
+                {
+                  searchError
+                  && (
+                    <FormError
+                      customClass='search-bar-error'
+                      name='search'
+                      errors={ searchError }
+                    />
+                  )
+                }
+              </div>
+              <BeverageList listConfig={ listConfig } />
+            </>
+          }
         />
-        {
-          searchError
-          && (
-            <FormError
-              customClass='search-bar-error'
-              name='search'
-              errors={ searchError }
-            />
-          )
-        }
-      </div>
-      <BeverageList listConfig={ listConfig } />
+        <Route path='/form' element={ <BeverageForm /> } />
+      </Routes>
     </main>
   )
 }
