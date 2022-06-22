@@ -5,6 +5,7 @@ class BeverageQuery {
   constructor() {
     if (BeverageQuery._instance) return BeverageQuery._instance
     BeverageQuery._instance = this
+    this.storageKey = 'queries'
     this.queries = {
       name: {},
       source: {},
@@ -25,9 +26,28 @@ class BeverageQuery {
     this.queries = {
       ...this.queries,
       [type]: {
+        ...this.queries[type],
         [term]: [...fromCurrentQuery, ...(beverages.map(beverage => beverage._id))]
       }
     }
+    console.log('query cache update', this.queries)
+  }
+
+  clearCache() {
+    this.queries = {
+      name: {},
+      source: {},
+      style: {}
+    }
+    this.storeCache()
+  }
+
+  loadCache() {
+    this.queries = JSON.parse(localStorage.getItem(this.storageKey))
+  }
+
+  storeCache() {
+    localStorage.setItem(this.storageKey, JSON.stringify(this.queries))
   }
 }
 
