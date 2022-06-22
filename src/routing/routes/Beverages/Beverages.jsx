@@ -2,10 +2,10 @@ import React, { useEffect, useState, useCallback } from 'react'
 
 import { getAuthoredBeverages, getPreviousBeverages, getBeveragesByQuery } from '../../../services/Beverage/Beverage'
 
+import BeverageCategory from '../../../components/BeverageComponents/BeverageCategory/BeverageCategory'
+import Beverage from '../../../components/BeverageComponents/Beverage/Beverage'
 import DropDown from '../../../components/Common/DropDown/DropDown'
-import BeverageCategory from '../../../components/BeverageCategory/BeverageCategory'
 import SearchBar from '../../../components/Common/SearchBar/SearchBar'
-import Beverage from '../../../components/Beverage/Beverage'
 import FormError from '../../../components/Common/Form/FormError/FormError'
 
 import './Beverages.css'
