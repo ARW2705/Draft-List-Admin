@@ -2,9 +2,9 @@ import React, { useEffect, useState, useCallback } from 'react'
 
 import { getAuthoredBeverages, getPreviousBeverages, getBeveragesByQuery } from '../../../services/Beverage/Beverage'
 
+import DropDown from '../../../components/Common/DropDown/DropDown'
 import BeverageCategory from '../../../components/BeverageCategory/BeverageCategory'
 import SearchBar from '../../../components/Common/SearchBar/SearchBar'
-import DropDown from '../../../components/Common/DropDown/DropDown'
 import Beverage from '../../../components/Beverage/Beverage'
 import FormError from '../../../components/Common/Form/FormError/FormError'
 
@@ -45,23 +45,11 @@ function Beverages() {
 
   useEffect(() => {
     if (selectedPage === 'authored') {
-<<<<<<< HEAD
-      setSearchLabel('Search authored by user')
-=======
-<<<<<<< Updated upstream
-      setSearchLabel('Search by authored by user')
->>>>>>> wip-feature-beverage-component
-      setListComponents(getAuthoredBeverages(authoredListPage, pageCount))
-    } else if (selectedPage === 'previous') {
-      setSearchLabel('Search previously used')
-      setListComponents(getPreviousBeverages(previousListPage, pageCount))
-=======
       setSearchLabel('Search authored by user')
       setListComponents(getAuthoredBeverages(pageNum, pageCount))
     } else if (selectedPage === 'previous') {
       setSearchLabel('Search previously used')
       setListComponents(getPreviousBeverages(pageNum, pageCount))
->>>>>>> Stashed changes
     } else if (selectedPage === 'search') {
       // TODO: write search logic
       setSearchLabel('name, source, or style')
@@ -70,19 +58,6 @@ function Beverages() {
     }
   }, [selectedPage, pageNum, pageCount, setListComponents])
 
-<<<<<<< HEAD
-  const handleSearchOnSubmit = () => {
-    console.log('bevs handle submit')
-  }
-
-  const handleSearchOnSelect = selectionName => {
-    console.log('bevs handle select', selectionName)
-    setSearchLabel(`Search by ${selectionName}`)
-=======
-<<<<<<< Updated upstream
-  const handleSearchOnSubmit = event => {
-    console.log('bevs handle submit', event)
-=======
   const handleSearchOnSubmit = async value => {
     console.log('bevs handle submit', value, searchType)
     let errors = {}
@@ -105,8 +80,6 @@ function Beverages() {
   const handleSearchOnSelect = selectionName => {
     setSearchLabel(`Search by ${selectionName}`)
     setSearchType(selectionName)
->>>>>>> Stashed changes
->>>>>>> wip-feature-beverage-component
   }
 
   const handleSelectCategory = page => {
@@ -114,17 +87,8 @@ function Beverages() {
   }
 
   return (
-    <main className='route Beverages'>
+    <main className="route Beverages">
       <BeverageCategory handleSelectCategory= { handleSelectCategory } />
-<<<<<<< HEAD
-=======
-<<<<<<< Updated upstream
-      <SearchBar
-        handleOnSubmit={ handleSearchOnSubmit }
-        label={ searchLabel }
-      />
-=======
->>>>>>> wip-feature-beverage-component
       <div className='search-container'>
         {
           selectedPage === 'search'
@@ -141,9 +105,6 @@ function Beverages() {
           handleOnSubmit={ handleSearchOnSubmit }
           label={ searchLabel }
         />
-<<<<<<< HEAD
-      </div>
-=======
         {
           searchError
           && (
@@ -155,12 +116,9 @@ function Beverages() {
           )
         }
       </div>
->>>>>>> Stashed changes
->>>>>>> wip-feature-beverage-component
       { components }
     </main>
   )
 }
-
 
 export default Beverages

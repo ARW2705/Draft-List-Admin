@@ -6,10 +6,15 @@ class BeverageQuery {
     if (BeverageQuery._instance) return BeverageQuery._instance
     BeverageQuery._instance = this
     this.storageKey = 'queries'
-    this.queries = {
-      name: {},
-      source: {},
-      style: {}
+    const storedQueries = this.loadCache()
+    if (storedQueries) {
+      this.queries = storedQueries
+    } else {
+      this.queries = {
+        name: {},
+        source: {},
+        style: {}
+      }
     }
   }
 
@@ -43,7 +48,7 @@ class BeverageQuery {
   }
 
   loadCache() {
-    this.queries = JSON.parse(localStorage.getItem(this.storageKey))
+    return JSON.parse(localStorage.getItem(this.storageKey))
   }
 
   storeCache() {
