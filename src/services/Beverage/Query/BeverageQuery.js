@@ -27,15 +27,22 @@ class BeverageQuery {
   }
 
   cacheQuery(type, term, beverages) {
-    const fromCurrentQuery = this.queries[type][term] || []
+    const unique = new Set()
+    let newQueries = this.queries[type][term] || []
+    newQueries.forEach(id => unique.add(id))
+    beverages.forEach(beverage => {
+      if (!unique.has(beverage._id)) {
+        newQueries = [...newQueries, beverage._id]
+      }
+    })
+
     this.queries = {
       ...this.queries,
       [type]: {
         ...this.queries[type],
-        [term]: [...fromCurrentQuery, ...(beverages.map(beverage => beverage._id))]
+        [term]: newQueries
       }
     }
-    console.log('query cache update', this.queries)
   }
 
   clearCache() {

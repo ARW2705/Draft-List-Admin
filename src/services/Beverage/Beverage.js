@@ -55,19 +55,26 @@ async function getPreviousBeverages(page, count) {
 }
 
 async function getBeveragesByQuery(type, term, page, count) {
-  const fromCache = beverageQuery.getIdsByQuery(type, term, page, count)
+  const cachedIds = beverageQuery.getIdsByQuery(type, term, page, count)
+  const fromCache = await getBeverageListByIds(cachedIds)
   if (fromCache.length === count) {
-    return getBeverageListByIds(fromCache)
+    return fromCache
   }
 
   const fromServer = await queryBeveragesFromServer(type, term, page, count - fromCache.length)
   const isErrorResponse = !Array.isArray(fromServer)
-  let beverages = fromCache
-  let errors = []
+  let { beverages, errors } = fromCache
+  console.log(fromCache, fromServer)
   if (isErrorResponse) {
-    errors = [fromServer]
+    errors = [...errors, fromServer]
   } else {
-    beverages = [...fromCache, ...fromServer]
+    const unique = new Set()
+    beverages.forEach(beverage => unique.add(beverage._id))
+    fromServer.forEach(beverage => {
+      if (!unique.has(beverage._id)) {
+        beverages = [...beverages, beverage]
+      }
+    })
   }
 
   return { beverages, errors }
