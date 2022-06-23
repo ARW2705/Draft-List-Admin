@@ -2,10 +2,16 @@
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  min-height: 75vh;
   margin: 3%;
 }
 
 .form-button {
   font-size: 1.5rem;
+  margin: 15px 0;
+}
+
+.form-title {
+  text-align: center;
+  color: var(--accent-dark);
+  font-size: 2rem;
 }

@@ -4,7 +4,7 @@ import { Route, Routes, useNavigate, useLocation } from 'react-router-dom'
 import user from '../../../services/User/User'
 
 import SignupForm from '../../../components/Forms/Signup/Signup'
-import Login from '../../../components/Forms/Login/Login'
+import LoginForm from '../../../components/Forms/Login/Login'
 import Profile from '../../../components/Profile/Profile'
 import LoginSignupButtons from '../../../components/LoginSignupButtons/LoginSignupButtons'
 
@@ -60,7 +60,7 @@ function User() {
     <main className="route user">
       <Routes>
         <Route path='/signup' element={ <SignupForm /> } />
-        <Route path='/login' element={ <Login /> } />
+        <Route path='/login' element={ <LoginForm /> } />
         <Route path='/profile' element={ <Profile user={ displayUser } /> } />
       </Routes>
       {

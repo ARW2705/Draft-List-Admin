@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import Button from '../../Button/Button'
 import FormError from '../FormError/FormError'
 import buildFormGroup from './build-form-group'
-import buildFormComponents from './build-form-components'
+import buildFormElements from './build-form-elements'
 
 import { validateForm } from '../../../../shared/validators/validators'
 
@@ -11,7 +11,7 @@ import './FormGroup.css'
 
 
 function FormGroup(props) {
-  const { form, submitHandler, customClass } = props
+  const { form, submitHandler, customClass, title } = props
   const { fields, validators } = form
 
   const [ formFields, setFormFields ] = useState({ ...fields })
@@ -44,28 +44,33 @@ function FormGroup(props) {
     setFormFields(prevProps => props.updateForm(name, value, errors, prevProps))
   }
 
-  const formComponents = buildFormComponents(formFields, handleOnChange)
+  const formComponents = buildFormElements(formFields, handleOnChange)
 
   return (
-    <form
-      className={ `form-group ${customClass || ''}` }
-      onSubmit={ handleSubmit }
-      autoComplete='off'
-      noValidate
-    >
-      { formComponents }
+    <>
       {
-        <FormError
-          name='form'
-          errors={ formErrors }
-        />
+        title && <h2 className='form-title'>{ title }</h2>
       }
-      <Button
-        text='Submit'
-        customClass='form-button'
-        isDisabled={ disableButton }
-      />
-    </form>
+      <form
+        className={ `form-group ${customClass || ''}` }
+        onSubmit={ handleSubmit }
+        autoComplete='off'
+        noValidate
+      >
+        { formComponents }
+        {
+          <FormError
+            name='form'
+            errors={ formErrors }
+          />
+        }
+        <Button
+          text='Submit'
+          customClass='form-button'
+          isDisabled={ disableButton }
+        />
+      </form>
+    </>
   )
 }
 

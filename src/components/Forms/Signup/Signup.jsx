@@ -77,6 +77,7 @@ function SignupForm() {
       form={ form }
       submitHandler={ handleSubmit }
       customClass='signup'
+      title='Signup'
     />
   )
 }

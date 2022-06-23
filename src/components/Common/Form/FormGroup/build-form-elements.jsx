@@ -4,7 +4,7 @@ import FormInput from '../Input/Input'
 import FormCheckbox from '../Checkbox/Checkbox'
 
 
-const buildFormComponents = (formFields, handleOnChange) => {
+const buildFormElements = (formFields, handleOnChange) => {
   const formComponents = []
   for (const key in formFields) {
     const { element, value, options, validators } = formFields[key]
@@ -43,4 +43,4 @@ const buildFormComponents = (formFields, handleOnChange) => {
   return formComponents
 }
 
-export default buildFormComponents
+export default buildFormElements

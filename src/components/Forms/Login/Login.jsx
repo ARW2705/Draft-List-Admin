@@ -8,7 +8,7 @@ import createForm from '../../../shared/form/create-form'
 import { required } from '../../../shared/validators/validators'
 
 
-function Login() {
+function LoginForm() {
   const form = createForm({
     fields: {
       username: {
@@ -57,8 +57,9 @@ function Login() {
       form={ form }
       submitHandler={ handleSubmit }
       customClass='login'
+      title='Log In'
     />
   )
 }
 
-export default Login
+export default LoginForm

@@ -50,6 +50,7 @@ function BeverageForm() {
       form={ form }
       submitHandler={ handleSubmit }
       customClass='beverage'
+      title='New Beverage'
     />
   )
 }
