@@ -38,6 +38,8 @@ function BeverageList({ listConfig }) {
 
   useEffect(() => {
     async function getList() {
+      if (listType === 'search') return
+      
       let getter = { beverages: [], errors: [] }
       if (listType === 'authored') {
         getter = await getAuthoredBeverages(pageNum, pageCount)
