@@ -41,7 +41,7 @@ function Beverages() {
   }
 
   const handleSearchOnSelect = searchType => {
-    setSearchLabel(`Search by ${searchType}`)
+    setSearchLabel(searchType)
     setListConfig(prevProps => ({ ...prevProps, searchType }))
   }
 
