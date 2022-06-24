@@ -52,7 +52,8 @@ function FormInput(props) {
     }
   }, [ touchStatus ])
 
-  const checkValidity = (name, value) => {
+  const checkValidity = (name, rawValue) => {
+    const value = attrs.type === 'number' ? parseFloat(rawValue) : rawValue
     const errors = validate(value, validators)
     setErrorState(() => ({ errors, show: touchStatus.touched }))
     attrs.handleOnChange(name, value, errors)
@@ -91,11 +92,11 @@ function FormInput(props) {
   }
 
   const { touched, focus, pristine } = touchStatus
-  const isEmpty = touched && !focus && !value.length
+  const isEmpty = touched && !focus && (value === null || value === undefined || value === '')
   const placeholderClass = pristine || isEmpty ? 'default' : 'aside'
 
   return (
-    <div className={`form-input-container ${customClass}`}>
+    <div className={`form-input-container ${attrs.customClass}`}>
       <label
         className={ `form-input placeholder-${placeholderClass}` }
         htmlFor={ attrs.id }
