@@ -1,4 +1,5 @@
 import React from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 import FormGroup from '../../Common/Form/FormGroup/FormGroup'
 
@@ -41,8 +42,14 @@ function BeverageForm() {
     }
   })
 
-  const handleSubmit = event => {
-    console.log('beverage form submit', event)
+  const location = useLocation()
+  const navigate = useNavigate()
+  const handleSubmit = data => {
+    if (!data) {
+      navigate(`/${location.pathname.split('/')[1]}`)
+    } else {
+      // TODO: submit new beverage
+    }
   }
 
   return (
