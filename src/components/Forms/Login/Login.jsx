@@ -1,4 +1,5 @@
 import React from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 import user from '../../../services/User/User'
 
@@ -44,12 +45,19 @@ function LoginForm() {
     }
   })
 
-  const handleSubmit = ({ username, password, remember }) => {
-    user.login({ username, password, remember })
-      .then(() => console.log('login complete'))
-      .catch(error => {
-        // TODO handle error feedback
-      })
+  const location = useLocation()
+  const navigate = useNavigate()
+  const handleSubmit = data => {
+    if (!data) {
+      navigate(`/${location.pathname.split('/')[1]}`)
+    } else {
+      const { username, password, remember } = data
+      user.login({ username, password, remember })
+        .then(() => console.log('login complete'))
+        .catch(error => {
+          // TODO handle error feedback
+        })
+    }
   }
 
   return (

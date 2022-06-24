@@ -1,4 +1,5 @@
 import React from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 import user from '../../../services/User/User'
 
@@ -64,12 +65,19 @@ function SignupForm() {
     }
   })
 
-  const handleSubmit = ({ username, password, email, remember }) => {
-    user.signup({ username, password, email, remember })
-      .then(() => console.log('signup complete'))
-      .catch(error => {
-        // TODO handle error feedback
-      })
+  const location = useLocation()
+  const navigate = useNavigate()
+  const handleSubmit = data => {
+    if (!data) {
+      navigate(`/${location.pathname.split('/')[1]}`)
+    } else {
+      const { username, password, email, remember } = data
+      user.signup({ username, password, email, remember })
+        .then(() => console.log('signup complete'))
+        .catch(error => {
+          // TODO handle error feedback
+        })
+    }
   }
 
   return (

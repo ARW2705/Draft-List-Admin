@@ -1,7 +1,7 @@
 .form-checkbox-container {
   display: flex;
   align-items: center;
-  margin: 15px 0;
+  margin: 10px 0;
 }
 
 .form-checkbox-container > input[type='checkbox'] {

@@ -19,6 +19,7 @@ function SearchBar({ label, handleOnSubmit }) {
   }
 
   const handleSubmit = event => {
+    event.stopPropagation()
     const { type, target, key } = event
     if (
       (type === 'click' && target.name === 'search-button')
