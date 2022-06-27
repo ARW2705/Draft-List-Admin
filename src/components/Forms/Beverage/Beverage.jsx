@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import FormGroup from '../../Common/Form/FormGroup/FormGroup'
 
 import createForm from '../../../shared/form/create-form'
-import { minLength, maxLength, required } from '../../../shared/validators/validators'
+import { min, max, minLength, maxLength, required } from '../../../shared/validators/validators'
 
 
 function BeverageForm() {
@@ -25,17 +25,20 @@ function BeverageForm() {
       abv: {
         options: {
           type: 'number'
-        }
+        },
+        validators: [min(0), max(100)]
       },
       ibu: {
         options: {
           type: 'number'
-        }
+        },
+        validators: [min(0), max(200)]
       },
       srm: {
         options: {
           type: 'number'
-        }
+        },
+        validators: [min(0), max(200)]
       },
       image: {},
       contentColor: {} 
@@ -45,6 +48,7 @@ function BeverageForm() {
   const location = useLocation()
   const navigate = useNavigate()
   const handleSubmit = data => {
+    console.log(data)
     if (!data) {
       navigate(`/${location.pathname.split('/')[1]}`)
     } else {
