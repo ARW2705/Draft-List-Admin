@@ -45,6 +45,14 @@ class User {
     if (storedUser) this.setUser(storedUser)
   }
 
+  addBeverageToAuthoredList(beverage) {
+    const user = this.user$.value
+    this.setUser({
+      ...user,
+      authoredList: [...user.authoredList, beverage._id]
+    })
+  }
+
   handleUserResponse(user, remember) {
     const newUser = {
       _id: user._id,

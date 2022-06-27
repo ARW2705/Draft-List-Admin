@@ -42,9 +42,7 @@ function BeverageForm() {
         validators: [min(0), max(200)]
       },
       image: {
-        options: {
-          type: 'file'
-        }
+        element: 'file'
       },
       contentColor: {} 
     }
