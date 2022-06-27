@@ -17,8 +17,8 @@ async function get(url, params = {}, data = {}) {
   return await request({ method: 'get', url, params, data })
 }
 
-async function post(url, data) {
-  return await request({ method: 'post', url, data })
+async function post(url, data, headers = {}) {
+  return await request({ method: 'post', url, data, headers })
 }
 
 async function patch(url, data) {

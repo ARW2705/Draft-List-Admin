@@ -60,6 +60,7 @@ function FormInput(props) {
   }
 
   const handleChange = event => {
+    console.log(event)
     const { name, value } = event.target
     checkValidity(name, value)
     setAttrs(prevProps => {

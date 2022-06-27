@@ -1,4 +1,4 @@
-import { getBeverageById, queryBeverages } from './Http/BeverageHttp'
+import { getBeverageById, queryBeverages, postBeverage } from './Http/BeverageHttp'
 import beverageStore from './Store/BeverageStore'
 import beverageQuery from './Query/BeverageQuery'
 import user from '../User/User'
@@ -80,9 +80,15 @@ async function getBeveragesByQuery(type, term, page, count) {
   return { beverages, errors }
 }
 
+async function addNewBeverage(beverageData) {
+  const response = await postBeverage(beverageData)
+  return response
+}
+
 
 export {
   getAuthoredBeverages,
   getPreviousBeverages,
-  getBeveragesByQuery
+  getBeveragesByQuery,
+  addNewBeverage
 }

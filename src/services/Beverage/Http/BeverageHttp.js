@@ -1,4 +1,4 @@
-import { get } from '../../HttpClient/HttpClient'
+import { get, post } from '../../HttpClient/HttpClient'
 import { beverageRouteURL } from './beverage-route-url'
 
 
@@ -17,8 +17,21 @@ async function queryBeverages(type, term, page, count) {
   )
 }
 
+async function postBeverage(beverageData) {
+  const { data, image } = beverageData
+  const header = { 'Content-Type': 'multipart/form-data' }
+  const formData = new FormData()
+  formData.append('data', JSON.stringify(data))
+  if (image) {
+    formData.append('image', image)
+  }
+
+  return await post(beverageRouteURL, formData, header)
+}
+
 
 export {
   getBeverageById,
-  queryBeverages
+  queryBeverages,
+  postBeverage
 }

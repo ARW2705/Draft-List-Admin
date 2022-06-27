@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 
 import FormGroup from '../../Common/Form/FormGroup/FormGroup'
 
+import { addNewBeverage } from '../../../services/Beverage/Beverage'
 import createForm from '../../../shared/form/create-form'
 import { min, max, minLength, maxLength, required } from '../../../shared/validators/validators'
 
@@ -40,19 +41,38 @@ function BeverageForm() {
         },
         validators: [min(0), max(200)]
       },
-      image: {},
+      image: {
+        options: {
+          type: 'file'
+        }
+      },
       contentColor: {} 
     }
   })
 
   const location = useLocation()
   const navigate = useNavigate()
-  const handleSubmit = data => {
+  const handleSubmit = async data => {
     console.log(data)
     if (!data) {
       navigate(`/${location.pathname.split('/')[1]}`)
     } else {
       // TODO: submit new beverage
+      const beverageData = {
+        data: {
+          name: data.name,
+          source: data.source,
+          description: data.description,
+          style: data.style,
+          abv: data.abv,
+          ibu: data.ibu,
+          srm: data.srm,
+          contentColor: data.contentColor
+        },
+        image: data.image
+      }
+      const response = await addNewBeverage(beverageData)
+      console.log(response)
     }
   }
 
