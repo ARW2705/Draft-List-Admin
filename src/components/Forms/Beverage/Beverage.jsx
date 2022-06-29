@@ -42,7 +42,7 @@ function BeverageForm() {
         validators: [min(0), max(200)]
       },
       image: {
-        element: 'file'
+        element: 'image'
       },
       contentColor: {} 
     }
@@ -69,8 +69,9 @@ function BeverageForm() {
         },
         image: data.image
       }
-      const response = await addNewBeverage(beverageData)
-      console.log(response)
+      console.log(beverageData)
+      // const response = await addNewBeverage(beverageData)
+      // console.log(response)
     }
   }
 

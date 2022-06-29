@@ -3,6 +3,7 @@ import React from 'react'
 import FormFileInput from '../FileInput/FileInput'
 import FormInput from '../Input/Input'
 import FormCheckbox from '../Checkbox/Checkbox'
+import ImageUpload from '../ImageUpload/ImageUpload'
 
 
 const buildFormElements = (formFields, handleOnChange) => {
@@ -43,6 +44,16 @@ const buildFormElements = (formFields, handleOnChange) => {
         formComponents = [
           ...formComponents,
           <FormFileInput
+            key={ key }
+            config={ config }
+            handleOnChange={ handleOnChange }
+          />
+        ]
+        break
+      case 'image':
+        formComponents = [
+          ...formComponents,
+          <ImageUpload
             key={ key }
             config={ config }
             handleOnChange={ handleOnChange }
