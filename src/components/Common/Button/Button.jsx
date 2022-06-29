@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import './Button.css'
 
 
-function Button({ text, customClass, isDisabled, name }) {
+function Button({ text, customClass, isDisabled, name, onClick = () => {} }) {
   const [ isButtonDisabled, setIsButtonDisabled ] = useState(isDisabled)
   useEffect(() => {
     setIsButtonDisabled(() => isDisabled)
@@ -14,6 +14,7 @@ function Button({ text, customClass, isDisabled, name }) {
       className={ `button ${customClass || ''}` }
       disabled={ isButtonDisabled }
       name={ name ?? text }
+      onClick={ onClick }
     >
       { text }
     </button>
