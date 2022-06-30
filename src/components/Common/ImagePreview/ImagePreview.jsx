@@ -7,23 +7,18 @@ import './ImagePreview.css'
 
 function ImagePreview({ preview, resetCrop }) {
   const handleClick = event => {
-    event.preventDefault()
-    const { target } = event
-    if (target.name === 'revert-crop') {
-      resetCrop()
-    }
+    event.stopPropagation()
+    resetCrop()
   }
 
   return (
-    <div
-      className='image-preview'
-      onClick={ handleClick }
-    >
+    <div className='image-preview'>
       <Button
         text='Revert Crop'
         name='revert-crop'
         customClass='crop-button'
         isDisabled={ false }
+        onClick={ handleClick }
       />
       <div>
         <img
