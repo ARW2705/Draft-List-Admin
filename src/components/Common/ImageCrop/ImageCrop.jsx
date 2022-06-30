@@ -7,11 +7,11 @@ import './ImageCrop.css'
 
 
 function ImageCrop({ image, showCropPreview }) {
-  const [imageSrc, setImageSrc] = useState('')
-  const [crop, setCrop] = useState(null)
-  const [completedCrop, setCompletedCrop] = useState(null)
-  const [aspect, setAspect] = useState(1) // TODO: decide if aspect other than 1 should be supported
-  const [image64, setImage64] = useState(null)
+  const [ imageSrc, setImageSrc ] = useState('')
+  const [ crop, setCrop ] = useState(null)
+  const [ completedCrop, setCompletedCrop ] = useState(null)
+  const [ aspect, setAspect ] = useState(1) // TODO: decide if aspect other than 1 should be supported
+  const [ image64, setImage64 ] = useState(null)
 
   useEffect(() => {
     setImage64(null)
@@ -52,23 +52,18 @@ function ImageCrop({ image, showCropPreview }) {
   const handleComplete = croppedImage => setCompletedCrop(croppedImage)
   const handleChange = croppedImage => setCrop(croppedImage)
   const handleClick = event => {
-    event.preventDefault()
-    const { target } = event
-    if (target.name === 'image-crop') {
-      showCropPreview(image64, completedCrop)
-    }
+    event.stopPropagation()
+    showCropPreview(image64, completedCrop)
   }
 
   return (
-    <div
-      className='image-crop-container'
-      onClick={ handleClick }
-    >
+    <div className='image-crop-container'>
       <Button
         text='Crop'
         name='image-crop'
         customClass='crop-button'
         isDisabled={ false }
+        onClick={ handleClick }
       />
       <ReactCrop
         crop={ crop }
