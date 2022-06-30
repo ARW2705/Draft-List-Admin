@@ -6,6 +6,7 @@ import FormGroup from '../../Common/Form/FormGroup/FormGroup'
 import { addNewBeverage } from '../../../services/Beverage/Beverage'
 import createForm from '../../../shared/form/create-form'
 import { min, max, minLength, maxLength, required } from '../../../shared/validators/validators'
+import base64ToBlob from '../../../shared/utilities/base64-to-blob'
 
 
 function BeverageForm() {
@@ -67,7 +68,7 @@ function BeverageForm() {
           srm: data.srm,
           contentColor: data.contentColor
         },
-        image: data.image
+        image: base64ToBlob(data.image, 'image/webp')
       }
       console.log(beverageData)
       // const response = await addNewBeverage(beverageData)
