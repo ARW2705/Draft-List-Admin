@@ -6,11 +6,11 @@ import './DropDown.css'
 
 
 function DropDown({ customClass, title, items, handleOnSelect }) {
-  const [listItems, setListItems] = useState([])
+  const [ listItems, setListItems ] = useState([])
 
-  const handleOnClick = ({ target }) => {
-    console.log('dropdown', target.name)
-    handleOnSelect(target.name.toLowerCase())
+  const handleOnClick = event => {
+    event.stopPropagation()
+    handleOnSelect(event.target.name.toLowerCase())
   }
 
   useEffect(() => {
