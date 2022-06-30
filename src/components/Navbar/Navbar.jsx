@@ -5,10 +5,6 @@ import './Navbar.css'
 
 
 function Navbar() {
-  const onNavClick = event => {
-    console.log('nav click event', event)
-  }
-
   const pageNames = [ 'Manage', 'Beverages', 'User' ]
   const links = pageNames.map(pageName => {
     const name = pageName.toLowerCase()
@@ -17,7 +13,6 @@ function Navbar() {
         key={ name }
         to={ `/${name}` }
         aria-labelledby={ `nav-${name}` }
-        onClick={ onNavClick }
       >
         <span id={ `nav-${name}` }>{ pageName }</span>
       </Link>
