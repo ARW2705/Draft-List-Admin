@@ -47,16 +47,17 @@ function LoginForm() {
 
   const location = useLocation()
   const navigate = useNavigate()
-  const handleSubmit = data => {
+  const handleSubmit = async data => {
     if (!data) {
       navigate(`/${location.pathname.split('/')[1]}`)
     } else {
       const { username, password, remember } = data
-      user.login({ username, password, remember })
-        .then(() => console.log('login complete'))
-        .catch(error => {
-          // TODO handle error feedback
-        })
+      try {
+        await user.login({ username, password, remember })
+        console.log('login complete')
+      } catch(error) {
+        console.log('error on login', error)
+      }
     }
   }
 
