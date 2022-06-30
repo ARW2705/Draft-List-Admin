@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import Button from '../Button/Button'
+import Button    from '../Button/Button'
 import FormInput from '../Form/Input/Input'
 
 import './SearchBar.css'
@@ -14,31 +14,25 @@ function SearchBar({ label, handleOnSubmit }) {
     label: label || 'Search...'
   })
 
-  const handleOnChange = (name, value) => {
+  const handleOnChange = (_, value) => {
     setConfig(prevProps => ({ ...prevProps, value }))
   }
 
   const handleSubmit = event => {
     event.stopPropagation()
-    const { type, target, key } = event
-    if (
-      (type === 'click' && target.name === 'search-button')
-      || (type === 'keydown' && key.toLowerCase() === 'enter')
-    ) {
+    const { type, key } = event
+    if (type === 'click' || (type === 'keydown' && key.toLowerCase() === 'enter')) {
       handleOnSubmit(config.value)
     }
   }
 
   useEffect(() => {
-    setConfig(prevProps => {
-      return { ...prevProps, label}
-    })
+    setConfig(prevProps => ({ ...prevProps, label }))
   }, [label])
 
   return (
-    <section
+    <div
       className='SearchBar'
-      onClick={ handleSubmit }
       onKeyDown={ handleSubmit }
     >
       <FormInput
@@ -52,8 +46,9 @@ function SearchBar({ label, handleOnSubmit }) {
         isDisabled={ false }
         customClass='search-button'
         name='search-button'
+        onClick={ handleSubmit }
       />
-    </section>
+    </div>
   )
 }
 
