@@ -1,9 +1,9 @@
 import React from 'react'
 
-import './Checkbox.css'
-
 import toTitleCase from '../../../../shared/utilities/title-case'
 import hyphenify from '../../../../shared/utilities/hyphenify'
+
+import './Checkbox.css'
 
 
 function FormCheckbox({ config, handleOnChange }) {
@@ -12,6 +12,7 @@ function FormCheckbox({ config, handleOnChange }) {
   const id = hyphenify(`form-checkbox-${name}`)
 
   const handleChange = event => {
+    event.stopPropagation()
     handleOnChange(name, event.target.checked)
   }
 
