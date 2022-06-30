@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import './Button.css'
 
 
-function Button({ text, customClass, isDisabled, name, onClick = () => {} }) {
+function Button({ text, customClass, isDisabled, name, onClick }) {
   const [ isButtonDisabled, setIsButtonDisabled ] = useState(isDisabled)
   useEffect(() => {
     setIsButtonDisabled(() => isDisabled)
