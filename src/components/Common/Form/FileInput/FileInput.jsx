@@ -18,11 +18,9 @@ function FormFileInput({ config, handleOnChange, customClass }) {
   })
 
   const handleChange = event => {
-    event.preventDefault()
-    console.log('file event', event)
+    event.stopPropagation()
     try {
-      const file = event.target.files[0]
-      handleOnChange(name, file)
+      handleOnChange(name, event.target.files[0])
     } catch(error) {
       console.log('file missing', error)
     }
@@ -30,19 +28,19 @@ function FormFileInput({ config, handleOnChange, customClass }) {
 
   return (
     <div className={`form-input-container ${attrs.customClass}`}>
-    <label
-      className='form-input'
-      htmlFor={ attrs.id }
-    >
-      { attrs.label }
-    </label>
-    <input
-      id={ attrs.id }
-      name={ attrs.name }
-      type='file'
-      onChange={ handleChange }
-    />
-  </div>
+      <label
+        className='form-input'
+        htmlFor={ attrs.id }
+      >
+        { attrs.label }
+      </label>
+      <input
+        id={ attrs.id }
+        name={ attrs.name }
+        type='file'
+        onChange={ handleChange }
+      />
+    </div>
   )
 }
 
