@@ -56,9 +56,9 @@ function BeverageList({ listConfig }) {
   }, [listType, pageNum, pageCount])
 
   return (
-    <section className='BeverageList'>
+    <div className='BeverageList'>
       { components }
-    </section>
+    </div>
   )
 }
 

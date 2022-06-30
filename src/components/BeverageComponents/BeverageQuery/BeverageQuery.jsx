@@ -10,6 +10,7 @@ import './BeverageQuery.css'
 
 function BeverageQuery({ onConfigUpdate }) {
   const defaultSearchLabel = 'Search...'
+
   const [ searchLabel, setSearchLabel ] = useState(defaultSearchLabel)
   const [ searchError, setSearchError ] = useState(null)
   const [ listConfig, setListConfig ] = useState({
@@ -53,7 +54,7 @@ function BeverageQuery({ onConfigUpdate }) {
   }
 
   return(
-    <section className='BeverageQuery'>
+    <div className='BeverageQuery'>
       <BeverageCategory handleSelectCategory= { handleSelectCategory } />
       <div className='search-container'>
         {
@@ -82,7 +83,7 @@ function BeverageQuery({ onConfigUpdate }) {
           )
         }
       </div>
-    </section>
+    </div>
   )
 }
 

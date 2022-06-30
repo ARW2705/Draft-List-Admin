@@ -1,6 +1,6 @@
 import React from 'react'
 
-import BeverageHeader from '../BeverageHeader/BeverageHeader'
+import BeverageHeader  from '../BeverageHeader/BeverageHeader'
 import BeverageSummary from '../BeverageSummary/BeverageSummary'
 
 import './Beverage.css'
@@ -8,6 +8,7 @@ import './Beverage.css'
 
 function Beverage({ beverage }) {
   const { name, style, source, abv, ibu, srm, description } = beverage
+  
   return (
     <article className='Beverage'>
       <BeverageHeader

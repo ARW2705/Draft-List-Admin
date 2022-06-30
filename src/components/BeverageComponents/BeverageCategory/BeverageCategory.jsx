@@ -8,13 +8,15 @@ import './BeverageCategory.css'
 function BeverageCategory({ handleSelectCategory }) {
   const baseClass = 'category-button'
 
-  const [buttonClasses, setButtonClasses] = useState({
+  const [ buttonClasses, setButtonClasses ] = useState({
     authored: `${baseClass} selected`,
     previous: baseClass,
     search: baseClass
   })
 
-  const handleClick = ({ target }) => {
+  const handleClick = event => {
+    event.stopPropagation()
+    const { target } = event
     const name = target.name.split('-')[0]
     setButtonClasses({
       authored: `${baseClass} ${name === 'authored' ? 'selected': ''}`,
@@ -25,7 +27,7 @@ function BeverageCategory({ handleSelectCategory }) {
   }
 
   return (
-    <section
+    <div
       className='BeverageCategory'
       onClick={ handleClick }
     >
@@ -44,7 +46,7 @@ function BeverageCategory({ handleSelectCategory }) {
         name='search-category'
         customClass={ buttonClasses.search }
       />
-    </section>
+    </div>
   )
 }
 
