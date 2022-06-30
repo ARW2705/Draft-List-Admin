@@ -64,11 +64,13 @@ function User() {
         <Route path='/profile' element={ <Profile user={ displayUser } /> } />
       </Routes>
       {
-        showButtons &&
-        <LoginSignupButtons
-          handleClick={ handleClick }
-          isLoggedIn={ !!displayUser }
-        />
+        showButtons
+        && (
+          <LoginSignupButtons
+            handleOnClick={ handleClick }
+            isLoggedIn={ !!displayUser }
+          />
+        )
       }
     </main>
   )
