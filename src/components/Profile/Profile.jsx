@@ -6,10 +6,10 @@ import './Profile.css'
 function Profile({ user }) {
   const { username, email } = user
   return (
-    <section className="Profile">
+    <div className="Profile">
       <p>{ username }</p>
       <p>{ email }</p>
-    </section>
+    </div>
   )
 }
 
