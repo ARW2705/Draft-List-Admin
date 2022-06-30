@@ -1,9 +1,9 @@
 import React from 'react'
 
+import FormCheckbox  from '../Checkbox/Checkbox'
 import FormFileInput from '../FileInput/FileInput'
-import FormInput from '../Input/Input'
-import FormCheckbox from '../Checkbox/Checkbox'
-import ImageUpload from '../ImageUpload/ImageUpload'
+import ImageUpload   from '../ImageUpload/ImageUpload'
+import FormInput     from '../Input/Input'
 
 
 const buildFormElements = (formFields, handleOnChange) => {
@@ -67,5 +67,6 @@ const buildFormElements = (formFields, handleOnChange) => {
   
   return formComponents
 }
+
 
 export default buildFormElements

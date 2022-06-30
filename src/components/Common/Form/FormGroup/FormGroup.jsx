@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 
-import Button from '../../Button/Button'
-import FormError from '../FormError/FormError'
-import buildFormGroup from './build-form-group'
 import buildFormElements from './build-form-elements'
+import buildFormGroup    from './build-form-group'
+import FormError         from '../FormError/FormError'
+import Button            from '../../Button/Button'
 
 import { validateForm } from '../../../../shared/validators/validators'
 
@@ -45,11 +45,11 @@ function FormGroup(props) {
   }
 
   const handleClick = event => {
+    event.preventDefault()
     const { name } = event.target
     if (name === 'submit-button') {
       handleSubmit(event)
     } else {
-      event.preventDefault()
       submitHandler(null)
     }
   }
@@ -58,9 +58,7 @@ function FormGroup(props) {
 
   return (
     <>
-      {
-        title && <h2 className='form-title'>{ title }</h2>
-      }
+      { title && <h2 className='form-title'>{ title }</h2> }
       <form
         className={ `form-group ${customClass || ''}` }
         onSubmit={ handleSubmit }
