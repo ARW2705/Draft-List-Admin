@@ -1,30 +1,32 @@
 import React, { useEffect, useState } from 'react'
 
-import './FormError.css'
-
 import toTitleCase from '../../../../shared/utilities/title-case'
 import errorMessages from '../../../../shared/constants/error-messages'
 
+import './FormError.css'
 
-function buildMessage(name, key, errors) {
-  let message
-  if (errorMessages.hasOwnProperty(key)) {
-    message = errorMessages[key](toTitleCase(name), errors[key])
-  } else {
-    message = `Error: ${errors[key]}`
-  }
-  return (
-    <span
-      key={ key }
-      className='form-error'
-    >
-      { message }
-    </span>
-  )
-}
 
-function Error({ customClass, name, errors }) {
+function FormError({ customClass, name, errors }) {
   const [ messages, setMessages ] = useState([])
+
+  const buildMessage = (name, key, errors) => {
+    let message
+    if (errorMessages.hasOwnProperty(key)) {
+      message = errorMessages[key](toTitleCase(name), errors[key])
+    } else {
+      message = `Error: ${errors[key]}`
+    }
+  
+    return (
+      <span
+        key={ key }
+        className='form-error'
+      >
+        { message }
+      </span>
+    )
+  }
+
   useEffect(() => {
     setMessages(() => {
       const newMessages = []
@@ -33,7 +35,7 @@ function Error({ customClass, name, errors }) {
       }
       return newMessages
     })
-  }, [ name, errors ])
+  }, [name, errors])
 
   return (
     <div className={ `form-error-container ${customClass || ''}` }>
@@ -42,4 +44,4 @@ function Error({ customClass, name, errors }) {
   )
 }
 
-export default Error
+export default FormError
