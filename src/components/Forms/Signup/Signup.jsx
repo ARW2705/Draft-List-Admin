@@ -67,16 +67,17 @@ function SignupForm() {
 
   const location = useLocation()
   const navigate = useNavigate()
-  const handleSubmit = data => {
+  const handleSubmit = async data => {
     if (!data) {
       navigate(`/${location.pathname.split('/')[1]}`)
     } else {
       const { username, password, email, remember } = data
-      user.signup({ username, password, email, remember })
-        .then(() => console.log('signup complete'))
-        .catch(error => {
-          // TODO handle error feedback
-        })
+      try {
+        await user.signup({ username, password, email, remember })
+        console.log('signup complete')
+      } catch(error) {
+        console.log('signup error', error)
+      }
     }
   }
 
