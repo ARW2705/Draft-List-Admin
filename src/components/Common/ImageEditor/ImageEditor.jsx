@@ -1,23 +1,20 @@
 import React, { useEffect, useState } from 'react'
 
+import ImageCrop    from '../ImageCrop/ImageCrop'
 import ImagePreview from '../ImagePreview/ImagePreview'
-import ImageCrop from '../ImageCrop/ImageCrop'
 
 import 'react-image-crop/dist/ReactCrop.css'
 import './ImageEditor.css'
 
 
-function ImageEditor({ image }) {
-  const [preview, setPreview] = useState(null)
+function ImageEditor({ image, onImageCrop }) {
+  const [ preview, setPreview ] = useState(null)
 
   useEffect(() => {
     setPreview(null)
   }, [image])
 
-  const resetCrop = () => {
-    setPreview(null)
-  }
-
+  const resetCrop = () => setPreview(null)
   const showCropPreview = (image64, crop) => {
     const canvas = document.createElement('canvas')
     const scaleX = image64.naturalWidth / image64.width
@@ -36,7 +33,10 @@ function ImageEditor({ image }) {
       crop.width,
       crop.height
     )
-    setPreview(canvas.toDataURL('image/webp', 1))
+
+    const croppedImage = canvas.toDataURL('image/webp', 1)
+    setPreview(croppedImage)
+    onImageCrop(croppedImage)
   }
 
   return (
@@ -44,7 +44,7 @@ function ImageEditor({ image }) {
     {
       image
       && (
-        <section className='image-editor'>
+        <div className='image-editor'>
           {
             !preview
             && (
@@ -63,7 +63,7 @@ function ImageEditor({ image }) {
               />
             )
           }
-        </section>
+        </div>
       )
     }
     </>
