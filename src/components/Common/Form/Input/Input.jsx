@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react'
 
 import FormError from '../FormError/FormError'
 
-import './Input.css'
-
 import { validate } from '../../../../shared/validators/validators'
-import toTitleCase from '../../../../shared/utilities/title-case'
-import hyphenify from '../../../../shared/utilities/hyphenify'
-import hasValue from '../../../../shared/utilities/has-value'
+import hasValue     from '../../../../shared/utilities/has-value'
+import hyphenify    from '../../../../shared/utilities/hyphenify'
+import toTitleCase  from '../../../../shared/utilities/title-case'
+
+import './Input.css'
 
 
 function FormInput(props) {
@@ -44,13 +44,13 @@ function FormInput(props) {
         }
       })
     }
-  }, [ props.config ])
+  }, [props.config])
 
   useEffect(() => {
     if (touchStatus.touched) {
       setErrorState(prevProps => ({ ...prevProps, show: true }))
     }
-  }, [ touchStatus ])
+  }, [touchStatus])
 
   const checkValidity = (name, rawValue) => {
     const value = attrs.type === 'number' ? parseFloat(rawValue) : rawValue
@@ -59,8 +59,8 @@ function FormInput(props) {
     attrs.handleOnChange(name, value, errors)
   }
 
-  const handleChange = event => {
-    const { name, value } = event.target
+  const handleChange = ({ target }) => {
+    const { name, value } = target
     checkValidity(name, value)
     setAttrs(prevProps => {
       return {
