@@ -18,16 +18,12 @@ function Beverages() {
     searchTerm: ''
   })
 
-  const onConfigUpdate = config => {
-    setListConfig(config)
-  }
-
+  const onConfigUpdate = config => setListConfig(config)
   const location = useLocation()
   const navigate = useNavigate()
   const handleOnClick = event => {
-    event.stopPropagation()
+    event.preventDefault()
     navigate(`${location.pathname}/form`)
-    console.log('new bev click', event)
   }
 
   return (
@@ -36,16 +32,14 @@ function Beverages() {
         <Route
           path='/'
           element={
-            <div
-              className='beverage-container'
-              onClick={ handleOnClick }
-            >
+            <div className='beverage-container'>
               <BeverageQuery onConfigUpdate={ onConfigUpdate } />
               <Button
                 text='Add New Beverage'
                 customClass='new-beverage'
                 idDisabled={ false }
                 name='new-beverage'
+                onClick={ handleOnClick }
               />
               <BeverageList listConfig={ listConfig } />
             </div>
