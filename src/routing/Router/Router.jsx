@@ -1,10 +1,10 @@
 import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
-import App from '../../App'
 import Beverages from '../routes/Beverages/Beverages'
-import Manage from '../routes/Manage/Manage'
-import User from '../routes/User/User'
+import Manage    from '../routes/Manage/Manage'
+import User      from '../routes/User/User'
+import App       from '../../App'
 
 
 function Router() {
@@ -20,5 +20,6 @@ function Router() {
     </BrowserRouter>
   )
 }
+
 
 export default Router
