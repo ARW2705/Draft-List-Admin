@@ -1,5 +1,7 @@
 import React from 'react'
 
+import Overlay from '../../Overlay/Overlay'
+
 import './Spinner.css'
 
 
@@ -18,7 +20,7 @@ function Spinner({ text = 'Loading...', customClass = '' }) {
         <text
           x="50%"
           y="50%"
-          text-anchor="middle"
+          textAnchor="middle"
           dy="0.3rem"
         >
           { text }
@@ -29,4 +31,4 @@ function Spinner({ text = 'Loading...', customClass = '' }) {
 }
 
 
-export default React.memo(Spinner)
+export default React.memo(Overlay(Spinner))
