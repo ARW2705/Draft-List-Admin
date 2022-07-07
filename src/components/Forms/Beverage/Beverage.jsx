@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 import FormGroup from '../../Common/Form/FormGroup/FormGroup'
@@ -13,6 +13,12 @@ import base64ToBlobWorker from '../../../shared/workers/base64-to-blob.worker'
 function BeverageForm() {
   const [ isLoading, setIsLoading ] = useState(false)
   const formData = useRef()
+  const location = useLocation()
+  const navigate = useNavigate()
+
+  const navigateBack = useCallback(() => {
+    navigate(`/${location.pathname.split('/')[1]}`)
+  }, [navigate, location])
 
   const form = createForm({
     fields: {
@@ -53,10 +59,9 @@ function BeverageForm() {
     }
   })
 
-  const submitForm = () => {
+  const submitForm = useCallback(() => {
     console.log('submitting')
-    base64ToBlobWorker.onmessage = ({ data: image }) => {
-      setIsLoading(false)
+    base64ToBlobWorker.onmessage = async ({ data: image }) => {
       const beverageData = {
         data: {
           name        : formData.current.name,
@@ -70,37 +75,38 @@ function BeverageForm() {
         },
         image
       }
+
       console.log('data build', beverageData)
+      const response = await addNewBeverage(beverageData)
+      console.log(response)
+      setIsLoading(false)
+      navigateBack()
     }
 
     base64ToBlobWorker.postMessage({
       image64: formData.current.image,
       contentType: 'image/webp'
     })
-  }
+  }, [navigateBack])
 
   useEffect(() => {
     if (isLoading && formData.current) {
       submitForm()
     }
-  }, [isLoading])
+  }, [isLoading, submitForm])
   
-  const location = useLocation()
-  const navigate = useNavigate()
   const handleSubmit = async data => {
     if (!data) {
-      navigate(`/${location.pathname.split('/')[1]}`)
+      navigateBack()
     } else {
-      setIsLoading(true)
       formData.current = data
-      // const response = await addNewBeverage(beverageData)
-      // console.log(response)
+      setIsLoading(true)
     }
   }
 
   return (
     <>
-      { isLoading && <Spinner /> }
+      { isLoading && <Spinner text='Submitting...' /> }
       <FormGroup
         form={ form }
         submitHandler={ handleSubmit }
