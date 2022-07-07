@@ -13,12 +13,11 @@ import base64ToBlobWorker from '../../../shared/workers/base64-to-blob.worker'
 function BeverageForm() {
   const [ isLoading, setIsLoading ] = useState(false)
   const formData = useRef()
-  const location = useLocation()
   const navigate = useNavigate()
 
   const navigateBack = useCallback(() => {
-    navigate(`/${location.pathname.split('/')[1]}`)
-  }, [navigate, location])
+    navigate(-1)
+  }, [navigate])
 
   const form = createForm({
     fields: {
