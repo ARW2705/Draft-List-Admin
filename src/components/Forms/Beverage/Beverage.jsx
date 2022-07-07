@@ -1,15 +1,19 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 import FormGroup from '../../Common/Form/FormGroup/FormGroup'
+import Spinner from '../../Common/Loaders/Spinner/Spinner'
 
 import { addNewBeverage } from '../../../services/Beverage/Beverage'
 import createForm from '../../../shared/form/create-form'
 import { min, max, minLength, maxLength, required } from '../../../shared/validators/validators'
-import base64ToBlob from '../../../shared/utilities/base64-to-blob'
+import base64ToBlobWorker from '../../../shared/workers/base64-to-blob.worker'
 
 
 function BeverageForm() {
+  const [ isLoading, setIsLoading ] = useState(false)
+  const formData = useRef()
+
   const form = createForm({
     fields: {
       name: {
@@ -49,40 +53,61 @@ function BeverageForm() {
     }
   })
 
+  const submitForm = () => {
+    console.log('submitting')
+    base64ToBlobWorker.onmessage = ({ data: image }) => {
+      setIsLoading(false)
+      const beverageData = {
+        data: {
+          name        : formData.current.name,
+          source      : formData.current.source,
+          description : formData.current.description,
+          style       : formData.current.style,
+          abv         : formData.current.abv,
+          ibu         : formData.current.ibu,
+          srm         : formData.current.srm,
+          contentColor: formData.current.contentColor
+        },
+        image
+      }
+      console.log('data build', beverageData)
+    }
+
+    base64ToBlobWorker.postMessage({
+      image64: formData.current.image,
+      contentType: 'image/webp'
+    })
+  }
+
+  useEffect(() => {
+    if (isLoading && formData.current) {
+      submitForm()
+    }
+  }, [isLoading])
+  
   const location = useLocation()
   const navigate = useNavigate()
   const handleSubmit = async data => {
-    console.log(data)
     if (!data) {
       navigate(`/${location.pathname.split('/')[1]}`)
     } else {
-      // TODO: submit new beverage
-      const beverageData = {
-        data: {
-          name: data.name,
-          source: data.source,
-          description: data.description,
-          style: data.style,
-          abv: data.abv,
-          ibu: data.ibu,
-          srm: data.srm,
-          contentColor: data.contentColor
-        },
-        image: base64ToBlob(data.image, 'image/webp')
-      }
-      console.log(beverageData)
+      setIsLoading(true)
+      formData.current = data
       // const response = await addNewBeverage(beverageData)
       // console.log(response)
     }
   }
 
   return (
-    <FormGroup
-      form={ form }
-      submitHandler={ handleSubmit }
-      customClass='beverage'
-      title='New Beverage'
-    />
+    <>
+      { isLoading && <Spinner /> }
+      <FormGroup
+        form={ form }
+        submitHandler={ handleSubmit }
+        customClass='beverage'
+        title='New Beverage'
+      />
+    </>
   )
 }
 
