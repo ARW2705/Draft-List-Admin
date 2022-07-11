@@ -49,7 +49,7 @@ function FormGroup(props) {
     const { name } = event.target
     if (name === 'submit-button') {
       handleSubmit(event)
-    } else {
+    } else if (name === 'cancel-button') {
       submitHandler(null)
     }
   }
