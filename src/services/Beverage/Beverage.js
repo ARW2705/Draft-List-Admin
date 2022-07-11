@@ -8,12 +8,12 @@ import getPaginated from '../../shared/utilities/get-paginated'
 function buildRequests(idList, storedBeverages) {
   return idList
     .map(id => {
-      if (!storedBeverages.find(beverage => id === beverage._id)) {
-        return getBeverageById(id)
+      const fromStore = storedBeverages.find(beverage => id === beverage._id)
+      if (fromStore) {
+        return Promise.resolve(fromStore)
       }
-      return null
+      return getBeverageById(id)
     })
-    .filter(id => id !== null)
 }
 
 async function getBeverageListByIds(idList) {
@@ -81,8 +81,9 @@ async function getBeveragesByQuery(type, term, page, count) {
 }
 
 async function addNewBeverage(beverageData) {
-  const response = await postBeverage(beverageData)
-  return response
+  const beverageResponse = await postBeverage(beverageData)
+  user.addBeverageToAuthoredList(beverageResponse)
+  return beverageResponse
 }
 
 

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import FormGroup from '../../Common/Form/FormGroup/FormGroup'
 import Spinner from '../../Common/Loaders/Spinner/Spinner'
@@ -13,8 +13,8 @@ import base64ToBlobWorker from '../../../shared/workers/base64-to-blob.worker'
 function BeverageForm() {
   const [ isLoading, setIsLoading ] = useState(false)
   const formData = useRef()
+  
   const navigate = useNavigate()
-
   const navigateBack = useCallback(() => {
     navigate(-1)
   }, [navigate])
@@ -105,7 +105,15 @@ function BeverageForm() {
 
   return (
     <>
-      { isLoading && <Spinner text='Submitting...' /> }
+      {
+        isLoading
+        && (
+          <Spinner
+            isBlocking={ true }
+            text='Submitting'
+          />
+        )
+      }
       <FormGroup
         form={ form }
         submitHandler={ handleSubmit }
