@@ -1,30 +1,30 @@
 .button {
   min-height: 48px;
   border-radius: 10px;
-  box-shadow: 0 2px 3px var(--text-dark);
-  border: 1px solid var(--accent);
-  color: var(--background);
-  background-color: var(--accent);
+  box-shadow: 0 2px 3px var(--gray-dark);
+  border: 1px solid var(--primary);
+  color: var(--gray-light);
+  background-color: var(--primary);
   transition: all linear 10ms;
 }
 
 .button:disabled,
 .button:disabled:hover {
-  color: var(--text-medium);
-  background-color: var(--accent-light);
-  border-color: var(--accent-light);
-  box-shadow: 0 2px 3px var(--accent-light);
+  color: var(--gray-medium);
+  background-color: var(--primary-light);
+  border-color: var(--primary-light);
+  box-shadow: 0 2px 3px var(--primary-light);
 }
 
 .button:hover {
-  color: var(--accent-dark);
+  color: var(--primary-dark);
   background-color: var(--background);
 }
 
 .button:enabled:active {
-  color: var(--accent-dark);
+  color: var(--primary-dark);
   background-color: var(--background);
-  box-shadow: 0 -2px 3px var(--accent), inset 0 -7px 9px -7px var(--accent);
+  box-shadow: 0 -2px 3px var(--primary), inset 0 -7px 9px -7px var(--accent);
   -webkit-transform: translateY(2px);
   transform: translateY(2px);
 }

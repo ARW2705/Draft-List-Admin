@@ -1,21 +1,25 @@
-.BeverageQuery .search-container {
+.beverage-query
+.search-container {
   display: flex;
   flex-wrap: wrap;
   padding: 0 0.5rem;
+  margin-top: 1%;
 }
 
-.BeverageQuery .search-by-menu {
+.beverage-query
+.search-by-menu {
   color: var(--background);
-  background-color: var(--accent);
-  border: 2px solid var(--text-medium);
+  background-color: var(--primary);
+  border: 2px solid var(--gray-medium);
   align-self: center;
   min-height: 48px;
 }
 
-.BeverageQuery .search-by-menu {
+.beverage-query
+.search-by-menu {
   color: var(--background);
-  background-color: var(--accent);
-  border: 2px solid var(--text-medium);
+  background-color: var(--primary);
+  border: 2px solid var(--gray-medium);
   border-radius: 10px;
   padding: 0 1%;
   margin-right: 0.5rem;
@@ -24,6 +28,7 @@
   min-height: 48px;
 }
 
-.BeverageQuery .search-bar-error {
+.beverage-query
+.search-bar-error {
   min-width: 100%;
 }

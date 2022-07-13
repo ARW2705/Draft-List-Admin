@@ -1,13 +1,13 @@
 .beverage-summary {
   width: 67%;
   height: 100%;
-  background-color: var(--text-dark);
+  background-color: var(--gray-dark);
   border-radius: 50px 15px 15px 0;
   border: 5px solid var(--secondary);
   position: absolute;
   top: 0;
   right: 0;
-  color: var(--text-light);
+  color: var(--gray-light);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

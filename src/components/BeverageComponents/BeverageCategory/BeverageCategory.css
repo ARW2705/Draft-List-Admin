@@ -1,10 +1,11 @@
-.BeverageCategory {
+.beverage-category {
   display: flex;
 }
 
-.BeverageCategory > .category-button {
+.beverage-category
+.category-button {
   flex-grow: 1;
-  color: var(--accent-dark);
+  color: var(--primary-dark);
   background-color: var(--background);
   box-shadow: none;
   border: none;
@@ -14,19 +15,22 @@
   font-size: 1rem;
 }
 
-.BeverageCategory > .category-button:active {
+.beverage-category
+.category-button:active {
   box-shadow: none;
   transform: none;
 }
 
-.BeverageCategory > .category-button:not(.selected):hover {
-  background-color: var(--accent-light);
-  border-color: var(--accent-light);
+.beverage-category
+.category-button:not(.selected):hover {
+  background-color: var(--primary-light);
+  border-color: var(--primary-light);
 }
 
-.BeverageCategory > .selected {
-  color: var(--background);
-  background-color: var(--accent);
-  border-top: 3px solid var(--accent);
-  border-bottom: 3px solid var(--accent-dark);
+.beverage-category
+.selected {
+  color: var(--text-light);
+  background-color: var(--primary);
+  border-top: 3px solid var(--primary);
+  border-bottom: 3px solid var(--primary-dark);
 }

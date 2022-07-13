@@ -28,7 +28,7 @@ function BeverageCategory({ handleSelectCategory }) {
 
   return (
     <div
-      className='BeverageCategory'
+      className='beverage-category'
       onClick={ handleClick }
     >
       <Button

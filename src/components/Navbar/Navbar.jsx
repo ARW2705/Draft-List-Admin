@@ -20,7 +20,7 @@ function Navbar() {
   })
 
   return (
-    <nav className="Navbar">
+    <nav className="navbar">
       { links }
     </nav>
   )

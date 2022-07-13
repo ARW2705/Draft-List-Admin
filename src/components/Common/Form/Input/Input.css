@@ -37,16 +37,10 @@ input[type=email],
 input[type=number] {
   padding: 0.75rem;
   margin: 15px 0;
-  border: 2px solid var(--text-medium);
+  border: 2px solid var(--gray-medium);
   border-radius: 10px;
-  box-shadow: 0 3px 5px var(--accent-light);
+  box-shadow: 0 3px 5px var(--primary-light);
   background-image: none;
   font-size: 1rem;
   min-height: calc(48px - 1.5rem);
-}
-
-input[type=text]:hover,
-input[type=password]:hover,
-input[type=email]:hover {
-  border: 2px solid var(--text-dark);
 }

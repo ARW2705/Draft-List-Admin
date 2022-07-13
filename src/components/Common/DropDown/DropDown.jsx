@@ -29,7 +29,7 @@ function DropDown({ customClass, title, items, handleOnSelect }) {
 
   return (
     <div
-      className={ `DropDown ${customClass || ''}`}
+      className={ `drop-down-container ${customClass || ''}`}
       onClick={ handleOnClick }
     >
       <span>{ title }</span>

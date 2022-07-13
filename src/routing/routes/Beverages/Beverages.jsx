@@ -27,7 +27,7 @@ function Beverages() {
   }
 
   return (
-    <main className="route Beverages">
+    <main className="route beverages-router">
       <Routes>
         <Route
           path='/'

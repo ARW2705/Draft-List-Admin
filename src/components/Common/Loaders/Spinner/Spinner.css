@@ -1,7 +1,7 @@
 .spinner-container {
   width: 150px;
   aspect-ratio: 1;
-  background-color: var(--primary);
+  background-color: var(--secondary);
   border-radius: 25%;
 }
 
@@ -23,21 +23,21 @@
 
 .spinner-svg text {
   opacity: 1;
-  fill: var(--accent-dark);
+  fill: var(--primary-dark);
   animation: pulse 1s infinite ease-in-out;
 }
 
 @keyframes rubberCircle {
   0% {
-    stroke: var(--accent-light);
+    stroke: var(--primary-light);
     stroke-dashoffset: -288.5;
   }
   45%, 55% {
-    stroke: var(--accent-dark);
+    stroke: var(--primary-dark);
     stroke-dashoffset: 0;
   }
   100% {
-    stroke: var(--accent-light);
+    stroke: var(--primary-light);
     stroke-dashoffset: 288.5;
   }
 }

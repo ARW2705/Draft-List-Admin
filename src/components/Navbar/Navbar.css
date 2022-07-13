@@ -1,4 +1,4 @@
-.Navbar {
+.navbar {
   height: 10vh;
   width: 50%;
   position: relative;
@@ -7,7 +7,7 @@
   font-size: 1.5rem;
 }
 
-.Navbar > a {
+.navbar > a {
   height: 100%;
   display: flex;
   flex-grow: 1;
@@ -15,13 +15,13 @@
   align-items: center;
 }
 
-.Navbar > a,
-.Navbar > a:visited,
-.Navbar > a:active {
+.navbar > a,
+.navbar > a:visited,
+.navbar > a:active {
   text-decoration: none;
-  color: inherit;
+  color: var(--text-light);
 }
 
-.Navbar > a:hover {
+.navbar > a:hover {
   background-color: var(--primary-light);
 }

@@ -32,7 +32,7 @@ function SearchBar({ label, handleOnSubmit }) {
 
   return (
     <div
-      className='SearchBar'
+      className='search-bar'
       onKeyDown={ handleSubmit }
     >
       <FormInput

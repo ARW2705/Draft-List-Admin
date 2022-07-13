@@ -1,8 +1,8 @@
-.Beverages > div {
+.beverage-container {
   display: flex;
   flex-direction: column;
 }
 
-.Beverages .new-beverage {
+.new-beverage {
   align-self: center;
 }

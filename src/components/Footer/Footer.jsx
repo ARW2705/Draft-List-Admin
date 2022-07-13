@@ -5,7 +5,7 @@ import './Footer.css'
 
 function Footer() {
   return (
-    <footer className="Footer">
+    <footer className="app-footer">
       <span>App Version v0.0.1</span>
       <span>API Version v0.0.1</span>
     </footer>

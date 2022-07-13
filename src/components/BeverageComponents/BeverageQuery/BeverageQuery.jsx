@@ -54,7 +54,7 @@ function BeverageQuery({ onConfigUpdate }) {
   }
 
   return(
-    <div className='BeverageQuery'>
+    <div className='beverage-query'>
       <BeverageCategory handleSelectCategory= { handleSelectCategory } />
       <div className='search-container'>
         {

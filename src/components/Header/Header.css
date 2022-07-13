@@ -1,4 +1,4 @@
-.Header {
+.app-header {
   position: sticky;
   top: 0;
   height: 10vh;
@@ -6,27 +6,28 @@
   justify-content: space-between;
   align-items: center;
   padding: 0 2%;
-  color: var(--text-dark);
+  color: var(--text-light);
+  border-bottom: 3px solid var(--primary-light);
   font-family: 'Roboto', sans-serif;
   background-color: var(--primary);
   transition: top 500ms ease-in-out;
   z-index: 10;
 }
 
-.Header.scroll-up {
+.app-header.scroll-up {
   top: 0;
 }
 
-.Header.scroll-down {
+.app-header.scroll-down {
   top: -100%;
 }
 
-.Header.scroll-up,
-.Header:focus-within {
+.app-header.scroll-up,
+.app-header:focus-within {
   top: 0;
 }
 
-.Header > h1 {
+.app-header > h1 {
   margin: 0;
   font-size: 2.25rem;
 }
