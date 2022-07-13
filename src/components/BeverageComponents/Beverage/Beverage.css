@@ -1,0 +1,8 @@
+.beverage {
+  width: 90%;
+  aspect-ratio: 3;
+  border-radius: 15px;
+  display: flex;
+  position: relative;
+  margin: 5% auto;
+}

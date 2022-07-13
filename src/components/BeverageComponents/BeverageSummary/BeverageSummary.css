@@ -1,0 +1,34 @@
+.beverage-summary {
+  width: 67%;
+  height: 100%;
+  background-color: var(--text-dark);
+  border-radius: 50px 15px 15px 0;
+  border: 5px solid var(--secondary);
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: var(--text-light);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.beverage-summary
+.number-values {
+  margin: 5% 0 0 0;
+  display: flex;
+  justify-content: space-around;
+  font-size: 3vw;
+}
+
+.beverage-summary
+.number-values
+.value {
+  color: var(--secondary);
+}
+
+.beverage-summary
+p {
+  padding: 0 5%;
+  font-size:2.5vw;
+}

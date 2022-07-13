@@ -10,13 +10,13 @@ function Beverage({ beverage }) {
   const { name, style, source, abv, ibu, srm, description } = beverage
   
   return (
-    <article className='Beverage'>
+    <article className='beverage'>
       <BeverageHeader
         name={ name }
         style={ style }
+        source={ source }
       />
       <BeverageSummary
-        source={ source }
         abv={ abv }
         ibu={ ibu }
         srm={ srm }

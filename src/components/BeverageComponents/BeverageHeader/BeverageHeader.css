@@ -1,0 +1,52 @@
+.beverage-header {
+  width: 40%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: var(--primary-dark);
+  color: var(--text-light);
+  border-radius: 15px 0 0 15px;
+  border: 5px solid var(--primary-dark);
+}
+
+.beverage-header
+.header-inner {
+  width: calc(82.5% - 20px);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  color: var(--text-light);
+}
+
+.beverage-header
+.header-inner
+span {
+  font-size: 4vw;
+}
+
+.beverage-header
+.header-inner
+.header-title {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.beverage-header
+.header-inner
+.header-title
+span:first-child {
+  font-size: 4.5vw;
+  font-weight: bold;
+}
+
+.beverage-header
+.header-inner
+.header-title
+span:nth-child(2) {
+  font-size: 2.75vw;
+  font-style: italic;
+}
