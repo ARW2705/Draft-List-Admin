@@ -20,8 +20,17 @@ function Navbar() {
   })
 
   return (
-    <nav className="navbar">
-      { links }
+    <nav className='navbar'>
+      <Link
+        to='/'
+        aria-labelledby='nav-home'
+      >
+        <span id='nav-home'>Draft List</span>
+      </Link>
+      
+      <div className='other-links'>
+        { links }
+      </div>
     </nav>
   )
 }

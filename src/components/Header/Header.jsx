@@ -32,7 +32,6 @@ function Header() {
 
   return (
     <header className={`app-header ${scrollClass.className}`}>
-      <h1>Draft List</h1>
       <Navbar />
     </header>
   )
