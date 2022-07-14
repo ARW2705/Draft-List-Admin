@@ -1,7 +1,5 @@
 import React from 'react'
 
-import DeviceCallout from '../../../components/DeviceCallout/DeviceCallout'
-
 import './Manage.css'
 
 // list of current drafts across all devices
@@ -13,11 +11,10 @@ import './Manage.css'
 
 // it will be filterable in the future
 
-
 function Manage() {
   return (
     <main className="route Manage">
-
+      
     </main>
   )
 }

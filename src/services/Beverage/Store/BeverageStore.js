@@ -15,11 +15,19 @@ class BeverageStore {
   }
 
   setBeverage(beverage) {
+    if (beverage.hasOwnProperty('_id')) {
+      beverage = this.prepareBeverage(beverage)
+    }
     this.beverages = { ...this.beverages, ...beverage }
+    console.log('new beverage store', this.beverages)
+  }
+
+  prepareBeverage(beverage) {
+    return { [beverage._id]: beverage }
   }
 
   setBeverages(beverages) {
-    this.setBeverage(beverages.reduce((acc, curr) => ({ ...acc, [curr._id]: curr}), {}))
+    this.setBeverage(beverages.reduce((acc, curr) => ({ ...acc, ...this.prepareBeverage(curr)}), {}))
   }
 
   clearBeverages() {

@@ -25,8 +25,8 @@ function FormInput(props) {
   })
   const [ touchStatus, setTouchStatus ] = useState({
     focus: false,
-    touched: false,
-    pristine: true
+    touched: !!value,
+    pristine: !value
   })
   const [ errorState, setErrorState ] = useState({
     errors: {},

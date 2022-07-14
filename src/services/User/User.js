@@ -11,6 +11,7 @@ class User {
     if (User._instance) return User._instance
     User._instance = this
     this.storageKey = 'user'
+    this.remember = false
     this.user$ = new BehaviorSubject({
       _id: null,
       username: null,
@@ -35,6 +36,7 @@ class User {
 
   setUser(user) {
     this.user$.next(user)
+    this.storeUser()
   }
 
   init() {
@@ -54,6 +56,7 @@ class User {
   }
 
   handleUserResponse(user, remember) {
+    this.remember = remember
     const newUser = {
       _id: user._id,
       username: user.username,
@@ -63,10 +66,6 @@ class User {
     }
     this.setUser(newUser)
     token.setToken(user.token, remember)
-
-    if (remember) {
-      this.storeUser(newUser)
-    }
   }
 
   login(credentials) {
@@ -108,12 +107,15 @@ class User {
       previousList: [],
       deviceList: []
     })
+    this.remember = false
     token.removeToken()
     localStorage.removeItem(this.storageKey)
   }
 
-  storeUser(user) {
-    localStorage.setItem(this.storageKey, JSON.stringify(user))
+  storeUser() {
+    if (this.remember) {
+      localStorage.setItem(this.storageKey, JSON.stringify(this.user$.value))
+    }
   }
 }
 

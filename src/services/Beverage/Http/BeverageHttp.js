@@ -1,4 +1,4 @@
-import { get, post } from '../../HttpClient/HttpClient'
+import { get, patch, post } from '../../HttpClient/HttpClient'
 import { beverageRouteURL } from './beverage-route-url'
 
 
@@ -17,21 +17,36 @@ async function queryBeverages(type, term, page, count) {
   )
 }
 
-async function postBeverage(beverageData) {
+function buildFormData(beverageData) {
   const { data, image } = beverageData
-  const header = { 'Content-Type': 'multipart/form-data' }
   const formData = new FormData()
   formData.append('data', JSON.stringify(data))
   if (image) {
     formData.append('image', image)
   }
+  return formData
+}
 
-  return await post(beverageRouteURL, formData, header)
+async function postBeverage(beverageData) {
+  return await post(
+    beverageRouteURL,
+    buildFormData(beverageData),
+    { 'Content-Type': 'multipart/form-data' }
+  )
+}
+
+async function patchBeverage(beverageId, beverageData) {
+  return await patch(
+    `${beverageRouteURL}/${beverageId}`,
+    buildFormData(beverageData),
+    { 'Content-Type': 'multipart/form-data' }
+  )
 }
 
 
 export {
   getBeverageById,
   queryBeverages,
-  postBeverage
+  postBeverage,
+  patchBeverage
 }

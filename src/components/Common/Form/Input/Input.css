@@ -44,3 +44,7 @@ input[type=number] {
   font-size: 1rem;
   min-height: calc(48px - 1.5rem);
 }
+
+input:focus-visible {
+  outline: none;
+}

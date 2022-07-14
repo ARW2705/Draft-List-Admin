@@ -21,8 +21,8 @@ async function post(url, data, headers = {}) {
   return await request({ method: 'post', url, data, headers })
 }
 
-async function patch(url, data) {
-  return await request({ method: 'patch', url, data })
+async function patch(url, data, headers = {}) {
+  return await request({ method: 'patch', url, data, headers })
 }
 
 export {

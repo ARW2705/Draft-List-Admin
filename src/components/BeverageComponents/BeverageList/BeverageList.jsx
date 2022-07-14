@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 import { getAuthoredBeverages, getPreviousBeverages, getBeveragesByQuery } from '../../../services/Beverage/Beverage'
 
@@ -11,19 +12,28 @@ function BeverageList({ listConfig }) {
   const { listType, pageNum, pageCount, searchType, searchTerm } = listConfig
   const [ components, setComponents ] = useState([])
 
-  const buildComponents = beverages => {
-    if (!beverages.length) return <p className='empty-list'>Nothing here...</p>
+  const location = useLocation()
+  const navigate = useNavigate()
+  const handleOnClick = useCallback(beverage => {
+    if (listType === 'authored') {
+      navigate(`${location.pathname}/form`, { state: { beverage }})
+    }
+  }, [listType, navigate, location.pathname])
 
-    return beverages.map(beverage => {
-      return (
-        <Beverage
-          className='beverage-container'
-          key={ beverage._id }
-          beverage={ beverage }
-        />
-      )
-    })
-  }
+  const buildComponents = useCallback(beverages => {
+      if (!beverages.length) return <p className='empty-list'>Nothing here...</p>
+
+      return beverages.map(beverage => {
+        return (
+          <Beverage
+            className='beverage-container'
+            key={ beverage._id }
+            beverage={ beverage }
+            onClick={ handleOnClick }
+          />
+        )
+      })
+    }, [handleOnClick])
 
   useEffect(() => {
     async function getQuery() {
@@ -34,7 +44,7 @@ function BeverageList({ listConfig }) {
     if (listType === 'search' && searchType && searchTerm) {
       getQuery()
     }
-  }, [listType, searchType, searchTerm, pageNum, pageCount])
+  }, [listType, searchType, searchTerm, pageNum, pageCount, buildComponents])
 
   useEffect(() => {
     async function getList() {
@@ -53,7 +63,7 @@ function BeverageList({ listConfig }) {
       setComponents(buildComponents(beverages))
     }
     getList()
-  }, [listType, pageNum, pageCount])
+  }, [listType, pageNum, pageCount, buildComponents])
 
   return (
     <div className='BeverageList'>
