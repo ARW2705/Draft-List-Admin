@@ -3,7 +3,9 @@ import { useNavigate, useLocation } from 'react-router-dom'
 
 import { getAuthoredBeverages, getPreviousBeverages, getBeveragesByQuery } from '../../../services/Beverage/Beverage'
 
-import Beverage from '../../../components/BeverageComponents/Beverage/Beverage'
+import Beverage from '../../BeverageComponents/Beverage/Beverage'
+
+import { LIST_TYPE_ENUM } from '../../../shared/constants/list-type-enum'
 
 import './BeverageList.css'
 
@@ -15,7 +17,7 @@ function BeverageList({ listConfig }) {
   const location = useLocation()
   const navigate = useNavigate()
   const handleOnClick = useCallback(beverage => {
-    if (listType === 'authored') {
+    if (listType === LIST_TYPE_ENUM.Authored) {
       navigate(`${location.pathname}/form`, { state: { beverage }})
     }
   }, [listType, navigate, location.pathname])
@@ -41,19 +43,19 @@ function BeverageList({ listConfig }) {
       setComponents(buildComponents(beverages))
     }
 
-    if (listType === 'search' && searchType && searchTerm) {
+    if (listType === LIST_TYPE_ENUM.Search && searchType && searchTerm) {
       getQuery()
     }
   }, [listType, searchType, searchTerm, pageNum, pageCount, buildComponents])
 
   useEffect(() => {
     async function getList() {
-      if (listType === 'search') return
+      if (listType === LIST_TYPE_ENUM.Search) return
       
       let getter = { beverages: [], errors: [] }
-      if (listType === 'authored') {
+      if (listType === LIST_TYPE_ENUM.Authored) {
         getter = await getAuthoredBeverages(pageNum, pageCount)
-      } else if (listType === 'previous') {
+      } else if (listType === LIST_TYPE_ENUM.Previous) {
         getter = await getPreviousBeverages(pageNum, pageCount)
       } else {
         throw new Error (`Unknown Beverage list type: ${listType}`)
@@ -66,7 +68,11 @@ function BeverageList({ listConfig }) {
   }, [listType, pageNum, pageCount, buildComponents])
 
   return (
-    <div className='BeverageList'>
+    <div className='beverage-list'>
+      {
+        listType === LIST_TYPE_ENUM.Authored
+        && <p className='click-instructions'>Click a Beverage below to edit</p>
+      }
       { components }
     </div>
   )
