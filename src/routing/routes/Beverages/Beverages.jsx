@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { Route, Routes, useNavigate, useLocation } from 'react-router-dom'
 
+import BeverageForm  from '../../../components/BeverageComponents/BeverageForm/BeverageForm'
 import BeverageList  from '../../../components/BeverageComponents/BeverageList/BeverageList'
 import BeverageQuery from '../../../components/BeverageComponents/BeverageQuery/BeverageQuery'
 import Button        from '../../../components/Common/Button/Button'
-import BeverageForm  from '../../../components/Forms/Beverage/Beverage'
 
 import './Beverages.css'
 

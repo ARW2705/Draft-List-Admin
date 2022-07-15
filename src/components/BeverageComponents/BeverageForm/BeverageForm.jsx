@@ -70,53 +70,6 @@ function BeverageForm() {
     }
   }
 
-  // const formConfig = {
-  //   fields: {
-  //     name: {
-  //       value: beverage?.name || '',
-  //       validators: [required(), minLength(2), maxLength(50)]
-  //     },
-  //     source: {
-  //       value: beverage?.source || '',
-  //       validators: [required(), minLength(2), maxLength(50)]
-  //     },
-  //     description: {
-  //       value: beverage?.description || '',
-  //       validators: [minLength(2), maxLength(120)]
-  //     },
-  //     style: {
-  //       value: beverage?.style || '',
-  //       validators: [required(), minLength(2), maxLength(50)]
-  //     },
-  //     abv: {
-  //       value: beverage?.abv || '',
-  //       options: {
-  //         type: 'number'
-  //       },
-  //       validators: [min(0), max(100)]
-  //     },
-  //     ibu: {
-  //       value: beverage?.ibu || '',
-  //       options: {
-  //         type: 'number'
-  //       },
-  //       validators: [min(0), max(200)]
-  //     },
-  //     srm: {
-  //       value: beverage?.srm || '',
-  //       options: {
-  //         type: 'number'
-  //       },
-  //       validators: [min(0), max(200)]
-  //     },
-  //     image: {
-  //       element: 'image'
-  //     },
-  //     contentColor: {
-  //       value: beverage?.contentColor || ''
-  //     } 
-  //   }
-  // }
   const form = createForm({ fields })
 
   const navigate = useNavigate()
