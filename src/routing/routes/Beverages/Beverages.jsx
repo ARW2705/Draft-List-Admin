@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { Route, Routes, useNavigate, useLocation } from 'react-router-dom'
 
-import BeverageList     from '../../../components/BeverageComponents/BeverageList/BeverageList'
-import BeverageQuery    from '../../../components/BeverageComponents/BeverageQuery/BeverageQuery'
-import Button           from '../../../components/Common/Button/Button'
-import BeverageForm     from '../../../components/Forms/Beverage/Beverage'
+import BeverageList  from '../../../components/BeverageComponents/BeverageList/BeverageList'
+import BeverageQuery from '../../../components/BeverageComponents/BeverageQuery/BeverageQuery'
+import Button        from '../../../components/Common/Button/Button'
+import BeverageForm  from '../../../components/Forms/Beverage/Beverage'
 
 import './Beverages.css'
 
@@ -27,7 +27,7 @@ function Beverages() {
   }
 
   return (
-    <main className="route beverages-router">
+    <main className='route beverages-router'>
       <Routes>
         <Route
           path='/'
@@ -37,7 +37,7 @@ function Beverages() {
               <Button
                 text='Add New Beverage'
                 customClass='new-beverage'
-                idDisabled={ false }
+                isDisabled={ false }
                 name='new-beverage'
                 onClick={ handleOnClick }
               />
