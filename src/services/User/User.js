@@ -1,6 +1,6 @@
 import { BehaviorSubject } from 'rxjs'
 
-import { post } from '../HttpClient/HttpClient'
+import { get, post } from '../HttpClient/HttpClient'
 import token from '../Token/Token'
 
 import { userRouteURL } from './user-route-url'
@@ -32,6 +32,10 @@ class User {
 
   getPreviousList() {
     return this.user$.value.previousList
+  }
+
+  getDeviceList() {
+    return this.user$.value.deviceList
   }
 
   setUser(user) {
@@ -66,6 +70,19 @@ class User {
     }
     this.setUser(newUser)
     token.setToken(user.token, remember)
+  }
+
+  refreshUserDataFromServer() {
+    return get(`${userRouteURL}`)
+      .then(user => {
+        if (user) {
+          this.setUser(user)
+        }
+      })
+      .catch(error => {
+        console.error('error on user refresh', error)
+        throw error
+      })
   }
 
   login(credentials) {
