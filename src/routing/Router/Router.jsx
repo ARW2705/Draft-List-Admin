@@ -1,6 +1,7 @@
 import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
+import Device    from '../routes/Devices/Devices'
 import Draft     from '../routes/Drafts/Drafts'
 import Beverages from '../routes/Beverages/Beverages'
 import Manage    from '../routes/Manage/Manage'
@@ -14,6 +15,7 @@ function Router() {
       <Routes>
         <Route path='/' element={<App />}>
           <Route path='/manage' element={<Manage />} />
+          <Route path='/devices/*' element={<Device />} />
           <Route path='/drafts/*' element={<Draft />} />
           <Route path='/beverages/*' element={<Beverages />} />
           <Route path='/user/*' element={<User />} />
