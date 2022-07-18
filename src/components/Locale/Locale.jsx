@@ -8,7 +8,7 @@ function Locale({ city, region, country }) {
     <address className='locale'>
       { city && <span>{ city }</span> }
       { region && <span>{ region }</span> }
-      { country && <span>{ city }</span> }
+      { country && <span>{ country }</span> }
     </address>
   )
 }
