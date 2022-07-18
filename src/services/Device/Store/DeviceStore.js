@@ -23,7 +23,7 @@ class DeviceStore {
   }
 
   setDevices(devices) {
-    this.setDevice(devices.reduce((acc, curr) => ({ ...acc, ...this.prepareBeverage(curr)}), {}))
+    this.setDevice(devices.reduce((acc, curr) => ({ ...acc, ...this.prepareDevice(curr)}), {}))
   }
 
   prepareDevice(device) {
