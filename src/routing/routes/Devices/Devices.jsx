@@ -5,10 +5,10 @@ import Button     from '../../../components/Common/Button/Button'
 import DeviceForm from '../../../components/DeviceComponents/DeviceForm/DeviceForm'
 import DeviceList from '../../../components/DeviceComponents/DeviceList/DeviceList'
 
-import './Beverages.css'
+import './Devices.css'
 
 
-function Beverages() {
+function Devices() {
   const location = useLocation()
   const navigate = useNavigate()
   const handleOnClick = event => {
@@ -25,6 +25,7 @@ function Beverages() {
             <div className='device-container'>
               <Button
                 text='Add New Device'
+                customClass='new-device'
                 name='new-device'
                 onClick={ handleOnClick }
               />
@@ -38,4 +39,4 @@ function Beverages() {
   )
 }
 
-export default Beverages
+export default Devices
