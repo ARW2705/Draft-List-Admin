@@ -1,32 +1,34 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 import './Navbar.css'
 
 
 function Navbar() {
-  const pageNames = [ 'Manage', 'Beverages', 'User' ]
+  const pageNames = [ 'Devices', 'Beverages', 'User' ]
   const links = pageNames.map(pageName => {
     const name = pageName.toLowerCase()
     return (
-      <Link
+      <NavLink
         key={ name }
         to={ `/${name}` }
         aria-labelledby={ `nav-${name}` }
       >
         <span id={ `nav-${name}` }>{ pageName }</span>
-      </Link>
+      </NavLink>
     )
   })
 
+  
+
   return (
     <nav className='navbar'>
-      <Link
+      <NavLink
         to='/'
         aria-labelledby='nav-home'
       >
         <span id='nav-home'>Draft List</span>
-      </Link>
+      </NavLink>
       
       <div className='other-links'>
         { links }
