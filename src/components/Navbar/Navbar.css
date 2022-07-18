@@ -12,12 +12,18 @@
   font-size: 1.5rem;
 }
 
+.other-links a.active,
+.other-links a.active:visited {
+  color: var(--primary-light);
+  border-bottom: 5px solid var(--primary-light);
+}
+
 .navbar a {
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0 5px;
+  padding: 0 10px;
 }
 
 .navbar a,
@@ -28,7 +34,9 @@
 }
 
 .navbar a:hover {
-  background-color: var(--primary-light);
+  color: var(--text-dark);
+  background-color: var(--gray-medium);
+  border-bottom: 5px solid var(--gray-medium);
 }
 
 .navbar .other-links {

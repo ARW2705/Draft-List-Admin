@@ -1,13 +1,13 @@
 .beverage-summary {
   width: 67%;
   height: 100%;
-  background-color: var(--gray-dark);
+  background-color: var(--gray-medium);
   border-radius: 50px 15px 15px 0;
   border: 5px solid var(--secondary);
   position: absolute;
   top: 0;
   right: 0;
-  color: var(--gray-light);
+  color: var(--dark);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -24,7 +24,8 @@
 .beverage-summary
 .number-values
 .value {
-  color: var(--secondary);
+  font-weight: bold;
+  color: var(--secondary-light);
 }
 
 .beverage-summary

@@ -6,10 +6,9 @@
   justify-content: space-between;
   align-items: center;
   padding: 0 2%;
-  color: var(--text-light);
-  border-bottom: 3px solid var(--primary-light);
+  border-bottom: 5px solid var(--gray-dark);
   font-family: 'Roboto', sans-serif;
-  background-color: var(--primary);
+  background-color: var(--gray-dark);
   transition: top 500ms ease-in-out;
   z-index: 10;
 }
