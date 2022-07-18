@@ -40,6 +40,7 @@ class User {
 
   setUser(user) {
     this.user$.next(user)
+    console.log('user', this.user$.value)
     this.storeUser()
   }
 
@@ -66,7 +67,8 @@ class User {
       username: user.username,
       email: user.email,
       authoredList: user.authoredList,
-      previousList: user.previousList
+      previousList: user.previousList,
+      deviceList: user.deviceList
     }
     this.setUser(newUser)
     token.setToken(user.token, remember)
