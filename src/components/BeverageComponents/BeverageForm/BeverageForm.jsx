@@ -136,7 +136,7 @@ function BeverageForm() {
       <FormGroup
         form={ form }
         submitHandler={ handleSubmit }
-        customClass='beverage'
+        customClass='beverage-form'
         title='New Beverage'
       />
     </>
