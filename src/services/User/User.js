@@ -60,6 +60,10 @@ class User {
     })
   }
 
+  isAuthoredBeverage(beverageId) {
+    return this.user$.value.authoredList.some(authoredId => authoredId === beverageId)
+  }
+
   handleUserResponse(user, remember) {
     this.remember = remember
     const newUser = {
