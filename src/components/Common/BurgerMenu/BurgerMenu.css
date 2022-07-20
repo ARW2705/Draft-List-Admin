@@ -1,0 +1,23 @@
+.burger-menu {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.burger-button {
+  color: var(--primary-light);
+  border: none;
+  background-color: var(--gray-dark);
+  font-size: 2.5rem;
+  box-shadow: none;
+  aspect-ratio: 1;
+}
+
+.burger-button span {
+  display: flex;
+}
+
+.circle-border {
+  border-radius: 50%;
+}

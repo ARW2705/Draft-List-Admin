@@ -1,38 +1,42 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { useMediaQuery } from 'react-responsive'
+
+import Nav from '../Common/Nav/Nav'
+import BurgerMenu from '../Common/BurgerMenu/BurgerMenu'
 
 import './Navbar.css'
 
 
 function Navbar() {
-  const pageNames = [ 'Devices', 'Beverages', 'User' ]
-  const links = pageNames.map(pageName => {
-    const name = pageName.toLowerCase()
-    return (
-      <NavLink
-        key={ name }
-        to={ `/${name}` }
-        aria-labelledby={ `nav-${name}` }
-      >
-        <span id={ `nav-${name}` }>{ pageName }</span>
-      </NavLink>
-    )
+  const links = ['Devices', 'Beverages', 'User'].map(pageName => {
+    return <Nav name={ pageName } key={ pageName } />
   })
-
-  
+  const isSmallScreen = useMediaQuery({ query: '(max-width: 600px)' })
+  const handleOnClick = e => {
+    console.log('e', e)
+  }
 
   return (
     <nav className='navbar'>
-      <NavLink
-        to='/'
-        aria-labelledby='nav-home'
-      >
-        <span id='nav-home'>Draft List</span>
-      </NavLink>
-      
-      <div className='other-links'>
-        { links }
-      </div>
+      <Nav
+        name='Draft List'
+        route='/'
+        customClass='home-link'
+      />
+      {
+        isSmallScreen
+        ? (
+          <BurgerMenu
+            menuItems={ links }
+            customClass='other-links'
+          />
+        )
+        : (
+          <div className='other-links' onClick={ handleOnClick }>
+            { links }
+          </div>
+        )
+      }
     </nav>
   )
 }
