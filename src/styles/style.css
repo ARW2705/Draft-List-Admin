@@ -1,5 +1,6 @@
 @import 'normalize.css';
 @import './colors.css';
+@import './breakpoints.css';
 
 body {
   overflow: hidden;
