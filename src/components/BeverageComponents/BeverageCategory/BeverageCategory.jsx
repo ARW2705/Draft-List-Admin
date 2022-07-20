@@ -15,9 +15,10 @@ function BeverageCategory({ handleSelectCategory }) {
   })
 
   const handleClick = event => {
+    console.log(event)
     event.stopPropagation()
     const { target } = event
-    const name = target.name.split('-')[0]
+    const name = target.parentElement.name.split('-')[0]
     setButtonClasses({
       authored: `${baseClass} ${name === 'authored' ? 'selected': ''}`,
       previous: `${baseClass} ${name === 'previous' ? 'selected': ''}`,
