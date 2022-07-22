@@ -7,7 +7,7 @@ import Menu from '../Menu/Menu'
 import './BurgerMenu.css'
 
 
-function BurgerMenu({ menuItems, customClass }) {
+function BurgerMenu({ menuItems, customClass, overrideOpen }) {
   const [ isOpen, setIsOpen ] = useState(false)
   const [ buttonConfig, setButtonConfig ] = useState({
     icon: <IoMenu />,
@@ -15,11 +15,15 @@ function BurgerMenu({ menuItems, customClass }) {
   })
 
   useEffect(() => {
-    setButtonConfig(prevProps => {
-      return {
-        icon: isOpen ? <IoClose /> : <IoMenu />,
-        label: `${ isOpen ? 'close' : 'menu' }-button`
-      }
+    if (overrideOpen?.hasOwnProperty('isOpen')) {
+      setIsOpen(overrideOpen.isOpen)
+    }
+  }, [overrideOpen])
+
+  useEffect(() => {
+    setButtonConfig({
+      icon: isOpen ? <IoClose /> : <IoMenu />,
+      label: `${ isOpen ? 'close' : 'menu' }-button`
     })
   }, [isOpen, setButtonConfig])
 
