@@ -32,3 +32,22 @@
 .search-bar-error {
   min-width: 100%;
 }
+
+
+@media screen and (max-width: 600px) {
+  .beverage-query
+  .search-container {
+    display: flex;
+    flex-wrap: nowrap;
+    padding: 0 0.5rem;
+    margin-top: 1%;
+  }
+
+  .beverage-query
+  .search-container
+  .shrink-to-dropdown
+  div {
+    width: calc(75% - 70px) !important;
+    flex-grow: 0 !important;
+  }
+}
