@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import { useMediaQuery } from 'react-responsive'
 
 import Nav from '../Common/Nav/Nav'
@@ -8,13 +9,15 @@ import './Navbar.css'
 
 
 function Navbar() {
+  const [ overrideOpen, setOverrideOpen ] = useState(false)
   const links = ['Devices', 'Beverages', 'User'].map(pageName => {
     return <Nav name={ pageName } key={ pageName } />
   })
   const isSmallScreen = useMediaQuery({ query: '(max-width: 600px)' })
-  const handleOnClick = e => {
-    console.log('e', e)
-  }
+  const location = useLocation()
+  useEffect(() => {
+    setOverrideOpen({ isOpen: false })
+  }, [location.pathname])
 
   return (
     <nav className='navbar'>
@@ -29,10 +32,11 @@ function Navbar() {
           <BurgerMenu
             menuItems={ links }
             customClass='other-links'
+            overrideOpen={ overrideOpen }
           />
         )
         : (
-          <div className='other-links' onClick={ handleOnClick }>
+          <div className='other-links'>
             { links }
           </div>
         )
