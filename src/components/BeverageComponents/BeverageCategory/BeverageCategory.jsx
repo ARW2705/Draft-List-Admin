@@ -14,38 +14,34 @@ function BeverageCategory({ handleSelectCategory }) {
     search: baseClass
   })
 
-  const handleClick = event => {
-    console.log(event)
-    event.stopPropagation()
-    const { target } = event
-    const name = target.parentElement.name.split('-')[0]
+  const handleClick = buttonName => {
     setButtonClasses({
-      authored: `${baseClass} ${name === 'authored' ? 'selected': ''}`,
-      previous: `${baseClass} ${name === 'previous' ? 'selected': ''}`,
-      search: `${baseClass} ${name === 'search' ? 'selected': ''}`
+      authored: `${baseClass} ${buttonName === 'authored' ? 'selected': ''}`,
+      previous: `${baseClass} ${buttonName === 'previous' ? 'selected': ''}`,
+      search  : `${baseClass} ${buttonName === 'search'   ? 'selected': ''}`
     })
-    handleSelectCategory(name)
+    handleSelectCategory(buttonName)
   }
 
   return (
-    <div
-      className='beverage-category'
-      onClick={ handleClick }
-    >
+    <div className='beverage-category'>
       <Button
         text='Authored Beverages'
         name='authored-category'
         customClass={ buttonClasses.authored }
+        onClick={ () => handleClick('authored') }
       />
       <Button
         text='Previous Beverages'
         name='previous-category'
         customClass={ buttonClasses.previous }
+        onClick={ () => handleClick('previous') }
       />
       <Button
         text='Search Beverages'
         name='search-category'
         customClass={ buttonClasses.search }
+        onClick={ () => handleClick('search') }
       />
     </div>
   )
