@@ -6,4 +6,5 @@
   background-color: var(--gray-dark);
   font-size: 1.35rem;
   color: var(--text-light);
+  text-align: center;
 }
