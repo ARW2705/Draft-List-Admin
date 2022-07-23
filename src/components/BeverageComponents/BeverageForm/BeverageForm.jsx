@@ -95,7 +95,11 @@ function BeverageForm() {
       }
 
       console.log('data build', beverageData)
-      const response = await (!!beverage ? updateBeverage(beverage._id, beverageData) : addNewBeverage(beverageData))
+      const response = await (
+        !!beverage
+        ? updateBeverage(beverage._id, beverageData)
+        : addNewBeverage(beverageData)
+      )
       console.log(response)
       setIsLoading(false)
       navigateBack()
@@ -105,7 +109,7 @@ function BeverageForm() {
       image64: formData.current.image,
       contentType: 'image/webp'
     })
-  }, [navigateBack])
+  }, [beverage, navigateBack])
 
   useEffect(() => {
     if (isLoading && formData.current) {
