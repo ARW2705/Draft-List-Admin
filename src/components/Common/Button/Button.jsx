@@ -9,13 +9,20 @@ function Button({ text, icon, customClass, isDisabled, name, onClick, ariaLabel 
     setIsButtonDisabled(() => isDisabled)
   }, [ isDisabled ])
 
+  const handleClick = event => {
+    event.preventDefault()
+    const { target } = event
+    const correctedTarget = target.tagName.toLowerCase() === 'button' ? target : target.parentElement
+    onClick(correctedTarget)
+  }
+
   return (
     <button
       aria-label={ ariaLabel || text }
       className={ `button ${customClass || ''}` }
       disabled={ isButtonDisabled }
       name={ name ?? text }
-      onClick={ onClick }
+      onClick={ onClick ? handleClick : undefined }
     >
       { icon && <span>{ icon }</span> }
       { text && <span>{ text }</span> }
