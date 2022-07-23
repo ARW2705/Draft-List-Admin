@@ -32,7 +32,7 @@ function FormGroup(props) {
   }, [ formFields, onInit, validators ])
 
   const handleSubmit = event => {
-    event.preventDefault()
+    if (event) event.preventDefault()
     const values = {}
     for (const field in formFields) {
       Object.assign(values, { [field]: formFields[field].value })
@@ -44,12 +44,10 @@ function FormGroup(props) {
     setFormFields(prevProps => props.updateForm(name, value, errors, prevProps))
   }
 
-  const handleClick = event => {
-    event.preventDefault()
-    const { name } = event.target
-    if (name === 'submit-button') {
-      handleSubmit(event)
-    } else if (name === 'cancel-button') {
+  const handleClick = buttonName => {
+    if (buttonName === 'submit') {
+      handleSubmit()
+    } else if (buttonName === 'cancel') {
       submitHandler(null)
     }
   }
@@ -72,21 +70,20 @@ function FormGroup(props) {
             errors={ formErrors }
           />
         }
-        <div
-          className='form-button-container'
-          onClick={ handleClick }
-        >
+        <div className='form-button-container'>
           <Button
             text='Cancel'
             customClass='form-button'
             isDisabled={ false }
             name='cancel-button'
+            onClick={ () => handleClick('cancel') }
           />
           <Button
             text='Submit'
             customClass='form-button'
             isDisabled={ disableButton }
             name='submit-button'
+            onClick={ () => handleClick('submit') }
           />
         </div>
       </form>
