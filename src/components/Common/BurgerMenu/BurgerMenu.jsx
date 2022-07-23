@@ -21,11 +21,9 @@ function BurgerMenu({ menuItems, customClass, overrideOpen }) {
   }, [overrideOpen])
 
   useEffect(() => {
-    setButtonConfig(prevProps => {
-      return {
-        icon: isOpen ? <IoClose /> : <IoMenu />,
-        label: `${ isOpen ? 'close' : 'menu' }-button`
-      }
+    setButtonConfig({
+      icon: isOpen ? <IoClose /> : <IoMenu />,
+      label: `${ isOpen ? 'close' : 'menu' }-button`
     })
   }, [isOpen, setButtonConfig])
 

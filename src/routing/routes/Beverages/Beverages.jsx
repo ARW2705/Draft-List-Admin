@@ -21,10 +21,7 @@ function Beverages() {
   const onConfigUpdate = config => setListConfig(config)
   const location = useLocation()
   const navigate = useNavigate()
-  const handleOnClick = event => {
-    event.preventDefault()
-    navigate(`${location.pathname}/form`)
-  }
+  const handleOnClick = () => navigate(`${location.pathname}/form`)
 
   return (
     <main className='route beverages-router'>

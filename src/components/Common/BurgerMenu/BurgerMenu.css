@@ -21,3 +21,8 @@
 .circle-border {
   border-radius: 50%;
 }
+
+.burger-button.button:enabled:active {
+  -webkit-transform: none;
+  transform: none;
+}
