@@ -13,7 +13,7 @@ function Device({ device, onClick: handleOnClick }) {
   const [ fullImageURL, setFullImageURL ] = useState('')
   
   useEffect(() => {
-    setFullImageURL(`${IMAGE_BASE_URL}/${imageURL}`)
+    setFullImageURL(imageURL ? `${IMAGE_BASE_URL}/${imageURL}` : '')
   }, [imageURL])
   
   useEffect(() => {
