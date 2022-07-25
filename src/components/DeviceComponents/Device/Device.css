@@ -1,0 +1,29 @@
+.device {
+  width: 90%;
+  margin: 5% auto;
+  display: flex;
+}
+
+.device-image {
+  width: 20%;
+  aspect-ratio: 1;
+}
+
+.right-side {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0 0 2% 5%;
+}
+
+.device-identifier:first-child {
+  font-size: 5vw;
+}
+
+
+@media screen and (max-width: 600px) {
+  .device {
+    width: 100%;
+    border-radius: 0;
+  }
+}

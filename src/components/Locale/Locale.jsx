@@ -4,12 +4,26 @@ import './Locale.css'
 
 
 function Locale({ city, region, country }) {
+  let addressText = ''
+  if (city) {
+    addressText += city
+  }
+
+  if (region) {
+    addressText += `${ addressText.length ? ', ' : '' }${ region }`
+  }
+
+  if (country) {
+    addressText += ` ${ country }`
+  }
+
   return (
-    <address className='locale'>
-      { city && <span>{ city }</span> }
-      { region && <span>{ region }</span> }
-      { country && <span>{ country }</span> }
-    </address>
+    (city || region || country)
+    && (
+      <address className='locale'>
+        { addressText }
+      </address>
+    )
   )
 }
 

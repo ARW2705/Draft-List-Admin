@@ -30,12 +30,14 @@ function Device({ device, onClick: handleOnClick }) {
         src={ fullImageURL }
         alt='device logo'
       />
-      <div className='device-identifier'>
-        <span>{ title ?? name }</span>
-        <Locale { ...locale } />
-      </div>
-      <div className='active-draft-count'>
-        Active drafts: <span>{ activeDraftCount }</span>
+      <div className='right-side'>
+        <div className='device-identifier'>
+          <span>{ title ?? name }</span>
+          <Locale { ...locale } />
+        </div>
+        <div className='active-draft-count'>
+          Active drafts: <span>{ activeDraftCount }</span>
+        </div>
       </div>
     </article>
   )
