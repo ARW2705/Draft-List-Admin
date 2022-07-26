@@ -4,6 +4,8 @@ import Locale from '../../Locale/Locale'
 
 import { IMAGE_BASE_URL } from '../../../shared/constants/image-base-url'
 
+import { getImage } from '../../../services/Image/Image'
+
 import './Device.css'
 
 
@@ -13,7 +15,15 @@ function Device({ device, onClick: handleOnClick }) {
   const [ fullImageURL, setFullImageURL ] = useState('')
   
   useEffect(() => {
-    setFullImageURL(imageURL ? `${IMAGE_BASE_URL}/${imageURL}` : '')
+    if (imageURL) {
+      async function getAsyncImage() {
+        const image = await getImage(`${IMAGE_BASE_URL}/${imageURL}`)
+        setFullImageURL(image)
+      }
+      getAsyncImage()
+    } else {
+      setFullImageURL('')
+    }
   }, [imageURL])
   
   useEffect(() => {
