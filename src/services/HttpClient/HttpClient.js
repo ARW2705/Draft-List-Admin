@@ -13,8 +13,8 @@ async function request(request) {
   return (await axios(config)).data
 }
 
-async function get(url, params = {}, data = {}) {
-  return await request({ method: 'get', url, params, data })
+async function get(url, params = {}, data = {}, responseType = {}) {
+  return await request({ method: 'get', url, params, data, responseType })
 }
 
 async function post(url, data, headers = {}) {
