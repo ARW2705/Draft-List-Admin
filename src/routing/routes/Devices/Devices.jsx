@@ -11,8 +11,7 @@ import './Devices.css'
 function Devices() {
   const location = useLocation()
   const navigate = useNavigate()
-  const handleOnClick = event => {
-    event.preventDefault()
+  const handleOnClick = () => {
     navigate(`${location.pathname}/form`)
   }
 
