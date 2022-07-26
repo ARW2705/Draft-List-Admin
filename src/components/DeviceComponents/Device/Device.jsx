@@ -17,8 +17,7 @@ function Device({ device, onClick: handleOnClick }) {
   useEffect(() => {
     if (imageURL) {
       async function getAsyncImage() {
-        const image = await getImage(`${IMAGE_BASE_URL}/${imageURL}`)
-        setFullImageURL(image)
+        setFullImageURL(await getImage(`${IMAGE_BASE_URL}/${imageURL}`))
       }
       getAsyncImage()
     } else {
