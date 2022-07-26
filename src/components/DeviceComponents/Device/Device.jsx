@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
+import DraftCount from '../DraftCount/DraftCount'
 import Locale from '../../Locale/Locale'
 
 import { IMAGE_BASE_URL } from '../../../shared/constants/image-base-url'
@@ -11,7 +12,6 @@ import './Device.css'
 
 function Device({ device, onClick: handleOnClick }) {
   const { name, title, imageURL, locale, draftList } = device
-  const [ activeDraftCount, setActiveDraftCount ] = useState(null)
   const [ fullImageURL, setFullImageURL ] = useState('')
   
   useEffect(() => {
@@ -24,10 +24,6 @@ function Device({ device, onClick: handleOnClick }) {
       setFullImageURL('')
     }
   }, [imageURL])
-  
-  useEffect(() => {
-    setActiveDraftCount(draftList.reduce((acc, curr) => acc + curr.isActive ? 1 : 0, 0))
-  }, [draftList])
 
   return (
     <article
@@ -44,9 +40,7 @@ function Device({ device, onClick: handleOnClick }) {
           <span>{ title ?? name }</span>
           <Locale { ...locale } />
         </div>
-        <div className='active-draft-count'>
-          Active drafts: <span>{ activeDraftCount }</span>
-        </div>
+        <DraftCount draftList={ draftList } />
       </div>
     </article>
   )
