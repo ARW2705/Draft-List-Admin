@@ -18,12 +18,9 @@ function Locale({ city, region, country }) {
   }
 
   return (
-    (city || region || country)
-    && (
-      <address className='locale'>
-        { addressText }
-      </address>
-    )
+    <address className='locale'>
+      { addressText }
+    </address>
   )
 }
 
