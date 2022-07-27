@@ -1,3 +1,4 @@
+import imageStore from './Store/ImageStore'
 import { get } from '../HttpClient/HttpClient'
 
 
@@ -11,7 +12,12 @@ async function fetchImageAsBase64(url) {
 }
 
 async function getImage(url) {
-  return await fetchImageAsBase64(url)
+  const fromStore = imageStore.get(url)
+  if (fromStore) return fromStore
+
+  const base64Image = await fetchImageAsBase64(url)
+  imageStore.setImage(url, base64Image)
+  return base64Image
 }
 
 
