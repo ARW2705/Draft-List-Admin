@@ -3,13 +3,14 @@
   margin: 5% auto;
   display: flex;
   border-radius: 15px;
+  border: 3px solid var(--primary-light);
   background-color: var(--gray-light);
 }
 
 .device-image {
   width: 20%;
   aspect-ratio: 1;
-  border-radius: 15px;
+  border-radius: 12.5px 0 0 12.5px;
 }
 
 .right-side {
