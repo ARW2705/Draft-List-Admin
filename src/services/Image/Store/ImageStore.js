@@ -22,7 +22,7 @@ class ImageStore {
   }
 
   loadImages() {
-    const images = JSON.parse(localStorage.get(this.storageKey))
+    const images = JSON.parse(localStorage.getItem(this.storageKey))
     if (images) this.images = images
   }
 
