@@ -34,7 +34,13 @@
 .beverage-summary
 p {
   padding: 0 5%;
+  margin-bottom: auto;
   font-size:2.5vw;
+}
+
+.beverage-edit-button {
+  align-self: center;
+  margin-bottom: 5px;
 }
 
 .edit-callout {
