@@ -34,10 +34,9 @@ async function addNewDevice(device) {
   return deviceResponse
 }
 
-async function updateDevice(device) {
-  const deviceResponse = await postDevice(device)
+async function updateDevice(deviceId, deviceData) {
+  const deviceResponse = await patchDevice(deviceId, deviceData)
   deviceStore.setDevice(deviceResponse)
-  await userService.refreshUserDataFromServer()
   return deviceResponse
 }
 

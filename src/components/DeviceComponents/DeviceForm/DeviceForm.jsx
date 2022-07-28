@@ -67,25 +67,29 @@ function DeviceForm() {
     console.log('submitting', formData.current)
     async function prepareDevice() {
       const image = await blobifyBase64Image(formData.current.image)
-      const deviceData = {
+      console.log('?', image)
+      let deviceData = {
         data: {
-          name      : formData.current.name,
-          hardwareId: formData.current.hardwareId,
+          name      : formData.current.name || device.name,
+          hardwareId: formData.current.hardwareId || device.hardwareId,
           title     : formData.current.title,
           locale: {
             city   : formData.current.city,
             region : formData.current.region,
             country: formData.current.country
           }
-        },
-        image
+        }
+      }
+
+      if (image) {
+        deviceData = { ...deviceData, image }
       }
 
       console.log('data build', deviceData)
       const response = await (
-        !!device
-        ? updateDevice(device._id, deviceData)
-        : addNewDevice(deviceData)
+        !device
+        ? addNewDevice(deviceData)
+        : updateDevice(device._id, deviceData)
       )
       console.log(response)
       setIsLoading(false)

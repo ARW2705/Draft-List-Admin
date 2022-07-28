@@ -2,8 +2,8 @@ import { get, patch, post } from '../../HttpClient/HttpClient'
 import { deviceRouteURL } from './device-route-url'
 
 
-function buildFormData(beverageData) {
-  const { data, image } = beverageData
+function buildFormData(deviceData) {
+  const { data, image } = deviceData
   const formData = new FormData()
   formData.append('data', JSON.stringify(data))
   if (image) {
