@@ -51,8 +51,7 @@ function ImageCrop({ image, showCropPreview }) {
 
   const handleComplete = croppedImage => setCompletedCrop(croppedImage)
   const handleChange = croppedImage => setCrop(croppedImage)
-  const handleClick = event => {
-    event.stopPropagation()
+  const handleClick = () => {
     showCropPreview(image64, completedCrop)
   }
 

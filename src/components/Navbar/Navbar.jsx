@@ -1,36 +1,46 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
+import { useMediaQuery } from 'react-responsive'
+
+import Nav from '../Common/Nav/Nav'
+import BurgerMenu from '../Common/BurgerMenu/BurgerMenu'
 
 import './Navbar.css'
 
 
 function Navbar() {
-  const pageNames = [ 'Manage', 'Beverages', 'User' ]
-  const links = pageNames.map(pageName => {
-    const name = pageName.toLowerCase()
-    return (
-      <Link
-        key={ name }
-        to={ `/${name}` }
-        aria-labelledby={ `nav-${name}` }
-      >
-        <span id={ `nav-${name}` }>{ pageName }</span>
-      </Link>
-    )
+  const [ overrideOpen, setOverrideOpen ] = useState(false)
+  const links = ['Devices', 'Beverages', 'User'].map(pageName => {
+    return <Nav name={ pageName } key={ pageName } />
   })
+  const isSmallScreen = useMediaQuery({ query: '(max-width: 600px)' })
+  const location = useLocation()
+  useEffect(() => {
+    setOverrideOpen({ isOpen: false })
+  }, [location.pathname])
 
   return (
     <nav className='navbar'>
-      <Link
-        to='/'
-        aria-labelledby='nav-home'
-      >
-        <span id='nav-home'>Draft List</span>
-      </Link>
-      
-      <div className='other-links'>
-        { links }
-      </div>
+      <Nav
+        name='Draft List'
+        route='/'
+        customClass='home-link'
+      />
+      {
+        isSmallScreen
+        ? (
+          <BurgerMenu
+            menuItems={ links }
+            customClass='other-links'
+            overrideOpen={ overrideOpen }
+          />
+        )
+        : (
+          <div className='other-links'>
+            { links }
+          </div>
+        )
+      }
     </nav>
   )
 }

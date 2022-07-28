@@ -7,7 +7,7 @@ function LoginSignupButtons({ handleOnClick, isLoggedIn }) {
   return (
     <div
       className='login-signup-buttons-container'
-      onClick={ handleOnClick }
+      
     >
       {
         !isLoggedIn
@@ -16,10 +16,12 @@ function LoginSignupButtons({ handleOnClick, isLoggedIn }) {
             <Button
               text='Login'
               customClass='form-button'
+              onClick={ handleOnClick }
             />
             <Button
               text='Signup'
               customClass='form-button'
+              onClick={ handleOnClick }
             />
           </>
         )
@@ -30,6 +32,7 @@ function LoginSignupButtons({ handleOnClick, isLoggedIn }) {
           <Button
             text='Logout'
             customClass='form-button'
+            onClick={ handleOnClick }
           />
         )
       }

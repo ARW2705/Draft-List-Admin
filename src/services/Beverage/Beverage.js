@@ -92,11 +92,16 @@ async function updateBeverage(beverageId, beverageData) {
   return beverageResponse
 }
 
+function canEdit(beverageId) {
+  return user.isAuthoredBeverage(beverageId)
+}
+
 
 export {
   getAuthoredBeverages,
   getPreviousBeverages,
   getBeveragesByQuery,
   addNewBeverage,
-  updateBeverage
+  updateBeverage,
+  canEdit
 }

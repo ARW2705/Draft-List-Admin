@@ -17,25 +17,23 @@ function BeverageList({ listConfig }) {
   const location = useLocation()
   const navigate = useNavigate()
   const handleOnClick = useCallback(beverage => {
-    if (listType === LIST_TYPE_ENUM.Authored) {
-      navigate(`${location.pathname}/form`, { state: { beverage }})
-    }
-  }, [listType, navigate, location.pathname])
+    navigate(`${location.pathname}/form`, { state: { beverage }})
+  }, [navigate, location.pathname])
 
   const buildComponents = useCallback(beverages => {
-      if (!beverages.length) return <p className='empty-list'>Nothing here...</p>
+    if (!beverages.length) return <p className='empty-list'>Nothing here...</p>
 
-      return beverages.map(beverage => {
-        return (
-          <Beverage
-            className='beverage-container'
-            key={ beverage._id }
-            beverage={ beverage }
-            onClick={ handleOnClick }
-          />
-        )
-      })
-    }, [handleOnClick])
+    return beverages.map(beverage => {
+      return (
+        <Beverage
+          className='beverage-container'
+          key={ beverage._id }
+          beverage={ beverage }
+          onClick={ handleOnClick }
+        />
+      )
+    })
+  }, [handleOnClick])
 
   useEffect(() => {
     async function getQuery() {
@@ -62,6 +60,7 @@ function BeverageList({ listConfig }) {
       }
 
       const { beverages, errors } = getter
+      console.log('beverage list error', errors)
       setComponents(buildComponents(beverages))
     }
     getList()
@@ -69,10 +68,6 @@ function BeverageList({ listConfig }) {
 
   return (
     <div className='beverage-list'>
-      {
-        listType === LIST_TYPE_ENUM.Authored
-        && <p className='click-instructions'>Click a Beverage below to edit</p>
-      }
       { components }
     </div>
   )

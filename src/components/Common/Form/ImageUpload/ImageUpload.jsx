@@ -21,15 +21,15 @@ function ImageUpload({ config, handleOnChange, customClass }) {
         handleOnChange={ handleChange }
         customClass={ customClass }
       />
-    {
-      image
-      && (
-        <ImageEditor
-          image={ image }
-          onImageCrop={ handleOnImageCrop }
-        />
-      )
-    }
+      {
+        image
+        && (
+          <ImageEditor
+            image={ image }
+            onImageCrop={ handleOnImageCrop }
+          />
+        )
+      }
     </div>
   )
 }

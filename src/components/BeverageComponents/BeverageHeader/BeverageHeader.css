@@ -1,18 +1,16 @@
 .beverage-header {
-  width: 40%;
+  width: 33%;
   height: 100%;
   position: absolute;
   top: 0;
   left: 0;
-  background-color: var(--primary-dark);
-  color: var(--gray-light);
+  color: var(--background);
   border-radius: 15px 0 0 15px;
-  border: 5px solid var(--primary-dark);
 }
 
 .beverage-header
 .header-inner {
-  width: calc(82.5% - 20px);
+  width: calc(100% - 10px);
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -23,7 +21,8 @@
 .beverage-header
 .header-inner
 span {
-  font-size: 4vw;
+  font-size: 3.5vw;
+  padding: 0 5px;
 }
 
 .beverage-header
@@ -38,14 +37,19 @@ span {
 .header-inner
 .header-title
 span:first-child {
-  font-size: 4.5vw;
+  font-size: 3.5vw;
   font-weight: bold;
+  margin-bottom: 10px;
 }
 
 .beverage-header
 .header-inner
 .header-title
 span:nth-child(2) {
-  font-size: 2.75vw;
+  font-size: 2.5vw;
   font-style: italic;
+}
+
+.header-style {
+  text-align: center;
 }

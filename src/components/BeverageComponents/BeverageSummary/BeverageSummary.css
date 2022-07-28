@@ -1,16 +1,20 @@
 .beverage-summary {
   width: 67%;
   height: 100%;
-  background-color: var(--gray-dark);
+  background-color: var(--gray-light);
   border-radius: 50px 15px 15px 0;
-  border: 5px solid var(--secondary);
+  border: 5px solid var(--gray-medium);
   position: absolute;
   top: 0;
   right: 0;
-  color: var(--gray-light);
+  color: var(--dark);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+}
+
+.beverage-summary.editable {
+  border-color: var(--primary-light);
 }
 
 .beverage-summary
@@ -24,11 +28,25 @@
 .beverage-summary
 .number-values
 .value {
-  color: var(--secondary);
+  font-weight: bold;
 }
 
 .beverage-summary
 p {
   padding: 0 5%;
   font-size:2.5vw;
+}
+
+.edit-callout {
+  font-size: 1rem;
+  color: var(--primary);
+  position: absolute;
+  bottom: 0;
+  align-self: center;
+}
+
+@media screen and (max-width: 600px) {
+  .beverage-summary {
+    border-radius: 50px 0 0 0;
+  }
 }

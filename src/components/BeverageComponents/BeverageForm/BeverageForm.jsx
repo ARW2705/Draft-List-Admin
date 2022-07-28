@@ -4,10 +4,11 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import FormGroup from '../../Common/Form/FormGroup/FormGroup'
 import Spinner from '../../Common/Loaders/Spinner/Spinner'
 
+import { blobifyBase64Image } from '../../../services/Image/Image'
+
 import { addNewBeverage, updateBeverage } from '../../../services/Beverage/Beverage'
 import createForm from '../../../shared/form/create-form'
 import { min, max, minLength, maxLength, required } from '../../../shared/validators/validators'
-import base64ToBlobWorker from '../../../shared/workers/base64-to-blob.worker'
 
 
 function BeverageForm() {
@@ -43,7 +44,10 @@ function BeverageForm() {
       validators: [min(0), max(200)]
     },
     contentColor: {
-      value: beverage?.contentColor || ''
+      value: beverage?.contentColor || '',
+      options: {
+        label: 'Content Color'
+      }
     } 
   }
 
@@ -79,37 +83,34 @@ function BeverageForm() {
 
   const submitForm = useCallback(() => {
     console.log('submitting')
-    base64ToBlobWorker.onmessage = async ({ data: image }) => {
+    async function prepareDevice() {
+      const image = await blobifyBase64Image(formData.current.image)
       const beverageData = {
-        data: {
-          name        : formData.current.name,
-          source      : formData.current.source,
-          description : formData.current.description,
-          style       : formData.current.style,
-          abv         : formData.current.abv,
-          ibu         : formData.current.ibu,
-          srm         : formData.current.srm,
-          contentColor: formData.current.contentColor
-        },
-        image
-      }
+          data: {
+            name        : formData.current.name,
+            source      : formData.current.source,
+            description : formData.current.description,
+            style       : formData.current.style,
+            abv         : formData.current.abv,
+            ibu         : formData.current.ibu,
+            srm         : formData.current.srm,
+            contentColor: formData.current.contentColor
+          },
+          image
+        }
 
       console.log('data build', beverageData)
       const response = await (
-        !beverage
-        ? addNewBeverage(beverageData)
-        : updateBeverage(beverage._id, beverageData)
+        !!beverage
+        ? updateBeverage(beverage._id, beverageData)
+        : addNewBeverage(beverageData)
       )
       console.log(response)
       setIsLoading(false)
       navigateBack()
     }
-
-    base64ToBlobWorker.postMessage({
-      image64: formData.current.image,
-      contentType: 'image/webp'
-    })
-  }, [navigateBack])
+    prepareDevice()
+  }, [beverage, navigateBack])
 
   useEffect(() => {
     if (isLoading && formData.current) {
@@ -140,7 +141,7 @@ function BeverageForm() {
       <FormGroup
         form={ form }
         submitHandler={ handleSubmit }
-        customClass='beverage'
+        customClass='beverage-form'
         title='New Beverage'
       />
     </>

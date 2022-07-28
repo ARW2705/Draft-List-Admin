@@ -6,7 +6,7 @@ import FormInput from '../Form/Input/Input'
 import './SearchBar.css'
 
 
-function SearchBar({ label, handleOnSubmit }) {
+function SearchBar({ label, handleOnSubmit, customClass }) {
   const [ config, setConfig ] = useState({
     name: 'search',
     value: '',
@@ -32,7 +32,7 @@ function SearchBar({ label, handleOnSubmit }) {
 
   return (
     <div
-      className='search-bar'
+      className={ `search-bar ${ customClass }` }
       onKeyDown={ handleSubmit }
     >
       <FormInput

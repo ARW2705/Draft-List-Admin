@@ -5,4 +5,13 @@
   display: flex;
   position: relative;
   margin: 5% auto;
+  background-color: var(--gray-dark);
+  border-bottom: 10px solid var(--gray-dark);
+}
+
+@media screen and (max-width: 600px) {
+  .beverage {
+    width: 100%;
+    border-radius: 0;
+  }
 }

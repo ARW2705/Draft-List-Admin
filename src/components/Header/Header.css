@@ -5,11 +5,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 2%;
-  color: var(--text-light);
-  border-bottom: 3px solid var(--primary-light);
   font-family: 'Roboto', sans-serif;
-  background-color: var(--primary);
+  background-color: var(--gray-dark);
   transition: top 500ms ease-in-out;
   z-index: 10;
 }
@@ -25,4 +22,11 @@
 .app-header.scroll-up,
 .app-header:focus-within {
   top: 0;
+}
+
+@media screen and (max-width: 600px) {
+  .app-header {
+    height: 7.5vh;
+    background-color: var(--primary);
+  }
 }

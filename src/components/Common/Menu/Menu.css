@@ -1,0 +1,30 @@
+.menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  top: 10vh;
+  left: 0;
+  width: 100%;
+  background-color: var(--gray-dark);
+  border-top: 3px solid var(--primary-dark);
+  border-bottom: 3px solid var(--primary-dark);
+  transform: translateX(100%);
+  transition: ease-in-out 0.3s;
+}
+
+.menu.show {
+  transform: translateX(0%);
+}
+
+.menu .nav-link {
+  width: 100%;
+  padding: 10px 0;
+}
+
+@media screen and (max-width: 600px) {
+  .menu {
+    top: 7.5vh;
+  }
+}

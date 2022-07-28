@@ -1,0 +1,48 @@
+.device {
+  width: 90%;
+  margin: 5% auto;
+  display: flex;
+  border-radius: 15px;
+  background-color: var(--gray-light);
+}
+
+.device-image {
+  width: 20vw;
+  border-radius: 15px 0 0 15px;
+}
+
+.right-side {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1% 0 2% 5%;
+}
+
+.device-identifier {
+  margin-bottom: 10px;
+}
+
+.device-identifier:first-child {
+  font-size: 5vw;
+}
+
+.device-button-container {
+  display: flex;
+}
+
+.device-button-container
+.device-edit-button {
+  margin-right: 15px;
+}
+
+
+@media screen and (max-width: 600px) {
+  .device {
+    width: 100%;
+    border-radius: 0;
+  }
+
+  .device-image {
+    border-radius: 0;
+  }
+}

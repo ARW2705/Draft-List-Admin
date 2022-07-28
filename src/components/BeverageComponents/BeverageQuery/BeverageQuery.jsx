@@ -13,6 +13,7 @@ function BeverageQuery({ onConfigUpdate }) {
 
   const [ searchLabel, setSearchLabel ] = useState(defaultSearchLabel)
   const [ searchError, setSearchError ] = useState(null)
+  const [ searchClass, setSearchClass ] = useState('')
   const [ listConfig, setListConfig ] = useState({
     listType: 'authored',
     pageNum: 0,
@@ -23,6 +24,7 @@ function BeverageQuery({ onConfigUpdate }) {
 
   useEffect(() => {
     onConfigUpdate(listConfig)
+    setSearchClass(listConfig.listType === 'search' ? 'shrink-to-dropdown' : '')
   }, [onConfigUpdate, listConfig])
 
   const handleSearchOnSubmit = async searchTerm => {
@@ -55,7 +57,7 @@ function BeverageQuery({ onConfigUpdate }) {
 
   return(
     <div className='beverage-query'>
-      <BeverageCategory handleSelectCategory= { handleSelectCategory } />
+      <BeverageCategory handleSelectCategory={ handleSelectCategory } />
       <div className='search-container'>
         {
           listConfig.listType === 'search'
@@ -71,6 +73,7 @@ function BeverageQuery({ onConfigUpdate }) {
         <SearchBar
           handleOnSubmit={ handleSearchOnSubmit }
           label={ searchLabel }
+          customClass={ searchClass }
         />
         {
           searchError

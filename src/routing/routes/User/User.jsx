@@ -15,21 +15,17 @@ function User() {
 
   const location = useLocation()
   const navigate = useNavigate()
-  const navToComponent = name => {
-    if (name === 'login') {
+  const handleClick = ({ name }) => {
+    const lowerName = name.toLowerCase()
+    if (lowerName === 'login') {
       setShowButtons(false)
       navigate(`${location.pathname}/login`)
-    } else if (name === 'signup') {
+    } else if (lowerName === 'signup') {
       setShowButtons(false)
       navigate(`${location.pathname}/signup`)
-    } else if (name === 'logout') {
+    } else if (lowerName === 'logout') {
       user.logout()
     }
-  }
-
-  const handleClick = event => {
-    event.preventDefault()
-    navToComponent(event.target.name.toLowerCase())
   }
 
   useEffect(() => {
