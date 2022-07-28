@@ -78,11 +78,8 @@ function DeviceForm() {
             region : formData.current.region,
             country: formData.current.country
           }
-        }
-      }
-
-      if (image) {
-        deviceData = { ...deviceData, image }
+        },
+        image
       }
 
       console.log('data build', deviceData)
