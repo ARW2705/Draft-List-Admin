@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import DraftCount from '../DraftCount/DraftCount'
+import Button from '../../Common/Button/Button'
 import Locale from '../../Locale/Locale'
 
 import { IMAGE_BASE_URL } from '../../../shared/constants/image-base-url'
@@ -13,7 +13,12 @@ import './Device.css'
 function Device({ device, onClick: handleOnClick }) {
   const { name, title, imageURL, locale, draftList } = device
   const [ fullImageURL, setFullImageURL ] = useState('')
-  
+  const [ activeDraftCount, setActiveDraftCount ] = useState(null)
+
+  useEffect(() => {
+    setActiveDraftCount(draftList.reduce((acc, curr) => acc + curr.isActive ? 1 : 0, 0))
+  }, [draftList])
+
   useEffect(() => {
     if (imageURL) {
       async function getAsyncImage() {
@@ -26,10 +31,7 @@ function Device({ device, onClick: handleOnClick }) {
   }, [imageURL])
 
   return (
-    <article
-      className='device'
-      onClick={ () => handleOnClick(device) }
-    >
+    <article className='device'>
       <img
         className='device-image'
         src={ fullImageURL }
@@ -40,7 +42,19 @@ function Device({ device, onClick: handleOnClick }) {
           <span>{ title ?? name }</span>
           <Locale { ...locale } />
         </div>
-        <DraftCount draftList={ draftList } />
+        <div className='device-button-container'>
+          <Button
+            text='Edit Device'
+            customClass='device-edit-button'
+            onClick={ () => handleOnClick('edit', device) }
+          />
+          <Button
+            text={ `Active drafts: ${activeDraftCount}`}
+            customClass='draft-count-button'
+            ariaLabel='nav to drafts by device'
+            onClick={ () => handleOnClick('draft', device) }
+          />
+        </div>
       </div>
     </article>
   )
