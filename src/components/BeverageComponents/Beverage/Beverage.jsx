@@ -11,8 +11,7 @@ import './Beverage.css'
 function Beverage({ beverage, onClick: handleOnClick }) {
   const { name, style, source, abv, ibu, srm, description } = beverage
   const canEditBeverage = canEdit(beverage._id)
-  const handleClick = event => {
-    event.preventDefault()
+  const handleClick = () => {
     if (canEditBeverage) handleOnClick(beverage)
   }
   
@@ -20,7 +19,6 @@ function Beverage({ beverage, onClick: handleOnClick }) {
     <article
       className='beverage'
       data-id={ beverage._id }
-      onClick={ handleClick }
     >
       <BeverageHeader
         name={ name }
@@ -33,6 +31,7 @@ function Beverage({ beverage, onClick: handleOnClick }) {
         srm={ srm }
         description={ description }
         isEditable={ canEditBeverage }
+        onClick={ handleClick }
       />
     </article>
   )

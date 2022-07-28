@@ -1,9 +1,11 @@
 import React from 'react'
 
+import Button from '../../Common/Button/Button'
+
 import './BeverageSummary.css'
 
-
-function BeverageSummary({ abv, ibu, srm, description, isEditable }) {
+// { isEditable && <span className='edit-callout'>Click To Edit</span> }
+function BeverageSummary({ abv, ibu, srm, description, isEditable, onClick: handleOnClick }) {
   return (
     <div className={ `beverage-summary ${ isEditable ? 'editable' : '' }` }>
       <div className='number-values'>
@@ -18,7 +20,15 @@ function BeverageSummary({ abv, ibu, srm, description, isEditable }) {
         </span>
       </div>
       { description && <p>{ description }</p> }
-      { isEditable && <span className='edit-callout'>Click To Edit</span> }
+      {
+        isEditable
+        && <Button
+          text='Edit Beverage'
+          customClass='beverage-edit-button'
+          ariaLabel='edit beverage'
+          onClick={ handleOnClick }
+        />
+      }
     </div>
   )
 }
