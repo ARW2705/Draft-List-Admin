@@ -4,6 +4,8 @@ import base64ToBlobWorker from '../../shared/workers/base64-to-blob.worker'
 
 
 async function blobifyBase64Image(image64) {
+  if (!image64) return image64
+
   const contentType = RegExp(/(?:data:)(.*)(?:;)/g).exec(image64)[1]
   return new Promise((resolve, _) => {
     base64ToBlobWorker.onmessage = ({ data }) => resolve(data)
