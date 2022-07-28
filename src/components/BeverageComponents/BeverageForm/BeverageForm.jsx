@@ -101,9 +101,9 @@ function BeverageForm() {
 
       console.log('data build', beverageData)
       const response = await (
-        !!beverage
-        ? updateBeverage(beverage._id, beverageData)
-        : addNewBeverage(beverageData)
+        !beverage
+        ? addNewBeverage(beverageData)
+        : updateBeverage(beverage._id, beverageData)
       )
       console.log(response)
       setIsLoading(false)
