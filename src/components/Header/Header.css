@@ -20,7 +20,7 @@
 }
 
 .app-header.scroll-up,
-.app-header:focus-within {
+.app-header {
   top: 0;
 }
 
