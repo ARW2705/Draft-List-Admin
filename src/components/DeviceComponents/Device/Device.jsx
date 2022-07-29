@@ -50,7 +50,7 @@ function Device({ device, onClick: handleOnClick }) {
             onClick={ () => handleOnClick('edit', device) }
             isFlat={ true }
           />
-          <Divider color='primary-dark' />
+          <Divider color='secondary-dark' />
           <Button
             text={ `${activeDraftCount} Active Drafts`}
             customClass='draft-count-button'
