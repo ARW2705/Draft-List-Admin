@@ -48,6 +48,7 @@ function Device({ device, onClick: handleOnClick }) {
             text='Edit Device'
             customClass='device-edit-button'
             onClick={ () => handleOnClick('edit', device) }
+            isFlat={ true }
           />
           <Divider color='primary-dark' />
           <Button
@@ -55,6 +56,7 @@ function Device({ device, onClick: handleOnClick }) {
             customClass='draft-count-button'
             ariaLabel='nav to drafts by device'
             onClick={ () => handleOnClick('draft', device) }
+            isFlat={ true }
           />
         </div>
       </div>
