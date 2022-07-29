@@ -54,4 +54,8 @@ p {
   .beverage-summary {
     border-radius: 50px 0 0 0;
   }
+
+  .beverage-edit-button {
+    border-radius: 0;
+  }
 }
