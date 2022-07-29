@@ -39,8 +39,7 @@ p {
 }
 
 .beverage-edit-button {
-  align-self: center;
-  margin-bottom: 5px;
+  border-radius: 0 0 10px 0;
 }
 
 .edit-callout {

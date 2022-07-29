@@ -4,7 +4,7 @@ import Button from '../../Common/Button/Button'
 
 import './BeverageSummary.css'
 
-// { isEditable && <span className='edit-callout'>Click To Edit</span> }
+
 function BeverageSummary({ abv, ibu, srm, description, isEditable, onClick: handleOnClick }) {
   return (
     <div className={ `beverage-summary ${ isEditable ? 'editable' : '' }` }>
@@ -27,6 +27,7 @@ function BeverageSummary({ abv, ibu, srm, description, isEditable, onClick: hand
           customClass='beverage-edit-button'
           ariaLabel='edit beverage'
           onClick={ handleOnClick }
+          isFlat={ true }
         />
       }
     </div>
