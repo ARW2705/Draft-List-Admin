@@ -29,3 +29,17 @@
   -webkit-transform: translateY(2px);
   transform: translateY(2px);
 }
+
+.flat-button {
+  box-shadow: none !important;
+}
+
+.flat-button:disabled,
+.flat-button:disabled:hover {
+  box-shadow: none !important;
+}
+
+.flat-button:enabled:active {
+  transform: none !important;
+  box-shadow: none !important;
+}
