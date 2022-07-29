@@ -14,7 +14,7 @@
 }
 
 .beverage-summary.editable {
-  border-color: var(--primary-light);
+  border-color: var(--secondary);
 }
 
 .beverage-summary
