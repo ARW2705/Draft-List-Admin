@@ -52,4 +52,14 @@
   .nav-link.home-link {
     border-bottom: none !important;
   }
+
+  .navbar a:hover {
+    color: var(--text-dark);
+    background-color: var(--primary-light);
+    border-bottom: 5px solid var(--primary-light);
+  }
+
+  .navbar a.active:hover {
+    color: var(--text-dark);
+  }
 }
