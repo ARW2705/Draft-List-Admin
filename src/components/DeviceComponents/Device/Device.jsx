@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import Button from '../../Common/Button/Button'
 import Locale from '../../Locale/Locale'
+import Divider from '../../Common/Divider/Divider'
 
 import { IMAGE_BASE_URL } from '../../../shared/constants/image-base-url'
 
@@ -48,6 +49,7 @@ function Device({ device, onClick: handleOnClick }) {
             customClass='device-edit-button'
             onClick={ () => handleOnClick('edit', device) }
           />
+          <Divider color='primary-dark' />
           <Button
             text={ `${activeDraftCount} Active Drafts`}
             customClass='draft-count-button'
