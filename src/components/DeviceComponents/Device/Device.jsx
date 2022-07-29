@@ -49,7 +49,7 @@ function Device({ device, onClick: handleOnClick }) {
             onClick={ () => handleOnClick('edit', device) }
           />
           <Button
-            text={ `Active drafts: ${activeDraftCount}`}
+            text={ `${activeDraftCount} Active Drafts`}
             customClass='draft-count-button'
             ariaLabel='nav to drafts by device'
             onClick={ () => handleOnClick('draft', device) }
