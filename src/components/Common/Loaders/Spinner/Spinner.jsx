@@ -13,15 +13,15 @@ function Spinner({ text = 'Loading...', customClass = '' }) {
         viewBox="0 0 100 100"
       >
         <circle
-          cx="50"
-          cy="50"
+          cx="50%"
+          cy="50%"
           r="42"
         />
         <text
           x="50%"
           y="50%"
           textAnchor="middle"
-          dy="0.3rem"
+          dominantBaseline="middle"
         >
           { text }
         </text>
