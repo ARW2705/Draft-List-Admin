@@ -11,8 +11,7 @@ import './Drafts.css'
 function Drafts() {
   const location = useLocation()
   const navigate = useNavigate()
-  const handleOnClick = event => {
-    event.preventDefault()
+  const handleOnClick = () => {
     navigate(`${location.pathname}/form`)
   }
 

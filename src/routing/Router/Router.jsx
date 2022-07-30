@@ -4,7 +4,6 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Device    from '../routes/Devices/Devices'
 import Draft     from '../routes/Drafts/Drafts'
 import Beverages from '../routes/Beverages/Beverages'
-import Manage    from '../routes/Manage/Manage'
 import User      from '../routes/User/User'
 import App       from '../../App'
 
@@ -14,10 +13,9 @@ function Router() {
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<App />}>
-          <Route path='/manage' element={<Manage />} />
-          <Route path='/devices/*' element={<Device />} />
-          <Route path='/drafts/*' element={<Draft />} />
-          <Route path='/beverages/*' element={<Beverages />} />
+          <Route path='/draft/*' element={<Draft />} />
+          <Route path='/device/*' element={<Device />} />
+          <Route path='/beverage/*' element={<Beverages />} />
           <Route path='/user/*' element={<User />} />
         </Route>
       </Routes>
