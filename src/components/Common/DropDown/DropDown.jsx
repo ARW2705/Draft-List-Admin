@@ -8,9 +8,8 @@ import './DropDown.css'
 function DropDown({ customClass, title, items, handleOnSelect }) {
   const [ listItems, setListItems ] = useState([])
 
-  const handleOnClick = event => {
-    event.stopPropagation()
-    handleOnSelect(event.target.name.toLowerCase())
+  const handleOnClick = ({ name }) => {
+    handleOnSelect(name.toLowerCase())
   }
 
   useEffect(() => {
@@ -21,6 +20,7 @@ function DropDown({ customClass, title, items, handleOnSelect }) {
             customClass='drop-down'
             isDisabled={ false }
             text={ item }
+            onClick={ handleOnClick }
           />
         </li>
       )
@@ -30,7 +30,7 @@ function DropDown({ customClass, title, items, handleOnSelect }) {
   return (
     <div
       className={ `drop-down-container ${customClass || ''}`}
-      onClick={ handleOnClick }
+      
     >
       <span>{ title }</span>
       <ul>

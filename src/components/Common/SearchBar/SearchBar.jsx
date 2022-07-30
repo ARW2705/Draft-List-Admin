@@ -18,12 +18,15 @@ function SearchBar({ label, handleOnSubmit, customClass }) {
     setConfig(prevProps => ({ ...prevProps, value }))
   }
 
-  const handleSubmit = event => {
+  const handleKeyPress = event => {
     event.stopPropagation()
-    const { type, key } = event
-    if (type === 'click' || (type === 'keydown' && key.toLowerCase() === 'enter')) {
+    if (event.key.toLowerCase() === 'enter') {
       handleOnSubmit(config.value)
     }
+  }
+
+  const handleOnClick = () => {
+    handleOnSubmit(config.value)
   }
 
   useEffect(() => {
@@ -33,7 +36,7 @@ function SearchBar({ label, handleOnSubmit, customClass }) {
   return (
     <div
       className={ `search-bar ${ customClass }` }
-      onKeyDown={ handleSubmit }
+      onKeyDown={ handleKeyPress }
     >
       <FormInput
         config={ config }
@@ -46,7 +49,7 @@ function SearchBar({ label, handleOnSubmit, customClass }) {
         isDisabled={ false }
         customClass='search-button'
         name='search-button'
-        onClick={ handleSubmit }
+        onClick={ handleOnClick }
       />
     </div>
   )
