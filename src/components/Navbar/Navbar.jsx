@@ -10,7 +10,7 @@ import './Navbar.css'
 
 function Navbar() {
   const [ overrideOpen, setOverrideOpen ] = useState(false)
-  const links = ['Devices', 'Beverages', 'User'].map(pageName => {
+  const links = ['Draft', 'Device', 'Beverage', 'User'].map(pageName => {
     return <Nav name={ pageName } key={ pageName } />
   })
   const isSmallScreen = useMediaQuery({ query: '(max-width: 600px)' })

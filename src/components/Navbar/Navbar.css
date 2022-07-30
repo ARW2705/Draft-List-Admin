@@ -1,7 +1,3 @@
-#nav-home {
-  font-size: 2.25rem;
-}
-
 .navbar {
   height: 100%;
   width: 100%;
@@ -13,13 +9,19 @@
 }
 
 .nav-link.home-link {
-  padding: 0;
+  padding: 0 1% 0 0;
+  font-size: 2rem;
 }
 
 .other-links a.active,
 .other-links a.active:visited {
   color: var(--primary-light);
   border-bottom: 5px solid var(--primary-light);
+}
+
+.other-links a.active:hover {
+  color: var(--text-dark);
+  border-color: var(--primary);
 }
 
 .navbar a {
@@ -39,8 +41,8 @@
 
 .navbar a:hover {
   color: var(--text-dark);
-  background-color: var(--gray-medium);
-  border-bottom: 5px solid var(--gray-medium);
+  background-color: var(--primary-light);
+  border-bottom: 5px solid var(--primary-light);
 }
 
 .navbar .other-links {
