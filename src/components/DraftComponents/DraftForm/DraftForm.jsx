@@ -15,7 +15,17 @@ function DraftForm() {
   const draft = location.state?.draft
 
   let fields = {
-    
+    beverage: {
+      value: draft?.beverage || '',
+      element: 'select',
+      options: {
+        formOptions: [
+          { label: 'test1', value: 1 },
+          { label: 'test2', value: 2 },
+          { label: 'test3', value: 3 }
+        ]
+      }
+    }
   }
 
   const form = createForm({ fields })
@@ -38,11 +48,12 @@ function DraftForm() {
   
   const handleSubmit = async data => {
     if (!data) {
-      navigateBack()
+      // navigateBack()
     } else {
       formData.current = data
-      setIsLoading(true)
+      // setIsLoading(true)
     }
+    console.log(formData.current)
   }
 
   return (
