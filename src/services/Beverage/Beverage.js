@@ -1,4 +1,4 @@
-import { getBeverageById, queryBeverages, postBeverage, patchBeverage } from './Http/BeverageHttp'
+import { getBeverageById as getBeverageByIdFromServer, queryBeverages, postBeverage, patchBeverage } from './Http/BeverageHttp'
 import beverageStore from './Store/BeverageStore'
 import beverageQuery from './Query/BeverageQuery'
 import user from '../User/User'
@@ -12,7 +12,7 @@ function buildRequests(idList, storedBeverages) {
       if (fromStore) {
         return Promise.resolve(fromStore)
       }
-      return getBeverageById(id)
+      return getBeverageByIdFromServer(id)
     })
 }
 
@@ -80,6 +80,15 @@ async function getBeveragesByQuery(type, term, page, count) {
   return { beverages, errors }
 }
 
+async function getBeverageById(beverageId) {
+  const fromStorage = beverageStore.getBeverage(beverageId)
+  if (fromStorage) return fromStorage
+
+  const response = await getBeverageByIdFromServer(beverageId)
+  beverageStore.setBeverage(response)
+  return response
+}
+
 async function addNewBeverage(beverageData) {
   const beverageResponse = await postBeverage(beverageData)
   user.addBeverageToAuthoredList(beverageResponse)
@@ -101,6 +110,7 @@ export {
   getAuthoredBeverages,
   getPreviousBeverages,
   getBeveragesByQuery,
+  getBeverageById,
   addNewBeverage,
   updateBeverage,
   canEdit
