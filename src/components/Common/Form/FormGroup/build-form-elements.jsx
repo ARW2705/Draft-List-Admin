@@ -4,6 +4,7 @@ import FormCheckbox  from '../Checkbox/Checkbox'
 import FormFileInput from '../FileInput/FileInput'
 import ImageUpload   from '../ImageUpload/ImageUpload'
 import FormInput     from '../Input/Input'
+import FormSelect    from '../Select/Select'
 
 /**
  * Construct a form element component for each form field
@@ -11,12 +12,13 @@ import FormInput     from '../Input/Input'
  * @param: formFields - object containing config data for a form field
  *   A form field can use any of the following optional properties
  *     {
- *       value     : value to apply on first load, default is undefined
+ *       value: value to apply on first load, default is undefined
  *       validators: array of form validators to apply
- *       options   : {
+ *       options: {
  *         element: the type of form element, default is 'input'
- *         label  : element label
- *         type   : form input 'type' eg 'number' or 'email', default is 'text'
+ *         label: element label
+ *         type: form input 'type' eg 'number' or 'email', default is 'text'
+ *         selectOptions: array of options for 'select' form elements
  *       }
  *     }
  * @param: handleOnChange - callback function for onChange event
@@ -70,6 +72,16 @@ const buildFormElements = (formFields, handleOnChange) => {
         formComponents = [
           ...formComponents,
           <ImageUpload
+            key={ key }
+            config={ config }
+            handleOnChange={ handleOnChange }
+          />
+        ]
+        break
+      case 'select':
+        formComponents = [
+          ...formComponents,
+          <FormSelect
             key={ key }
             config={ config }
             handleOnChange={ handleOnChange }
