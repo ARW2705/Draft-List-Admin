@@ -36,7 +36,7 @@ class DeviceStore {
   }
 
   loadDevices() {
-    this.devices = JSON.parse(localStorage.get(this.storageKey))
+    this.devices = JSON.parse(localStorage.getItem(this.storageKey))
   }
 
   storeDevices() {

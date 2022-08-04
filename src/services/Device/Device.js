@@ -1,4 +1,4 @@
-import { getDeviceById, postDevice, patchDevice, confirmDevice } from './Http/DeviceHttp'
+import { getDeviceById as getDeviceByIdFromServer, postDevice, patchDevice, confirmDevice } from './Http/DeviceHttp'
 import deviceStore from './Store/DeviceStore'
 import userService from '../User/User'
 import buildGapRequests from '../../shared/utilities/build-gap-requests'
@@ -12,7 +12,7 @@ async function getDevices() {
   }
 
   const responses = await Promise.allSettled(
-    buildGapRequests(idList, storedDevices, getDeviceById)
+    buildGapRequests(idList, storedDevices, getDeviceByIdFromServer)
   )
   let devices = [], errors = []
   responses.forEach(response => {
@@ -25,6 +25,13 @@ async function getDevices() {
 
   deviceStore.setDevices(devices)
   return { devices, errors }
+}
+
+function getDeviceById(deviceId) {
+  if (!userService.getDeviceList().includes(deviceId)) {
+    throw new Error('Device does not belong to user')
+  }
+  return deviceStore.getDevice(deviceId) 
 }
 
 async function addNewDevice(device) {
@@ -47,6 +54,7 @@ async function confirm(confirmation) {
 
 export {
   getDevices,
+  getDeviceById,
   addNewDevice,
   updateDevice,
   confirm
