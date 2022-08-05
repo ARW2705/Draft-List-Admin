@@ -39,6 +39,7 @@ function DraftList() {
       components = [
         ...components,
         <DraftGroup
+          key={ key }
           deviceName={ deviceName }
           draftComponents={ buildDraftComponents(drafts) }
         />
