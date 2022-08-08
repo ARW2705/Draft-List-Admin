@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import buildFormElements from './build-form-elements'
 import buildFormGroup    from './build-form-group'
 import FormError         from '../FormError/FormError'
-import Button            from '../../Button/Button'
+import FormButtons       from '../FormButtons/FormButtons'
 
 import { validateForm } from '../../../../shared/validators/validators'
 
@@ -64,28 +64,14 @@ function FormGroup(props) {
         noValidate
       >
         { formComponents }
-        {
-          <FormError
-            name='form'
-            errors={ formErrors }
-          />
-        }
-        <div className='form-button-container'>
-          <Button
-            text='Cancel'
-            customClass='form-button'
-            isDisabled={ false }
-            name='cancel-button'
-            onClick={ () => handleClick('cancel') }
-          />
-          <Button
-            text='Submit'
-            customClass='form-button'
-            isDisabled={ disableButton }
-            name='submit-button'
-            onClick={ () => handleClick('submit') }
-          />
-        </div>
+        <FormError
+          name='form'
+          errors={ formErrors }
+        />
+        <FormButtons
+          isDisabled={ disableButton }
+          onClick={ handleClick }
+        />
       </form>
     </>
   )

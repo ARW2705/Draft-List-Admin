@@ -5,19 +5,9 @@
   margin: 3%;
 }
 
-.form-button {
-  font-size: 1.5rem;
-  margin: 15px 0;
-}
-
 .form-title {
   text-align: center;
   color: var(--primary);
   font-size: 2rem;
   margin: 2% 0;
-}
-
-.form-button-container {
-  display: flex;
-  justify-content: space-around;
 }
