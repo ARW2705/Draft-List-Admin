@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 
 import Button from '../Button/Button'
 
@@ -8,9 +8,9 @@ import './DropDown.css'
 function DropDown({ customClass, title, items, onSelect: handleOnSelect }) {
   const [ listItems, setListItems ] = useState([])
 
-  const handleOnClick = ({ name }) => {
+  const handleOnClick = useCallback(({ name }) => {
     handleOnSelect(name.toLowerCase())
-  }
+  }, [handleOnSelect])
 
   useEffect(() => {
     setListItems(items.map((item, index) => {
@@ -25,13 +25,10 @@ function DropDown({ customClass, title, items, onSelect: handleOnSelect }) {
         </li>
       )
     }))
-  }, [items])
+  }, [items, handleOnClick])
 
   return (
-    <div
-      className={ `drop-down-container ${customClass || ''}`}
-      
-    >
+    <div className={ `drop-down-container ${customClass || ''}` }>
       <span>{ title }</span>
       <ul>
         { listItems }
