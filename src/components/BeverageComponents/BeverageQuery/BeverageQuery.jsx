@@ -66,7 +66,7 @@ function BeverageQuery({ onConfigUpdate }) {
               customClass='search-by-menu'
               title='Search By'
               items={ ['Name', 'Source', 'Style'] }
-              handleOnSelect={ handleSearchOnSelect }
+              onSelect={ handleSearchOnSelect }
             />
           )
         }

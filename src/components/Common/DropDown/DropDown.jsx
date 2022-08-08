@@ -5,7 +5,7 @@ import Button from '../Button/Button'
 import './DropDown.css'
 
 
-function DropDown({ customClass, title, items, handleOnSelect }) {
+function DropDown({ customClass, title, items, onSelect: handleOnSelect }) {
   const [ listItems, setListItems ] = useState([])
 
   const handleOnClick = ({ name }) => {
