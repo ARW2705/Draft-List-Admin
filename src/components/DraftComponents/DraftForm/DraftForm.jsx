@@ -1,104 +1,69 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
+import React, { useCallback, useEffect, useReducer, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
-import FormGroup from '../../Common/Form/FormGroup/FormGroup'
-import DropDown from '../../Common/DropDown/DropDown'
+import FormButtons from '../../Common/Form/FormButtons/FormButtons'
 import Spinner from '../../Common/Loaders/Spinner/Spinner'
-import SearchBar from '../../Common/SearchBar/SearchBar'
-import BeverageSimpleView from '../../BeverageComponents/BeverageSimpleView/BeverageSimpleView'
+import BeverageSelect from './BeverageSelect/BeverageSelect'
+import ContainerSelect from './ContainerSelect/ContainerSelect'
+import SelectionPreview from './SelectionPreview/SelectionPreview'
+import DeviceSelect from './DeviceSelect/DeviceSelect'
 
 import { addNewDraft, updateDraft } from '../../../services/Draft/Draft'
-import { getPreviousBeverages, getBeveragesByQuery } from '../../../services/Beverage/Beverage'
-import createForm from '../../../shared/form/create-form'
-import Button from '../../Common/Button/Button'
-import { getAllContainers } from '../../../services/Container/Container'
 
 
 function DraftForm() {
-  const [ isLoading, setIsLoading ] = useState(false)
-  const [ previousBeverages, setPreviousBeverages ] = useState(null)
-  const [ searchResult, setSearchResult ] = useState(null)
-  const [ containers, setContainers ] = useState([])
-  const [ selectedContainer, setSelectedContainer ] = useState(null)
-  const formData = useRef({ beverage: null, container: null })
+  const reducer = (state, action) => {
+    switch(action.type) {
+      case 'beverage':
+        return { ...state, beverage: action.beverage }
+      case 'container':
+        return { ...state, container: action.container }
+      case 'device':
+        return { ...state, device: action.device }
+      default:
+        throw new Error(`Invalid form category type: ${action.type}`)
+    }
+  }
 
+  const [ { beverage, container, device }, dispatch ] = useReducer(
+    reducer,
+    { beverage: null, container: null, device: null }
+  )
+
+  const [ disableSubmit, setDisableSubmit ] = useState(true)
+  const [ isLoading, setIsLoading ] = useState(false)
+
+  useEffect(() => {
+    setDisableSubmit(!(beverage && container && device))
+  }, [beverage, container, device])
+  
   const navigate = useNavigate()
   const navigateBack = useCallback(() => {
     navigate(-1)
   }, [navigate])
 
-  const submitForm = useCallback(() => {
-    console.log('submitting', formData.current)
-
-  }, [navigateBack])
-
-  const buildPreviousList = useCallback(beverageList => {
-    if (!beverageList.length) return <div>No previously used beverages...</div>
-
-    return (
-      <div className='previous-beverage-list-container'>
-        {
-          beverageList.map(beverage => (
-            <BeverageSimpleView
-              key={ beverage._id }
-              onClick={ handleBeverageClick }
-              { ...beverage }
-            />
-          ))
-        }
-      </div>
-    )
-  }, [])
-
-  useEffect(() => {
-    async function getContainers() {
-      const containers = await getAllContainers()
-      let containerArray = []
-      for (const key in containers) {
-        containerArray = [...containerArray, containers[key]]
-      }
-      setContainers(containers)
-    }
-    getContainers()
-  }, [])
-
-  useEffect(() => {
-    async function getRecentBeverages() {
-      const { beverages, errors } = await getPreviousBeverages(0, 5)
-      console.log('got previous', beverages)
-      setPreviousBeverages(buildPreviousList(beverages))
-    }
-    getRecentBeverages()
-  }, [buildPreviousList])
-  
-  const handleSearchOnSubmit = async searchTerm => {
-    const { beverages, errors } = await getBeveragesByQuery('name', searchTerm, 0, 1)
-    setSearchResult(
-      beverages.length
-      ? <BeverageSimpleView
-          onClick={ handleBeverageClick }
-          { ...beverages[0] }
-        />
-      : <div>{ `'${searchTerm}' not found` }</div>
-    )
-  }
-
-  const handleBeverageClick = (_, beverageId) => {
-    formData.current = { ...formData.current, beverage: beverageId }
-  }
-
-  const handleOnSelect = name => {
-    console.log(name)
-    const selected = containers.find(container => container.name.toLowerCase() === name) || ''
-    setSelectedContainer(selected)
-    formData.current = {
-      ...formData.current,
+  const submitDraft = async () => {
+    const draftData = {
+      beverage: beverage._id,
       container: {
-        containerInfo: selected._id,
-        quantity: selected.capacity
+        containerInfo: container._id,
+        quantity: container.capacity,
+        contentColor: container.contentColor
       }
     }
+
+    console.log(draftData)
   }
+
+  const handleSubmit = buttonName => {
+    if (buttonName === 'submit') {
+      submitDraft()
+    } else if (buttonName === 'cancel') {
+      navigateBack()
+    }
+  }
+  
+  const handleOnSelect = (type, data) => dispatch({ type, [type]: data })
 
   return (
     <div className='draft-form-container'>
@@ -111,25 +76,17 @@ function DraftForm() {
           />
         )
       }
-      <div className='beverage-selection-container'>
-        <SearchBar
-          handleOnSubmit={ handleSearchOnSubmit }
-          label='Beverage Name'
-        />
-        { searchResult ?? <></> }
-        <div className='most-recent-list-container'>
-          { previousBeverages ?? <Spinner /> }
-        </div>
-      </div>
-      <div className='container-selection-container'>
-        <DropDown
-          title='Select a Container'
-          items={ containers.map(containers => containers.name) }
-          customClass='container-dropdown'
-          onSelect={ handleOnSelect }
-        />
-        { selectedContainer && <div>{ selectedContainer.name }</div> }
-      </div>
+      <DeviceSelect onSelect={ data => handleOnSelect('device', data) } />
+      <BeverageSelect onSelect={ data => handleOnSelect('beverage', data) } />
+      <ContainerSelect onSelect={ data => handleOnSelect('container', data) } />
+      <SelectionPreview
+        beverage={ beverage }
+        container={ container }
+      />
+      <FormButtons
+        isDisabled={ disableSubmit }
+        onClick={ handleSubmit }
+      />
     </div>
   )
 }
