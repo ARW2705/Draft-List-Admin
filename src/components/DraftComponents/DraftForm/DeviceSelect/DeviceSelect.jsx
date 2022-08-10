@@ -11,8 +11,8 @@ import './DeviceSelect.css'
 function DeviceSelect({ onSelect: handleOnSelect }) {
   const [ devices, setDevices ] = useState([])
 
-  const handleClick = useCallback(async (_, deviceId) => {
-    handleOnSelect(await getDeviceById(deviceId))
+  const handleClick = useCallback(async (_, { _id }) => {
+    handleOnSelect(await getDeviceById(_id))
   }, [handleOnSelect])
 
   const buildDeviceList = useCallback(deviceList => {
@@ -33,13 +33,13 @@ function DeviceSelect({ onSelect: handleOnSelect }) {
         }
       </div>
     )
-  })
+  }, [handleClick])
 
   useEffect(() => {
     async function getAllDevices() {
       const { devices, errors } = await getDevices()
       console.log('got devices', devices)
-      setDevices(devices)
+      setDevices(buildDeviceList(devices))
     }
     getAllDevices()
   }, [buildDeviceList])
