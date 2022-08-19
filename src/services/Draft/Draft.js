@@ -1,13 +1,8 @@
 import buildGapRequests from '../../shared/utilities/build-gap-requests'
 import getPaginated from '../../shared/utilities/get-paginated'
 import { getDevices, getDeviceById } from '../Device/Device'
-<<<<<<< HEAD
-import { getDraftById, postDraft } from './Http/DraftHttp'
-import draftStore from './Store/DraftStore'
-=======
 import { getDraftById, postDraft, patchDraft } from './Http/DraftHttp'
 import draftStore from './DraftStore/DraftStore'
->>>>>>> wip-feature-draft-service
 
 
 async function getDraft(draftId) {
@@ -62,20 +57,8 @@ async function getActiveDrafts() {
   return activeDraftsByDevice
 }
 
-<<<<<<< HEAD
-/**
- * Add a new draft to the device
- * 
- * @param: deviceId - id of device to which the draft belongs
- * @param: draft - the new draft
- * @return: submitted draft response
- */
-async function addNewDraft(deviceId, draft) {
-  const draftResponse = await postDraft(deviceId, draft)
-=======
 async function addNewDraft(deviceId, draftData) {
   const draftResponse = await postDraft(deviceId, draftData)
->>>>>>> wip-feature-draft-service
   draftStore.setDraft(draftResponse)
   return draftResponse
 }
