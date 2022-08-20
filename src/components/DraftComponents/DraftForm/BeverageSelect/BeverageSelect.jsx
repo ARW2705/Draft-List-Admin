@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 
 import SearchBar  from '../../../Common/SearchBar/SearchBar'
 import SimpleView from '../../../Common/SimpleView/SimpleView'
@@ -10,6 +10,7 @@ import './BeverageSelect.css'
 
 
 function BeverageSelect({ onSelect: handleOnSelect }) {
+  const initialBuild = useRef(true)
   const [ searchResult, setSearchResult ] = useState(null)
   const [ previousBeverages, setPreviousBeverages ] = useState(null)
 
@@ -58,7 +59,11 @@ function BeverageSelect({ onSelect: handleOnSelect }) {
       console.log('got previous', beverages)
       setPreviousBeverages(buildPreviousList(beverages))
     }
-    getRecentBeverages()
+    
+    if (initialBuild.current) {
+      getRecentBeverages()
+      initialBuild.current = false
+    }
   }, [buildPreviousList])
 
   return (
