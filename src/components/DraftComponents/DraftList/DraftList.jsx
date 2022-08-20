@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 import Draft from '../Draft/Draft'
@@ -10,6 +10,7 @@ import './DraftList.css'
 
 
 function DraftList() {
+  const onInit = useRef(true)
   const [ components, setComponents ] = useState([])
 
   const location = useLocation()
@@ -49,13 +50,21 @@ function DraftList() {
     return components
   }, [buildDraftComponents])
 
-  useEffect(() => {
+  const buildDraftList = useCallback(() => {
     async function getList() {
       const draftCollection = await getActiveDrafts()
       setComponents(buildGroupContainers(draftCollection))
     }
     getList()
   }, [buildGroupContainers])
+
+  useEffect(() => {
+    if (onInit.current || location.pathname === '/draft') {
+      console.log('build draft list')
+      buildDraftList()
+      onInit.current = false
+    }
+  }, [location, buildDraftList])
 
   return (
     <div className='draft-list-container'>
