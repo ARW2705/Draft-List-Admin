@@ -7,9 +7,8 @@ import './Draft.css'
 
 function Draft({ draft, onClick: handleOnClick }) {
   const { container } = draft
-  const { quantity, containerInfo } = container
-  const { type, capacity } = containerInfo
-  console.log(quantity, type, capacity)
+  const { quantity, containerInfo, contentColor } = container
+  const { type, name, capacity } = containerInfo
   const [ beverage, setBeverage ] = useState(null)
 
   useEffect(() => {
@@ -21,7 +20,8 @@ function Draft({ draft, onClick: handleOnClick }) {
 
   return (
     <div className='draft-container'>
-      
+      <span>{ beverage.title || beverage.name }</span>
+      <span>{ name }</span>
     </div>
   )
 }
