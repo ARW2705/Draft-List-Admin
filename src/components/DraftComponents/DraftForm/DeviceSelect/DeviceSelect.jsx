@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 
 import SimpleView from '../../../Common/SimpleView/SimpleView'
 import Spinner from '../../../Common/Loaders/Spinner/Spinner'
@@ -9,6 +9,7 @@ import './DeviceSelect.css'
 
 
 function DeviceSelect({ onSelect: handleOnSelect }) {
+  const initialBuild = useRef(true)
   const [ devices, setDevices ] = useState([])
 
   const handleClick = useCallback(async (_, { _id }) => {
@@ -41,7 +42,11 @@ function DeviceSelect({ onSelect: handleOnSelect }) {
       console.log('got devices', devices)
       setDevices(buildDeviceList(devices))
     }
-    getAllDevices()
+
+    if (initialBuild.current) {
+      getAllDevices()
+      initialBuild.current = false
+    }
   }, [buildDeviceList])
 
   return (
