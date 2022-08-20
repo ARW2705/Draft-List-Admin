@@ -7,7 +7,7 @@ async function getDraftById(draftId) {
 }
 
 async function postDraft(deviceId, draftData) {
-  return await post(`${draftRouteURL}/devices/${deviceId}`, draftData)
+  return await post(`${draftRouteURL}/device/${deviceId}`, draftData)
 }
 
 async function patchDraft(draftId, draftData) {
