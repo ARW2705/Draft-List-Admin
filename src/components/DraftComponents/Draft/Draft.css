@@ -1,0 +1,6 @@
+.draft-container {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px dotted var(--gray-dark);
+  margin: 10px 0;
+}
