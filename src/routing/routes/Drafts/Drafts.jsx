@@ -21,7 +21,7 @@ function Drafts() {
         <Route
           path='/'
           element={
-            <div className='draft-container'>
+            <div className='drafts-container'>
               <Button
                 text='Add New Draft'
                 name='new-draft'
