@@ -1,0 +1,27 @@
+.draft-group-container {
+  width: 80%;
+  margin: 10px auto;
+  border: 2px solid var(--gray-dark);
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.draft-group {
+  padding: 1%;
+}
+
+.draft-group-list-header {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 0 2% 0;
+  border-bottom: 2px solid var(--gray-dark);
+}
+
+.draft-device-name {
+  margin: 0;
+  padding: 1%;
+  font-size: 3.5vw;
+  text-align: center;
+  background-color: var(--gray-dark);
+  color: var(--light);
+}
