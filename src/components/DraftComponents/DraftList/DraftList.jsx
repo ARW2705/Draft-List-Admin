@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 
 import Draft from '../Draft/Draft'
 import DraftGroup from '../DraftGroup/DraftGroup'
@@ -13,25 +13,11 @@ function DraftList() {
   const onInit = useRef(true)
   const [ components, setComponents ] = useState([])
 
-  const location = useLocation()
-  const navigate = useNavigate()
-  const handleOnClick = useCallback(draft => {
-    navigate(`${location.pathname}/form`, { state: { draft } })
-  }, [navigate, location.pathname])
-
   const buildDraftComponents = useCallback(drafts => {
-    if (!drafts.length) return <p className='empty-list'>Nothing here...</p>
+    if (!drafts.length) return <p className='empty-list'>Device has no active drafts</p>
   
-    return drafts.map(draft => {
-      return (
-        <Draft
-          key={ draft._id }
-          draft={ draft }
-          onClick={ handleOnClick }
-        />
-      )
-    })
-  }, [handleOnClick])
+    return drafts.map(draft => (<Draft key={ draft._id } draft={ draft } />))
+  }, [])
 
   const buildGroupContainers = useCallback(draftCollection => {
     let components = []
@@ -41,6 +27,7 @@ function DraftList() {
         ...components,
         <DraftGroup
           key={ key }
+          deviceId={ key }
           deviceName={ deviceName }
           draftComponents={ buildDraftComponents(drafts) }
         />
@@ -58,6 +45,7 @@ function DraftList() {
     getList()
   }, [buildGroupContainers])
 
+  const location = useLocation()
   useEffect(() => {
     if (onInit.current || location.pathname === '/draft') {
       console.log('build draft list')
