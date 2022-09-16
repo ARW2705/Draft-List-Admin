@@ -1,6 +1,42 @@
 .draft-container {
-  display: flex;
-  flex-direction: column;
+  --image-width: 20vw;
+  --width-minus-image: calc(100% - var(--image-width));
+  --content-item-width: calc(var(--width-minus-image) * 0.3);
+  --content-divider-width: calc(var(--width-minus-image) * 0.045);
+  
+  display: grid;
+  align-items: center;
+  grid-template-columns:
+    [col-1] 20vw
+    [col-2] calc(var(--width-minus-image) * .01)
+    [col-3] var(--content-item-width)
+    [col-4] var(--content-divider-width)
+    [col-5] var(--content-item-width)
+    [col-6] var(--content-divider-width)
+    [col-7] var(--content-item-width);
+  grid-template-rows:
+    [row-1] 50%
+    [row-2] 100%
+    [row-3];
   border-bottom: 1px dotted var(--gray-dark);
   margin: 10px 0;
+  text-align: center;
+  font-size: 2.5vw;
 }
+
+.draft-beverage-label {
+  width: var(--image-width);
+  aspect-ratio: 1;
+  grid-column: col-1;
+  grid-row: row-1 / row-3;
+}
+
+.draft-content-a { grid-column: col-3; }
+.draft-content-b { grid-column: col-4; }
+.draft-content-c { grid-column: col-5; }
+.draft-content-d { grid-column: col-6; }
+.draft-content-e { grid-column: col-7; }
+
+.draft-button-a { grid-column: col-3; }
+.draft-button-b { grid-column: col-5; }
+.draft-button-c { grid-column: col-7; }
