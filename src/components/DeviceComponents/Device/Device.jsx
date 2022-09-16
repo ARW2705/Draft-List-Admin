@@ -3,40 +3,25 @@ import React, { useEffect, useState } from 'react'
 import Button from '../../Common/Button/Button'
 import Locale from '../../Locale/Locale'
 import Divider from '../../Common/Divider/Divider'
-
-import { IMAGE_BASE_URL } from '../../../shared/constants/image-base-url'
-
-import { getImage } from '../../../services/Image/Image'
+import Image from '../../Common/Image/Image'
 
 import './Device.css'
 
 
 function Device({ device, onClick: handleOnClick }) {
   const { name, title, imageURL, locale, draftList } = device
-  const [ fullImageURL, setFullImageURL ] = useState('')
   const [ activeDraftCount, setActiveDraftCount ] = useState(null)
 
   useEffect(() => {
     setActiveDraftCount(draftList.reduce((acc, curr) => acc + curr.isActive ? 1 : 0, 0))
   }, [draftList])
 
-  useEffect(() => {
-    if (imageURL) {
-      async function getAsyncImage() {
-        setFullImageURL(await getImage(`${IMAGE_BASE_URL}/${imageURL}`))
-      }
-      getAsyncImage()
-    } else {
-      setFullImageURL('')
-    }
-  }, [imageURL])
-
   return (
     <article className='device'>
-      <img
-        className='device-image'
-        src={ fullImageURL }
+      <Image
+        imageURL={ imageURL }
         alt='device logo'
+        customClass='device-image'
       />
       <div className='right-side'>
         <div className='device-identifier'>
