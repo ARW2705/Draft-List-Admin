@@ -1,3 +1,4 @@
+import { IMAGE_BASE_URL } from '../../shared/constants/image-base-url'
 import imageStore from './Store/ImageStore'
 import { get } from '../HttpClient/HttpClient'
 import base64ToBlobWorker from '../../shared/workers/base64-to-blob.worker'
@@ -25,7 +26,8 @@ async function fetchImageAsBase64(url) {
   })
 }
 
-async function getImage(url) {
+async function getImage(imageURL) {
+  const url = `${IMAGE_BASE_URL}/${imageURL}`
   const fromStore = imageStore.getImage(url)
   if (fromStore) return fromStore
 
