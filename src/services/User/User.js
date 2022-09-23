@@ -16,8 +16,7 @@ class User {
       _id: null,
       username: null,
       email: null,
-      authoredList: [],
-      previousList: [],
+      beverageList: [],
       deviceList: []
     })
   }
@@ -26,12 +25,8 @@ class User {
     return this.user$
   }
 
-  getAuthoredList() {
-    return this.user$.value.authoredList
-  }
-
-  getPreviousList() {
-    return this.user$.value.previousList
+  getBeverageList() {
+    return this.user$.value.beverageList
   }
 
   getDeviceList() {
@@ -52,16 +47,12 @@ class User {
     if (storedUser) this.setUser(storedUser)
   }
 
-  addBeverageToAuthoredList(beverage) {
+  addBeverageToList(beverage) {
     const user = this.user$.value
     this.setUser({
       ...user,
-      authoredList: [...user.authoredList, beverage._id]
+      beverageList: [...user.beverageList, beverage._id]
     })
-  }
-
-  isAuthoredBeverage(beverageId) {
-    return this.user$.value.authoredList.some(authoredId => authoredId === beverageId)
   }
 
   handleUserResponse(user, remember) {
@@ -70,8 +61,7 @@ class User {
       _id: user._id,
       username: user.username,
       email: user.email,
-      authoredList: user.authoredList,
-      previousList: user.previousList,
+      beverageList: user.beverageList,
       deviceList: user.deviceList
     }
     this.setUser(newUser)
@@ -126,8 +116,7 @@ class User {
       _id: null,
       username: null,
       email: null,
-      authoredList: [],
-      previousList: [],
+      beverageList: [],
       deviceList: []
     })
     this.remember = false
