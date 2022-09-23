@@ -10,15 +10,16 @@ import './Beverages.css'
 
 
 function Beverages() {
-  const [ listConfig, setListConfig ] = useState({
-    listType: 'authored',
+  const defaultConfig = {
     pageNum: 0,
     pageCount: 25,
     searchType: '',
     searchTerm: ''
-  })
+  }
 
-  const onConfigUpdate = config => setListConfig(config)
+  const [ listConfig, setListConfig ] = useState(defaultConfig)
+
+  const onConfigUpdate = config => setListConfig(config ?? defaultConfig)
   const location = useLocation()
   const navigate = useNavigate()
   const handleOnClick = () => navigate(`${location.pathname}/form`)
