@@ -46,31 +46,25 @@ async function queryBeveragesFromServer(type, term, page, count) {
   }
 }
 
-async function getAuthoredBeverages(page, count) {
-  return await getBeverageListByIds(getPaginated(user.getAuthoredList(), page, count))
-}
-
-async function getPreviousBeverages(page, count) {
-  return await getBeverageListByIds(getPaginated(user.getPreviousList(), page, count))
+async function getBeverageList(page, count) {
+  return await getBeverageListByIds(getPaginated(user.getBeverageList(), page, count))
 }
 
 async function getBeveragesByQuery(type, term, page, count) {
   const cachedIds = beverageQuery.getIdsByQuery(type, term, page, count)
-  const fromCache = await getBeverageListByIds(cachedIds)
-  if (fromCache.length === count) {
-    return fromCache
+  let { beverages, errors } = await getBeverageListByIds(cachedIds)
+  if (beverages.length === count) {
+    return beverages
   }
 
-  const fromServer = await queryBeveragesFromServer(type, term, page, count - fromCache.length)
-  const isErrorResponse = !Array.isArray(fromServer)
-  let { beverages, errors } = fromCache
-  console.log(fromCache, fromServer)
+  const beveragesFromServer = await queryBeveragesFromServer(type, term, page, count - beverages.length)
+  const isErrorResponse = !Array.isArray(beveragesFromServer)
   if (isErrorResponse) {
-    errors = [...errors, fromServer]
+    errors = [...errors, beveragesFromServer]
   } else {
     const unique = new Set()
     beverages.forEach(beverage => unique.add(beverage._id))
-    fromServer.forEach(beverage => {
+    beveragesFromServer.forEach(beverage => {
       if (!unique.has(beverage._id)) {
         beverages = [...beverages, beverage]
       }
@@ -91,7 +85,7 @@ async function getBeverageById(beverageId) {
 
 async function addNewBeverage(beverageData) {
   const beverageResponse = await postBeverage(beverageData)
-  user.addBeverageToAuthoredList(beverageResponse)
+  user.addBeverageToList(beverageResponse)
   return beverageResponse
 }
 
@@ -101,17 +95,11 @@ async function updateBeverage(beverageId, beverageData) {
   return beverageResponse
 }
 
-function canEdit(beverageId) {
-  return user.isAuthoredBeverage(beverageId)
-}
-
 
 export {
-  getAuthoredBeverages,
-  getPreviousBeverages,
+  getBeverageList,
   getBeveragesByQuery,
   getBeverageById,
   addNewBeverage,
-  updateBeverage,
-  canEdit
+  updateBeverage
 }
