@@ -5,9 +5,9 @@ import Button from '../../Common/Button/Button'
 import './BeverageSummary.css'
 
 
-function BeverageSummary({ abv, ibu, srm, description, isEditable, onClick: handleOnClick }) {
+function BeverageSummary({ abv, ibu, srm, description, customClass, onClick: handleOnClick }) {
   return (
-    <div className={ `beverage-summary ${ isEditable ? 'editable' : '' }` }>
+    <div className={ `beverage-summary ${ customClass ?? '' }` }>
       <div className='number-values'>
         <span>
           ABV <span className='value'>{ abv ? `${abv}%` : '--' }</span>
@@ -20,16 +20,13 @@ function BeverageSummary({ abv, ibu, srm, description, isEditable, onClick: hand
         </span>
       </div>
       { description && <p>{ description }</p> }
-      {
-        isEditable
-        && <Button
-          text='Edit Beverage'
-          customClass='beverage-edit-button'
-          ariaLabel='edit beverage'
-          onClick={ handleOnClick }
-          isFlat={ true }
-        />
-      }
+      <Button
+        text='Edit Beverage'
+        customClass='beverage-edit-button'
+        ariaLabel='edit beverage'
+        onClick={ handleOnClick }
+        isFlat={ true }
+      />
     </div>
   )
 }
