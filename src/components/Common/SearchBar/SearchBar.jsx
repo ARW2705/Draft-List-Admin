@@ -13,6 +13,7 @@ function SearchBar({ label, handleOnSubmit, customClass }) {
     type: 'text',
     label: label || 'Search...'
   })
+  const [ showResetButton, setShowResetButton ] = useState(false)
 
   const handleOnChange = (_, value) => {
     setConfig(prevProps => ({ ...prevProps, value }))
@@ -25,8 +26,14 @@ function SearchBar({ label, handleOnSubmit, customClass }) {
     }
   }
 
-  const handleOnClick = () => {
-    handleOnSubmit(config.value)
+  const handleOnClick = ({ name }) => {
+    if (name === 'search-button') {
+      setShowResetButton(true)
+      handleOnSubmit(config.value)
+    } else if (name === 'reset-button') {
+      setShowResetButton(false)
+      handleOnSubmit(null)
+    }
   }
 
   useEffect(() => {
@@ -43,6 +50,19 @@ function SearchBar({ label, handleOnSubmit, customClass }) {
         handleOnChange={ handleOnChange }
         customClass='search-input'
       />
+      {
+        showResetButton
+        && (
+          <Button
+            text='reset'
+            isIcon={ true }
+            isDisabled={ false }
+            customClass='reset-button'
+            name='reset-button'
+            onClick={ handleOnClick }
+          />
+        )
+      }
       <Button
         text='search'
         isIcon={ true }
