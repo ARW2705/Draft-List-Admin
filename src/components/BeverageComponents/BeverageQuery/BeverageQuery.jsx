@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 
-import BeverageCategory from '../../../components/BeverageComponents/BeverageCategory/BeverageCategory'
 import DropDown         from '../../../components/Common/DropDown/DropDown'
 import SearchBar        from '../../../components/Common/SearchBar/SearchBar'
 import FormError        from '../../../components/Common/Form/FormError/FormError'
@@ -10,24 +9,28 @@ import './BeverageQuery.css'
 
 function BeverageQuery({ onConfigUpdate }) {
   const defaultSearchLabel = 'Search...'
-
-  const [ searchLabel, setSearchLabel ] = useState(defaultSearchLabel)
-  const [ searchError, setSearchError ] = useState(null)
-  const [ searchClass, setSearchClass ] = useState('')
-  const [ listConfig, setListConfig ] = useState({
-    listType: 'authored',
+  const defaultConfig = {
     pageNum: 0,
     pageCount: 25,
     searchType: '',
     searchTerm: ''
-  })
+  }
+
+  const [ searchLabel, setSearchLabel ] = useState(defaultSearchLabel)
+  const [ searchError, setSearchError ] = useState(null)
+  const [ listConfig, setListConfig ] = useState(defaultConfig)
 
   useEffect(() => {
     onConfigUpdate(listConfig)
-    setSearchClass(listConfig.listType === 'search' ? 'shrink-to-dropdown' : '')
   }, [onConfigUpdate, listConfig])
 
-  const handleSearchOnSubmit = async searchTerm => {
+  const handleSearchOnSubmit = searchTerm => {
+    if (searchTerm === null) {
+      setSearchError(null)
+      setListConfig(defaultConfig)
+      return
+    }
+
     let errors = {}
     if (!searchTerm.length) {
       errors = { searchTerm: 'Please enter a search term' }
@@ -50,30 +53,19 @@ function BeverageQuery({ onConfigUpdate }) {
     setListConfig(prevProps => ({ ...prevProps, searchType }))
   }
 
-  const handleSelectCategory = listType => {
-    setSearchLabel(defaultSearchLabel)
-    setListConfig(prevProps => ({ ...prevProps, listType }))
-  }
-
   return(
     <div className='beverage-query'>
-      <BeverageCategory handleSelectCategory={ handleSelectCategory } />
       <div className='search-container'>
-        {
-          listConfig.listType === 'search'
-          && (
-            <DropDown
-              customClass='search-by-menu'
-              title='Search By'
-              items={ ['Name', 'Source', 'Style'] }
-              onSelect={ handleSearchOnSelect }
-            />
-          )
-        }
+        <DropDown
+          customClass='search-by-menu'
+          title='Search By'
+          items={ ['Name', 'Source', 'Style'] }
+          onSelect={ handleSearchOnSelect }
+        />
         <SearchBar
           handleOnSubmit={ handleSearchOnSubmit }
           label={ searchLabel }
-          customClass={ searchClass }
+          customClass='shrink-to-dropdown'
         />
         {
           searchError
