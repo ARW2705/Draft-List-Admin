@@ -3,17 +3,11 @@ import React from 'react'
 import BeverageHeader  from '../BeverageHeader/BeverageHeader'
 import BeverageSummary from '../BeverageSummary/BeverageSummary'
 
-import { canEdit } from '../../../services/Beverage/Beverage'
-
 import './Beverage.css'
 
 
 function Beverage({ beverage, onClick: handleOnClick }) {
   const { name, style, source, abv, ibu, srm, description } = beverage
-  const canEditBeverage = canEdit(beverage._id)
-  const handleClick = () => {
-    if (canEditBeverage) handleOnClick(beverage)
-  }
   
   return (
     <article
@@ -30,8 +24,7 @@ function Beverage({ beverage, onClick: handleOnClick }) {
         ibu={ ibu }
         srm={ srm }
         description={ description }
-        isEditable={ canEditBeverage }
-        onClick={ handleClick }
+        onClick={ () => handleOnClick(beverage) }
       />
     </article>
   )
