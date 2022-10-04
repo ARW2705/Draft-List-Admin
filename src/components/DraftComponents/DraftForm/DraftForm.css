@@ -1,0 +1,9 @@
+.draft-form-container {
+  padding: 5%;
+  flex-grow: 1;
+}
+
+.drop-down-selections-container {
+  display: flex;
+  justify-content: space-around;
+}
