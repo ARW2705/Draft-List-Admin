@@ -36,10 +36,11 @@ function FormInput(props) {
   useEffect(() => {
     if (hasValue(props.config, 'type')) {
       setAttrs(prevProps => {
-        const { type, label, name } = props.config
+        const { type, label, name, value } = props.config
         return {
           ...prevProps,
           type,
+          value,
           label: toTitleCase(label || name)
         }
       })
