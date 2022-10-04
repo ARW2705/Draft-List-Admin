@@ -25,8 +25,3 @@
   background-color: var(--gray-dark);
   color: var(--light);
 }
-
-.new-draft-button {
-  border-radius: 0;
-  width: 100%;
-}

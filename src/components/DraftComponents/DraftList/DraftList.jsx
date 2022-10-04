@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
+import Button from '../../Common/Button/Button'
 import Draft from '../Draft/Draft'
 import DraftGroup from '../DraftGroup/DraftGroup'
 
@@ -39,8 +40,7 @@ function DraftList() {
 
   const buildDraftList = useCallback(() => {
     async function getList() {
-      const draftCollection = await getActiveDrafts()
-      setComponents(buildGroupContainers(draftCollection))
+      setComponents(buildGroupContainers(await getActiveDrafts()))
     }
     getList()
   }, [buildGroupContainers])
@@ -54,8 +54,19 @@ function DraftList() {
     }
   }, [location, buildDraftList])
 
+  const navigate = useNavigate()
+  const handleOnClick = () => {
+    navigate(`${location.pathname}/form`)
+  }
+
   return (
     <div className='draft-list-container'>
+      <Button
+        text='Add New Draft'
+        name='add-draft'
+        onClick={ handleOnClick }
+        customClass='new-draft-button'
+      />
       { components }
     </div>
   )
