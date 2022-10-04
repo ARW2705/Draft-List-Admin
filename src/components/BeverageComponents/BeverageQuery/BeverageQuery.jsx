@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 
-import DropDown         from '../../../components/Common/DropDown/DropDown'
-import SearchBar        from '../../../components/Common/SearchBar/SearchBar'
-import FormError        from '../../../components/Common/Form/FormError/FormError'
+import DropDown  from '../../../components/Common/DropDown/DropDown'
+import SearchBar from '../../../components/Common/SearchBar/SearchBar'
+import FormError from '../../../components/Common/Form/FormError/FormError'
 
 import './BeverageQuery.css'
 
