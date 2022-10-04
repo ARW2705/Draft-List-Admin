@@ -33,7 +33,7 @@ function ContainerSelect({ onSelect: handleOnSelect }) {
   }, [])
 
   return (
-    <div className='container-selection-container'>
+    <div className='container-selection'>
       <DropDown
         title='Select a Container'
         items={ containerOptions }
