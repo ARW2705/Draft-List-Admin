@@ -1,6 +1,6 @@
 import buildGapRequests from '../../shared/utilities/build-gap-requests'
 import getPaginated from '../../shared/utilities/get-paginated'
-import { getDevices, getDeviceById } from '../Device/Device'
+import { getDevices, getDeviceById, addDraftToDevice } from '../Device/Device'
 import { getDraftById, postDraft, patchDraft } from './Http/DraftHttp'
 import draftStore from './Store/DraftStore'
 
@@ -45,12 +45,12 @@ async function getDraftListByIds(idList) {
 async function getActiveDrafts() {
   const { devices } = await getDevices()
   let activeDraftsByDevice = {}
-  for (const key in devices) {
-    const { drafts, errors } = await getDraftListByIds(devices[key].draftList)
-    const deviceName = devices[key].title || devices[key].name
+  for (const device of devices) {
+    const { drafts, errors } = await getDraftListByIds(device.draftList)
+    const deviceName = device.title || device.name
     activeDraftsByDevice = {
       ...activeDraftsByDevice,
-      [devices[key]._id]: { drafts, errors, deviceName }
+      [device._id]: { drafts, errors, deviceName }
     }
   }
 
@@ -60,6 +60,7 @@ async function getActiveDrafts() {
 async function addNewDraft(deviceId, draftData) {
   const draftResponse = await postDraft(deviceId, draftData)
   draftStore.setDraft(draftResponse)
+  addDraftToDevice(deviceId, draftResponse)
   return draftResponse
 }
 
