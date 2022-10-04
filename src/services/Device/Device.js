@@ -51,11 +51,18 @@ async function confirm(confirmation) {
   return await confirmDevice(confirmation)
 }
 
+function addDraftToDevice(deviceId, newDraft) {
+  const device = deviceStore.getDevice(deviceId)
+  device.draftList = [...device.draftList, newDraft._id]
+  deviceStore.setDevice(device)
+}
+
 
 export {
   getDevices,
   getDeviceById,
   addNewDevice,
   updateDevice,
-  confirm
+  confirm,
+  addDraftToDevice
 }
