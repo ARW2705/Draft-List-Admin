@@ -7,12 +7,13 @@ import './SearchBar.css'
 
 
 function SearchBar({ label, handleOnSubmit, customClass }) {
-  const [ config, setConfig ] = useState({
+  const defaultConfig = {
     name: 'search',
     value: '',
     type: 'text',
     label: label || 'Search...'
-  })
+  }
+  const [ config, setConfig ] = useState(defaultConfig)
   const [ showResetButton, setShowResetButton ] = useState(false)
 
   const handleOnChange = (_, value) => {
@@ -32,6 +33,7 @@ function SearchBar({ label, handleOnSubmit, customClass }) {
       handleOnSubmit(config.value)
     } else if (name === 'reset-button') {
       setShowResetButton(false)
+      setConfig(defaultConfig)
       handleOnSubmit(null)
     }
   }
@@ -48,6 +50,7 @@ function SearchBar({ label, handleOnSubmit, customClass }) {
       <FormInput
         config={ config }
         handleOnChange={ handleOnChange }
+        value={ config.value }
         customClass='search-input'
       />
       {
