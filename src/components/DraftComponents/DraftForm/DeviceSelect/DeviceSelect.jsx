@@ -1,57 +1,48 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
-import SimpleView from '../../../Common/SimpleView/SimpleView'
-import Spinner from '../../../Common/Loaders/Spinner/Spinner'
+import DropDown from '../../../Common/DropDown/DropDown'
 
-import { getDeviceById, getDevices } from '../../../../services/Device/Device'
+import { getDevices } from '../../../../services/Device/Device'
 
 import './DeviceSelect.css'
 
 
 function DeviceSelect({ onSelect: handleOnSelect }) {
-  const initialBuild = useRef(true)
+  const [ deviceOptions, setDeviceOptions ] = useState([])
   const [ devices, setDevices ] = useState([])
 
-  const handleClick = useCallback(async (_, { _id }) => {
-    handleOnSelect(await getDeviceById(_id))
-  }, [handleOnSelect])
-
-  const buildDeviceList = useCallback(deviceList => {
-    if (!deviceList.length) return <div>No devices found: add a new device before adding a draft</div>
-  
-    return (
-      <div className='device-list-container'>
-        {
-          deviceList.map(device => (
-            <SimpleView
-              key={ device._id }
-              onClick={ handleClick }
-              keysToDisplay={ [device.title ? 'title' : 'name'] }
-              data={ device }
-              customClass='device-view'
-            />
-          ))
-        }
-      </div>
-    )
-  }, [handleClick])
+  const handleSelect = name => {
+    for (const key in devices) {
+      if (
+        devices[key].name.toLowerCase() === name.toLowerCase()
+        || devices[key].title.toLowerCase() === name.toLowerCase()
+      ) {
+        handleOnSelect(devices[key])
+      }
+    }
+  }
 
   useEffect(() => {
     async function getAllDevices() {
       const { devices, errors } = await getDevices()
-      console.log('got devices', devices)
-      setDevices(buildDeviceList(devices))
+      let deviceNames = []
+      for (const key in devices) {
+        deviceNames = [...deviceNames, (devices[key].title || devices[key].name)]
+      }
+      setDevices(devices)
+      setDeviceOptions(deviceNames)
     }
-
-    if (initialBuild.current) {
-      getAllDevices()
-      initialBuild.current = false
-    }
-  }, [buildDeviceList])
+    getAllDevices()
+  }, [])
 
   return (
-    <div className='device-selection-container'>
-      { devices ?? <Spinner /> }
+    <div className='device-selection'>
+      <DropDown
+        title='Select a Device'
+        items={ deviceOptions }
+        customClass='device-dropdown'
+        onSelect={ handleSelect }
+      />
     </div>
   )
 }
