@@ -11,8 +11,15 @@ import ColorSelect from './ColorSelect/ColorSelect'
 
 import { addNewDraft } from '../../../services/Draft/Draft'
 
+import './DraftForm.css'
+
 
 function DraftForm() {
+  const location = useLocation()
+  const deviceId = location.state?.deviceId
+  const currentDraft = location.state?.draft
+  console.log(deviceId, currentDraft)
+  
   const reducer = (state, action) => {
     switch(action.type) {
       case 'beverage':
@@ -40,7 +47,6 @@ function DraftForm() {
     setDisableSubmit(!(beverage && container && device))
   }, [beverage, container, device])
   
-  const location = useLocation()
   const navigate = useNavigate()
   const navigateBack = useCallback(() => {
     console.log('nb', location)
@@ -55,12 +61,11 @@ function DraftForm() {
           containerInfo: container._id,
           quantity: container.capacity,
           contentColor: color
-        },
-        device: device._id
+        }
       }
 
       console.log('data build', draftData)
-      const response = await addNewDraft(draftData.device, draftData)
+      const response = await addNewDraft(device._id, draftData)
       console.log('res', response)
       setIsLoading(false)
       navigateBack()
@@ -96,8 +101,8 @@ function DraftForm() {
         )
       }
       <DeviceSelect onSelect={ data => handleOnSelect('device', data) } />
-      <BeverageSelect onSelect={ data => handleOnSelect('beverage', data) } />
       <ContainerSelect onSelect={ data => handleOnSelect('container', data) } />
+      <BeverageSelect onSelect={ data => handleOnSelect('beverage', data) } />
       <ColorSelect onSelect={ data => handleOnSelect('color', data) } />
       <SelectionPreview
         beverage={ beverage }
