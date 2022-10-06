@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 
 import './Overlay.css'
 
@@ -7,10 +8,11 @@ function Overlay(InnerComponent) {
   function wrapper(props) {
     const { isBlocking } = props
 
-    return (
+    return ReactDOM.createPortal(
       <div className={ `overlay-container ${isBlocking ? 'blocking' : ''}`}>
         <InnerComponent { ...props } /> 
-      </div>
+      </div>,
+      document.querySelector('#overlay-root')
     )
   }
 
