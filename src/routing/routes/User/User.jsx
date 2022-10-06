@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Route, Routes, useNavigate, useLocation } from 'react-router-dom'
 
-import user from '../../../services/User/User'
+import UserService from '../../../services/User/User'
 
 import SignupForm from '../../../components/Forms/Signup/Signup'
 import LoginForm from '../../../components/Forms/Login/Login'
@@ -24,12 +24,12 @@ function User() {
       setShowButtons(false)
       navigate(`${location.pathname}/signup`)
     } else if (lowerName === 'logout') {
-      user.logout()
+      UserService.logout()
     }
   }
 
   useEffect(() => {
-    const subscription = user.getUser()
+    const subscription = UserService.getUser()
       .subscribe({
         next: user => {
           let route = '/user'
