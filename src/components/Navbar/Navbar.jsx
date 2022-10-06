@@ -29,8 +29,7 @@ function Navbar() {
       next: user => setHomeRoute(user._id !== null ? '/draft' : '/user'),
       error: error => console.error('user error', error)
     })
-
-  return () => subscription.unsubscribe()
+    return () => subscription.unsubscribe()
   }, [])
 
   return (
@@ -59,4 +58,4 @@ function Navbar() {
   )
 }
 
-export default Navbar
+export default React.memo(Navbar)

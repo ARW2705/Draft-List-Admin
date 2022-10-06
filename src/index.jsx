@@ -22,6 +22,9 @@ root.render(
   </React.StrictMode>
 )
 
+// Comment preceding render and uncomment the following to test without strict mode
+// root.render(<Router />)
+
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

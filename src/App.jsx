@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useLocation, useNavigate, Outlet } from 'react-router-dom'
 
 import TokenService from './services/Token/Token'
@@ -13,28 +13,26 @@ import './App.css'
 function App() {
   TokenService.init()
   UserService.init()
-
+  
   const [ isLoggedIn, setIsLoggedIn ] = useState(false)
-
+  
   const location = useLocation()
   const navigate = useNavigate()
+  const onInit = useRef(true)
   useEffect(() => {
-    if (location.pathname === '/') {
-      console.log('naving', isLoggedIn)
+    if (!onInit.current && location.pathname === '/') {
       navigate(isLoggedIn ? '/draft' : '/user')
+    } else {
+      onInit.current = false
     }
   }, [isLoggedIn, location, navigate])
 
   useEffect(() => {
     const subscription = UserService.getUser()
       .subscribe({
-        next: user => {
-          console.log('setting login', user._id)
-          setIsLoggedIn(user._id !== null)
-        },
+        next: user => setIsLoggedIn(user._id !== null),
         error: error => console.error('user error', error)
       })
-
     return () => subscription.unsubscribe()
   }, [])
 
