@@ -20,7 +20,6 @@ function App() {
   const navigate = useNavigate()
   useEffect(() => {
     if (location.pathname === '/') {
-      console.log('naving from router')
       navigate(isLoggedIn ? '/draft' : '/user')
     }
   }, [isLoggedIn, location, navigate])
