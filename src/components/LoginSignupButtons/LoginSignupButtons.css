@@ -1,0 +1,20 @@
+.login-signup-buttons-container {
+  display: flex;
+  flex-direction: column;
+  margin: 0 5%;
+}
+
+.login-signup-buttons-container > h2 {
+  text-align: center;
+  font-size: 1.75rem;
+}
+
+.login-signup-buttons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.logout {
+  flex-direction: row;
+  justify-content: center;
+}
