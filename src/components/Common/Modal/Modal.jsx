@@ -5,16 +5,13 @@ import Overlay from '../Overlay/Overlay'
 import './Modal.css'
 
 
-function Modal({ component: Component, data, customClass = '', onDismiss = () => {} }) {
-  const dismiss = obj => onDismiss(obj)
-
-  return Overlay(
-    <div className={ `modal container ${customClass}` }>
-      { { isBlocking: true } }
-      <Component { ...data } dismiss={ dismiss } />
+function Modal({ component: Component, data = {}, customClass = '', dismiss = () => {} }) {
+  return (
+    <div className={ `modal-container ${customClass}` }>
+      <Component data={ data } dismiss={ dismiss } />
     </div>
   )
 }
 
 
-export default Modal
+export default Overlay(Modal)
