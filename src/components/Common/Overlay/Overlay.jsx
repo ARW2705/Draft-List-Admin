@@ -6,10 +6,15 @@ import './Overlay.css'
 
 function Overlay(InnerComponent) {
   function wrapper(props) {
+    const handleClick = ({ target }) => {
+      if (target.dataset.overlay) props.dismiss({})
+    }
+    
     return ReactDOM.createPortal(
       <div
         className='overlay-container'
-        onClick={ () => props.dismiss({}) }
+        data-overlay
+        onClick={ handleClick }
       >
         <InnerComponent { ...props } /> 
       </div>,
