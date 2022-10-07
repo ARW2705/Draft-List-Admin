@@ -6,7 +6,7 @@ body {
   margin: 0;
 }
 
-#root {
+#app-root {
   height: 100vh;
   position: absolute;
   top: 0;
@@ -16,7 +16,7 @@ body {
   overflow-y: scroll;
 }
 
-#root::-webkit-scrollbar {
+#app-root::-webkit-scrollbar {
   display: none;
 }
 
