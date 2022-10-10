@@ -17,8 +17,8 @@ import './DraftForm.css'
 function DraftForm() {
   const location = useLocation()
   const deviceId = location.state?.deviceId
-  const currentDraft = location.state?.draft
-  console.log(deviceId, currentDraft)
+  const draftId = location.state?.draftId
+  console.log(deviceId, draftId)
   
   const reducer = (state, action) => {
     switch(action.type) {
