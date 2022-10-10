@@ -1,0 +1,23 @@
+.quantity {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.current-quantity {
+  text-align: center;
+}
+
+.new-quantity-input {
+  margin-bottom: 2%;
+}
+
+.quantity-button-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.quantity-button {
+  min-width: 40%;
+}
