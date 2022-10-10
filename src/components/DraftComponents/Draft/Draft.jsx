@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
+import { getDraft, updateDraft } from '../../../services/Draft/Draft'
+
 import Button from '../../Common/Button/Button'
 import Image from '../../Common/Image/Image'
 import Modal from '../../Common/Modal/Modal'
@@ -9,12 +11,9 @@ import Quantity from '../../Common/Quantity/Quantity'
 import './Draft.css'
 
 
-function Draft({ draftId, container, beverage }) {
+function Draft({ draftId, container: initialContainer, beverage }) {
   const [ showQuantityModal, setShowQuantityModal ] = useState(false)
-
-  const { quantity, containerInfo } = container
-  console.log('q', quantity)
-  const { name: containerName, capacity } = containerInfo
+  const [ container, setContainer ] = useState(initialContainer)
 
   const location = useLocation()
   const navigate = useNavigate()
@@ -35,8 +34,21 @@ function Draft({ draftId, container, beverage }) {
     }
   }
 
+  const updateQuantity = async newQuantity => {
+    const draft = await getDraft(draftId)
+    const draftBody = {
+      ...draft,
+      container: {
+        ...draft.container,
+        quantity: newQuantity
+      }
+    }
+    const { container: updatedContainer } = await updateDraft(draftId, draftBody)
+    setContainer(updatedContainer)
+  }
+
   const handleQuantityModalDismiss = data => {
-    console.log('new quantity', data.quantity)
+    if (data) updateQuantity(data.quantity)
     setShowQuantityModal(false)
   }
 
@@ -46,7 +58,7 @@ function Draft({ draftId, container, beverage }) {
         showQuantityModal
         && <Modal
           component={ Quantity }
-          data={ { quantity } }
+          data={ { quantity: container.quantity } }
           dismiss={ handleQuantityModalDismiss }
         />
       }
@@ -58,9 +70,9 @@ function Draft({ draftId, container, beverage }) {
         />
         <div className='draft-content-a'>{ beverage.title || beverage.name }</div>
         <div className='draft-content-b'>•</div>
-        <div className='draft-content-c'>{ containerName }</div>
+        <div className='draft-content-c'>{ container.containerInfo.name }</div>
         <div className='draft-content-d'>•</div>
-        <div className='draft-content-e'>{ Math.floor(quantity * 100 / capacity) }%</div>
+        <div className='draft-content-e'>{ Math.floor(container.quantity * 100 / container.containerInfo.capacity) }%</div>
         <Button
           text='Change Quantity'
           name='change-quantity'

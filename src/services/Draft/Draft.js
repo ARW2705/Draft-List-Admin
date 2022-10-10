@@ -64,8 +64,8 @@ async function addNewDraft(deviceId, draftData) {
   return draftResponse
 }
 
-async function updateDraft(draftData) {
-  const draftResponse = await patchDraft(draftData._id, draftData)
+async function updateDraft(draftId, draftData) {
+  const draftResponse = await patchDraft(draftId, draftData)
   draftStore.setDraft(draftResponse)
   return draftResponse
 }
