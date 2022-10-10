@@ -13,6 +13,11 @@ import { addNewDraft } from '../../../services/Draft/Draft'
 
 
 function DraftForm() {
+  const location = useLocation()
+  const deviceId = location.state?.deviceId
+  const draftId = location.state?.draftId
+  console.log(deviceId, draftId)
+  
   const reducer = (state, action) => {
     switch(action.type) {
       case 'beverage':
@@ -40,7 +45,6 @@ function DraftForm() {
     setDisableSubmit(!(beverage && container && device))
   }, [beverage, container, device])
   
-  const location = useLocation()
   const navigate = useNavigate()
   const navigateBack = useCallback(() => {
     console.log('nb', location)
