@@ -12,7 +12,7 @@ import './Input.css'
 
 function FormInput(props) {
   const { config, validators, handleOnChange, customClass } = props
-  const { name, value, type, label } = config
+  const { name, value, type, label, min, max } = config
 
   const [ attrs, setAttrs ] = useState({
     name,
@@ -21,7 +21,9 @@ function FormInput(props) {
     type: type || 'text',
     label: toTitleCase(label || name),
     id: hyphenify(`form-input-${name}`),
-    customClass: customClass || ''
+    customClass: customClass || '',
+    min,
+    max
   })
   const [ touchStatus, setTouchStatus ] = useState({
     focus: false,
@@ -109,6 +111,8 @@ function FormInput(props) {
         name={ attrs.name }
         type={ attrs.type }
         value={ attrs.value }
+        min={ attrs.min }
+        max={ attrs.max }
         onChange={ handleChange }
         onFocus={ handleOnFocusOrBlur }
         onBlur={ handleOnFocusOrBlur }
