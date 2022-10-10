@@ -26,7 +26,7 @@ function Quantity({ data, dismiss }) {
   }
 
   const handleOnClick = action => {
-    let data = {}
+    let data = null
     if (action === 'submit') {
       data = { quantity: currentQuantity - reduceQuantityAmount.current }
     }

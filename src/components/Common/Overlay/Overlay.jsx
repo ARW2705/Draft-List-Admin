@@ -7,7 +7,7 @@ import './Overlay.css'
 function Overlay(InnerComponent) {
   function wrapper(props) {
     const handleClick = ({ target }) => {
-      if (target.dataset.overlay) props.dismiss({})
+      if (target.dataset.overlay) props.dismiss(null)
     }
     
     return ReactDOM.createPortal(
