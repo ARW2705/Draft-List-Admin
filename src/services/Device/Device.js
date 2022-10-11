@@ -57,6 +57,27 @@ function addDraftToDevice(deviceId, newDraft) {
   deviceStore.setDevice(device)
 }
 
+async function archiveDraft(deviceId, draftId) {
+  const device = await getDeviceById(deviceId)
+  const targetDraftIndex = device.draftList.findIndex(draft => draft === draftId)
+  if (targetDraftIndex === -1) {
+    throw new Error('Draft does not belong to device')
+  }
+
+  const draftToArchive = device.draftList[targetDraftIndex]
+  device.draftList = [...device.draftList.slice(0, targetDraftIndex), ...device.draftList.slice(targetDraftIndex + 1)]
+  const previousDraftIndex = device.previousDraftList.findIndex(previous => previous.draft === draftId)
+  
+  if (previousDraftIndex === -1) {
+    device.previousDraftList = [...device.previousDraftList, { count: 1, draft: draftToArchive }]
+  } else {
+    device.previousDraftList[previousDraftIndex].count++
+  }
+
+  const updatedDevice = await updateDevice(deviceId, { data: device })
+  return updatedDevice.draftList
+}
+
 
 export {
   getDevices,
@@ -64,5 +85,6 @@ export {
   addNewDevice,
   updateDevice,
   confirm,
-  addDraftToDevice
+  addDraftToDevice,
+  archiveDraft
 }
