@@ -11,7 +11,7 @@ import Quantity from '../../Common/Quantity/Quantity'
 import './Draft.css'
 
 
-function Draft({ draftId, container: initialContainer, beverage }) {
+function Draft({ draftId, container: initialContainer, beverage, removeDraft }) {
   const [ showQuantityModal, setShowQuantityModal ] = useState(false)
   const [ container, setContainer ] = useState(initialContainer)
 
@@ -27,7 +27,7 @@ function Draft({ draftId, container: initialContainer, beverage }) {
         navigate(`${location.pathname}/form`, { state: { draftId }})
         break
       case 'finish-draft':
-        console.log('finish')
+        removeDraft()
         break
       default:
         throw new Error(`Invalid click event: ${name}`)
