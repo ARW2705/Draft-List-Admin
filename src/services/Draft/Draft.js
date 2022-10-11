@@ -1,6 +1,5 @@
 import buildGapRequests from '../../shared/utilities/build-gap-requests'
-import getPaginated from '../../shared/utilities/get-paginated'
-import { getDevices, getDeviceById, addDraftToDevice } from '../Device/Device'
+import { getDevices, addDraftToDevice } from '../Device/Device'
 import { getDraftById, postDraft, patchDraft } from './Http/DraftHttp'
 import draftStore from './Store/DraftStore'
 
@@ -73,6 +72,7 @@ async function updateDraft(draftId, draftData) {
 export {
   getActiveDrafts,
   getDraft,
+  getDraftListByIds,
   addNewDraft,
   updateDraft
 }
