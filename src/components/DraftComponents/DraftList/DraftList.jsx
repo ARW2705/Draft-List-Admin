@@ -1,10 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
-import { getBeverageById } from '../../../services/Beverage/Beverage'
-
 import Button from '../../Common/Button/Button'
-import Draft from '../Draft/Draft'
 import DraftGroup from '../DraftGroup/DraftGroup'
 import SpinnerLoader from '../../Common/Loaders/Spinner/Spinner'
 
@@ -18,38 +15,23 @@ function DraftList() {
   const [ components, setComponents ] = useState([])
   const [ isLoading, setIsLoading ] = useState(true)
 
-  const buildDraftComponents = useCallback(drafts => {
-    if (!drafts.length) return <p className='empty-list'>Device has no active drafts</p>
-  
-    return drafts.map(draft => (
-      <Draft
-        key={ draft._id }
-        draftId={ draft._id }
-        container={ draft.container }
-        beverage={ draft.beverage }
-      />
-    ))
-  }, [])
-
   const buildGroupContainers = useCallback(async draftCollection => {
     let components = []
     for (const key in draftCollection) {
       const { drafts, deviceName } = draftCollection[key]
-      const populatedBeverages = await Promise.all(drafts.map(draft => getBeverageById(draft.beverage)))
-      const populatedDrafts = drafts.map((draft, index) => ({ ...draft, beverage: populatedBeverages[index] }))
       components = [
         ...components,
         <DraftGroup
           key={ key }
           deviceId={ key }
           deviceName={ deviceName }
-          draftComponents={ buildDraftComponents(populatedDrafts) }
+          drafts={ drafts }
         />
       ]
     }
 
     return components
-  }, [buildDraftComponents])
+  }, [])
 
   const buildDraftList = useCallback(async () => {
     setComponents(await buildGroupContainers(await getActiveDrafts()))
