@@ -16,6 +16,7 @@ async function getDevices() {
   let devices = [], errors = []
   responses.forEach(response => {
     if (response.status === 'fulfilled') {
+      deviceStore.setDevice(response.value)
       devices = [...devices, response.value]
     } else {
       errors = [...errors, response.reason]
