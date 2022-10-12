@@ -29,23 +29,23 @@ async function getDevices() {
   return { devices, errors }
 }
 
-function getDeviceById(deviceId) {
+async function getDeviceById(deviceId) {
   if (!userService.getDeviceList().includes(deviceId)) {
     throw new Error('Device does not belong to user')
   }
-  return deviceStore.getDevice(deviceId) 
+  return await deviceStore.getDevice(deviceId) 
 }
 
 async function addNewDevice(device) {
   const deviceResponse = await postDevice(device)
-  deviceStore.setDevice(deviceResponse)
+  await deviceStore.setDevice(deviceResponse)
   await userService.refreshUserDataFromServer()
   return deviceResponse
 }
 
 async function updateDevice(deviceId, deviceData) {
   const deviceResponse = await patchDevice(deviceId, deviceData)
-  deviceStore.setDevice(deviceResponse)
+  await deviceStore.setDevice(deviceResponse)
   return deviceResponse
 }
 
@@ -53,10 +53,10 @@ async function confirm(confirmation) {
   return await confirmDevice(confirmation)
 }
 
-function addDraftToDevice(deviceId, newDraft) {
-  const device = deviceStore.getDevice(deviceId)
+async function addDraftToDevice(deviceId, newDraft) {
+  const device = await deviceStore.getDevice(deviceId)
   device.draftList = [...device.draftList, newDraft._id]
-  deviceStore.setDevice(device)
+  await deviceStore.setDevice(device)
 }
 
 async function archiveDraft(deviceId, draftId) {
