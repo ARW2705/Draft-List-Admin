@@ -6,7 +6,7 @@ import buildGapRequests from '../../shared/utilities/build-gap-requests'
 
 async function getDevices() {
   const idList = userService.getDeviceList()
-  let storedDevices = deviceStore.getDevices(idList)
+  const storedDevices = deviceStore.getDevices(idList)
   if (idList.length === storedDevices.length) {
     return { devices: storedDevices, errors: [] }
   }
@@ -17,13 +17,13 @@ async function getDevices() {
   let devices = [], errors = []
   responses.forEach(response => {
     if (response.status === 'fulfilled') {
+      deviceStore.setDevice(response.value)
       devices = [...devices, response.value]
     } else {
       errors = [...errors, response.reason]
     }
   })
 
-  deviceStore.setDevices(devices)
   return { devices, errors }
 }
 
