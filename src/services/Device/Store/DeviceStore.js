@@ -22,21 +22,20 @@ class DeviceStore {
   }
 
   async setDevice(device) {
-    await IDB_update(this.keyStore, ids => {
-      if (!ids.includes(device._id)) return [...ids, device._id]
-      return ids
-    })
-    await IDB_set(device._id, device)
+    const entry = await IDB_get(device._id)
+    if (!entry) {
+      await IDB_update(this.keyStore, ids => {
+        if (!ids.includes(device._id)) return [...ids, device._id]
+        return ids
+      })
+      return IDB_set(device._id, device)
+    }
+    return IDB_update(device._id, () => device)
   }
 
   async setDevices(devices) {
     return await Promise.allSettled(devices.map(async device => {
-      const entry = await IDB_get(device._id)
-      if (entry) {
-        return IDB_update(device._id, () => device)
-      } else {
-        return IDB_set(device._id, device)
-      }
+      return this.setDevice(device)
     }))
   }
 
