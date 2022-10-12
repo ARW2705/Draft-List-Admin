@@ -1,4 +1,13 @@
-import { get, set, update, clear } from 'idb-keyval'
+import {
+  get as _get,
+  getMany as _getMany,
+  set as _set,
+  setMany as _setMany,
+  update as _update,
+  clear as _clear,
+  del as _del,
+  delMany as _delMany
+} from 'idb-keyval'
 
 
 class Storage {
@@ -7,25 +16,46 @@ class Storage {
     Storage._instance = this
   }
 
-  async setItem(key, val) {
+  async set(key, val) {
     try {
-      await set(key, val)
+      await _set(key, val)
       console.log(`${key} stored`)
     } catch(error) {
       console.log(`Failed to store ${key}: ${error}`)
     }
   }
 
-  async getItem(key) {
-    return await get(key)
+  async setMany(items) {
+    try {
+      await _setMany(items)
+      console.log('items stored')
+    } catch(error) {
+      console.log(`Failed to set: ${error}`)
+    }
   }
 
-  updateItem(key, newVal) {
-    update(key, () => newVal)
+  async get(key) {
+    return await _get(key)
   }
 
-  clearItems() {
-    clear()
+  async getMany(keys) {
+    return await _getMany(keys)
+  }
+
+  async update(key, updateFn) {
+    await _update(key, updateFn)
+  }
+
+  async del(key) {
+    await _del(key)
+  }
+
+  async delMany(keys) {
+    await _delMany(keys)
+  }
+
+  async clear() {
+    await _clear()
   }
 }
 
