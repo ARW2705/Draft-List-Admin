@@ -1,48 +1,75 @@
+import storageService from '../../Storage/Storage'
+
+
 class DeviceStore {
   constructor() {
     if (DeviceStore._instance) return DeviceStore._instance
     DeviceStore._instance = this
-    this.storageKey = 'devices'
-    this.devices = {} // core device defs
+    this.keyStore = 'device-ids'
+    this.devices = new Map()
+    this.loadDevices()
+  }
+
+  setDevice(device) {
+    this.devices.set(device._id, device)
+    this.storeDevice(device)
+  }
+
+  deleteDevice(deviceId) {
+    this.devices.delete(deviceId)
+    this.removeDeviceFromStorage(deviceId)
   }
 
   getDevice(id) {
-    return this.devices[id]
+    return this.devices.get(id)
   }
 
   getDevices(ids) {
     return ids.map(id => this.getDevice(id)).filter(device => !!device)
   }
 
-  setDevice(device) {
-    if (device.hasOwnProperty('_id')) {
-      device = this.prepareDevice(device)
+  async clearDevices() {
+    let keysToDelete = []
+    for (const key of this.devices.keys()) {
+      keysToDelete = [...keysToDelete, key]
     }
-    this.devices = { ...this.devices, ...device }
-    console.log('new device store', this.devices)
+    this.devices.clear()
+    await storageService.delMany([this.keyStore, ...keysToDelete])
   }
 
-  setDevices(devices) {
-    this.setDevice(devices.reduce((acc, curr) => ({ ...acc, ...this.prepareDevice(curr)}), {}))
+  async loadDevices() {
+    const deviceIds = await storageService.get(this.keyStore)
+    if (!deviceIds) {
+      storageService.set(this.keyStore, [])
+    }
+
+    const devices = await storageService.getMany(deviceIds)
+    if (devices.length) devices.forEach(device => this.setDevice(device))
+    
+    console.log('loaded devices from storage', this.devices)
   }
 
-  prepareDevice(device) {
-    return { [device._id]: device }
+  async storeDevice(device) {
+    await storageService.update(this.keyStore, ids => ([...ids, device._id]))
+    await storageService.set(device._id, device)
   }
 
-  clearDevices() {
-    this.devices = {}
-    this.storeDevices()
-  }
+  async removeDeviceFromStorage(deviceId) {
+    const ids = await storageService.get(this.keyStore)
+    const idIndex = ids.findIndex(id => id === deviceId)
+    let newIds = []
+    if (idIndex !== -1) {
+      newIds = [...ids.slice(0, idIndex), ...ids.slice(idIndex + 1)]
+    }
 
-  loadDevices() {
-    this.devices = JSON.parse(localStorage.getItem(this.storageKey))
-  }
+    if (newIds.length) {
+      await storageService.update(this.keyStore, newIds)
+    }
 
-  storeDevices() {
-    localStorage.setItem(this.storageKey, JSON.stringify(this.devices))
+    await storageService.del(deviceId)
   }
 }
+
 
 const deviceStore = new DeviceStore()
 
