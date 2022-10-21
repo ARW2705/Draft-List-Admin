@@ -5,7 +5,9 @@ import {
   DRAFTS_STORE_NAME,
   IMAGES_STORE_NAME,
   CONTAINERS_STORE_NAME,
-  QUERIES_STORE_NAME
+  QUERY_NAME_STORE_NAME,
+  QUERY_SOURCE_STORE_NAME,
+  QUERY_STYLE_STORE_NAME
 } from '../../shared/constants/db-store-names'
 
 
@@ -21,7 +23,9 @@ class Storage {
     this._db = await openDB(this.dbName, 1, {
       upgrade(db) {
         db.createObjectStore(IMAGES_STORE_NAME)
-        db.createObjectStore(QUERIES_STORE_NAME)
+        db.createObjectStore(QUERY_NAME_STORE_NAME)
+        db.createObjectStore(QUERY_SOURCE_STORE_NAME)
+        db.createObjectStore(QUERY_STYLE_STORE_NAME)
         
         db.createObjectStore(DEVICES_STORE_NAME   , { keyPath: '_id' })
         db.createObjectStore(DRAFTS_STORE_NAME    , { keyPath: '_id' })
@@ -51,12 +55,12 @@ class Storage {
     let args = [storeName, value]
     if (key) args = [...args, key]
 
-    await this._db.put(...args)
+    return await this._db.put(...args)
   }
 
   async setMany(storeName, keyVals) {
     const tx = this._db.transaction(storeName, 'readwrite')
-    await this.promisifyAll(
+    return await this.promisifyAll(
       [
         ...keyVals.map(keyVal => Array.isArray(keyVal) ? tx.store.put(...keyVal) : tx.store.put(keyVal)),
         tx.done
