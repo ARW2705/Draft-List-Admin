@@ -2,10 +2,11 @@ import buildGapRequests from '../../shared/utilities/build-gap-requests'
 import { getDevices, addDraftToDevice } from '../Device/Device'
 import { getDraftById, postDraft, patchDraft } from './Http/DraftHttp'
 import draftStore from './Store/DraftStore'
+import { parseAllSettled } from '../../shared/utilities/parse-all-settled'
 
 
 async function getDraft(draftId) {
-  const storedDraft = draftStore.getDraft(draftId)
+  const storedDraft = await draftStore.getDraft(draftId)
   if (storedDraft) return storedDraft
 
   const response = await getDraftById(draftId)
@@ -14,7 +15,7 @@ async function getDraft(draftId) {
 }
 
 async function getDraftListByIds(idList) {
-  const storedDrafts = draftStore.getDrafts(idList)
+  const storedDrafts = await draftStore.getDrafts(idList)
   if (idList.length === storedDrafts.length) {
     return { drafts: storedDrafts, errors: [] }
   }
@@ -22,15 +23,7 @@ async function getDraftListByIds(idList) {
   const responses = await Promise.allSettled(
     buildGapRequests(idList, storedDrafts, getDraftById)
   )
-  let drafts = [], errors = []
-  responses.forEach(response => {
-    if (response.status === 'fulfilled') {
-      drafts = [...drafts, response.value]
-    } else {
-      errors = [...errors, response.reason]
-    }
-  })
-
+  const { values: drafts, errors } = parseAllSettled(responses)
   draftStore.setDrafts(drafts)
   return { drafts, errors }
 }
