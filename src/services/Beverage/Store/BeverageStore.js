@@ -1,46 +1,27 @@
+import storageService from '../../Storage/Storage'
+import { BEVERAGES_STORE_NAME } from '../../../shared/constants/db-store-names'
+
+
 class BeverageStore {
   constructor() {
     if (BeverageStore._instance) return BeverageStore._instance
     BeverageStore._instance = this
-    this.storageKey = 'beverages'
-    this.beverages = {} // core beverage defs
   }
 
-  getBeverage(id) {
-    return this.beverages[id]
+  async getBeverage(id) {
+    return await storageService.get(BEVERAGES_STORE_NAME, id)
   }
 
-  getBeverages(ids) {
-    return ids.map(id => this.getBeverage(id)).filter(beverage => !!beverage)
+  async getBeverages(ids) {
+    return (await storageService.getMany(BEVERAGES_STORE_NAME, ids)).filter(device => !!device)
   }
 
-  setBeverage(beverage) {
-    if (beverage.hasOwnProperty('_id')) {
-      beverage = this.prepareBeverage(beverage)
-    }
-    this.beverages = { ...this.beverages, ...beverage }
-    console.log('new beverage store', this.beverages)
+  async setBeverage(device) {
+    await storageService.set(BEVERAGES_STORE_NAME, device)
   }
 
-  prepareBeverage(beverage) {
-    return { [beverage._id]: beverage }
-  }
-
-  setBeverages(beverages) {
-    this.setBeverage(beverages.reduce((acc, curr) => ({ ...acc, ...this.prepareBeverage(curr)}), {}))
-  }
-
-  clearBeverages() {
-    this.beverages = {}
-    this.storeBeverages()
-  }
-
-  loadBeverages() {
-    this.beverages = JSON.parse(localStorage.getItem(this.storageKey))
-  }
-
-  storeBeverages() {
-    localStorage.setItem(this.storageKey, JSON.stringify(this.beverages))
+  async setBeverages(devices) {
+    await storageService.setMany(BEVERAGES_STORE_NAME, devices)
   }
 }
 
