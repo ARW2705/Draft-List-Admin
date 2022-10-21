@@ -4,7 +4,8 @@ import {
   BEVERAGES_STORE_NAME,
   DRAFTS_STORE_NAME,
   IMAGES_STORE_NAME,
-  CONTAINERS_STORE_NAME
+  CONTAINERS_STORE_NAME,
+  QUERIES_STORE_NAME
 } from '../../shared/constants/db-store-names'
 
 
@@ -20,6 +21,8 @@ class Storage {
     this._db = await openDB(this.dbName, 1, {
       upgrade(db) {
         db.createObjectStore(IMAGES_STORE_NAME)
+        db.createObjectStore(QUERIES_STORE_NAME)
+        
         db.createObjectStore(DEVICES_STORE_NAME   , { keyPath: '_id' })
         db.createObjectStore(DRAFTS_STORE_NAME    , { keyPath: '_id' })
         db.createObjectStore(CONTAINERS_STORE_NAME, { keyPath: '_id' })
