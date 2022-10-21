@@ -1,3 +1,9 @@
+import storageService from '../../Storage/Storage'
+import {
+  QUERY_NAME_STORE_NAME,
+  QUERY_SOURCE_STORE_NAME,
+  QUERY_STYLE_STORE_NAME
+} from '../../../shared/constants/db-store-names'
 import getPaginated from '../../../shared/utilities/get-paginated'
 
 
@@ -5,30 +11,32 @@ class BeverageQuery {
   constructor() {
     if (BeverageQuery._instance) return BeverageQuery._instance
     BeverageQuery._instance = this
-    this.storageKey = 'queries'
-    const storedQueries = this.loadCache()
-    if (storedQueries) {
-      this.queries = storedQueries
-    } else {
-      this.queries = {
-        name: {},
-        source: {},
-        style: {}
-      }
+  }
+
+  getQueryStoreName(type) {
+    switch(type) {
+      case 'name':
+        return QUERY_NAME_STORE_NAME
+      case 'source':
+        return QUERY_SOURCE_STORE_NAME
+      case 'style':
+        return QUERY_STYLE_STORE_NAME
+      default:
+        throw new Error(`Invalid query term: ${type}`)
     }
   }
 
-  getIdsByQuery(type, term, page, count) {
-    const fromCache = this.queries[type][term]
-    if (fromCache?.length) {
-      return getPaginated(fromCache, page, count)
+  async getByQuery(type, term, page, count) {
+    const fromDB = storageService.get(this.getQueryStoreName(type), term)
+    if (fromDB?.length) {
+      return page && count ? getPaginated(fromDB, page, count) : fromDB
     }
     return []
   }
 
-  cacheQuery(type, term, beverages) {
+  async setQuery(type, term, beverages) {
     const unique = new Set()
-    let newQueries = this.queries[type][term] || []
+    let newQueries = await this.getByQuery(type, term)
     newQueries.forEach(id => unique.add(id))
     beverages.forEach(beverage => {
       if (!unique.has(beverage._id)) {
@@ -36,30 +44,7 @@ class BeverageQuery {
       }
     })
 
-    this.queries = {
-      ...this.queries,
-      [type]: {
-        ...this.queries[type],
-        [term]: newQueries
-      }
-    }
-  }
-
-  clearCache() {
-    this.queries = {
-      name: {},
-      source: {},
-      style: {}
-    }
-    this.storeCache()
-  }
-
-  loadCache() {
-    return JSON.parse(localStorage.getItem(this.storageKey))
-  }
-
-  storeCache() {
-    localStorage.setItem(this.storageKey, JSON.stringify(this.queries))
+    return await storageService.set(this.getQueryStoreName(type), newQueries, term)
   }
 }
 
