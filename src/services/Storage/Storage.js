@@ -60,13 +60,27 @@ class Storage {
 
   async setMany(storeName, keyVals) {
     const tx = this._db.transaction(storeName, 'readwrite')
-    return await this.promisifyAll(
+    await this.promisifyAll(
       [
         ...keyVals.map(keyVal => Array.isArray(keyVal) ? tx.store.put(...keyVal) : tx.store.put(keyVal)),
         tx.done
       ],
       true
     )
+  }
+
+  clear() {
+    [
+      DEVICES_STORE_NAME,
+      BEVERAGES_STORE_NAME,
+      DRAFTS_STORE_NAME,
+      IMAGES_STORE_NAME,
+      CONTAINERS_STORE_NAME,
+      QUERY_NAME_STORE_NAME,
+      QUERY_SOURCE_STORE_NAME,
+      QUERY_STYLE_STORE_NAME
+    ]
+    .forEach(storeName => this._db.clear(storeName))
   }
 }
 
