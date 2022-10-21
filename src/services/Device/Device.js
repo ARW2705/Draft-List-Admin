@@ -16,10 +16,7 @@ async function getDevices() {
     buildGapRequests(idList, storedDevices, getDeviceByIdFromServer)
   )
   const { values: devices, errors } = parseAllSettled(responses)
-  const stored = await deviceStore.setDevices(devices)
-  if (stored.errors.length) {
-    stored.errors.forEach(error => console.log('device store error', error))
-  }
+  deviceStore.setDevices(devices)
   return { devices, errors }
 }
 
@@ -32,14 +29,14 @@ async function getDeviceById(deviceId) {
 
 async function addNewDevice(device) {
   const deviceResponse = await postDevice(device)
-  await deviceStore.setDevice(deviceResponse)
+  deviceStore.setDevice(deviceResponse)
   await userService.refreshUserDataFromServer()
   return deviceResponse
 }
 
 async function updateDevice(deviceId, deviceData) {
   const deviceResponse = await patchDevice(deviceId, deviceData)
-  await deviceStore.setDevice(deviceResponse)
+  deviceStore.setDevice(deviceResponse)
   return deviceResponse
 }
 
@@ -50,7 +47,7 @@ async function confirm(confirmation) {
 async function addDraftToDevice(deviceId, newDraft) {
   const device = await deviceStore.getDevice(deviceId)
   device.draftList = [...device.draftList, newDraft._id]
-  await deviceStore.setDevice(device)
+  deviceStore.setDevice(device)
 }
 
 async function archiveDraft(deviceId, draftId) {

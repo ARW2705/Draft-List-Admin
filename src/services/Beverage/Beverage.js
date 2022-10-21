@@ -25,7 +25,7 @@ async function getBeverageListByIds(idList) {
 
   const responses = await Promise.allSettled(buildRequests(idList, storedBeverages))
   const { values: beverages, errors } = parseAllSettled(responses)
-  await beverageStore.setBeverages(beverages)
+  beverageStore.setBeverages(beverages)
   return { beverages, errors }
 }
 
@@ -72,7 +72,7 @@ async function getBeverageById(beverageId) {
   if (fromStorage) return fromStorage
 
   const response = await getBeverageByIdFromServer(beverageId)
-  await beverageStore.setBeverage(response)
+  beverageStore.setBeverage(response)
   return response
 }
 
@@ -84,7 +84,7 @@ async function addNewBeverage(beverageData) {
 
 async function updateBeverage(beverageId, beverageData) {
   const beverageResponse = await patchBeverage(beverageId, beverageData)
-  await beverageStore.setBeverage(beverageResponse)
+  beverageStore.setBeverage(beverageResponse)
   return beverageResponse
 }
 
