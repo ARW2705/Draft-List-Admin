@@ -2,6 +2,7 @@ import { getDeviceById as getDeviceByIdFromServer, postDevice, patchDevice, conf
 import deviceStore from './Store/DeviceStore'
 import userService from '../User/User'
 import buildGapRequests from '../../shared/utilities/build-gap-requests'
+import { parseAllSettled } from '../../shared/utilities/parse-all-settled'
 
 
 async function getDevices() {
@@ -10,19 +11,11 @@ async function getDevices() {
   if (idList.length === storedDevices.length) {
     return { devices: storedDevices, errors: [] }
   }
+
   const responses = await Promise.allSettled(
     buildGapRequests(idList, storedDevices, getDeviceByIdFromServer)
   )
-  let devices = [], errors = []
-  responses.forEach(response => {
-    if (response.status === 'fulfilled') {
-      deviceStore.setDevice(response.value)
-      devices = [...devices, response.value]
-    } else {
-      errors = [...errors, response.reason]
-    }
-  })
-
+  const { values: devices, errors } = parseAllSettled(responses)
   const stored = await deviceStore.setDevices(devices)
   if (stored.errors.length) {
     stored.errors.forEach(error => console.log('device store error', error))
