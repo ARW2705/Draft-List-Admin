@@ -1,48 +1,27 @@
-// import { get}
+import storageService from '../../Storage/Storage'
+import { DRAFTS_STORE_NAME } from '../../../shared/constants/db-store-names'
+
 
 class DraftStore {
   constructor() {
     if (DraftStore._instance) return DraftStore._instance
     DraftStore._instance = this
-    this.storageKey = 'drafts'
-    this.drafts = {}
   }
 
-  setDraft(draft) {
-    if (draft.hasOwnProperty('_id')) {
-      draft = this.prepareDraft(draft)
-    }
-    this.drafts = { ...this.drafts, ...draft }
-    console.log('new draft store', this.drafts)
+  async getDraft(id) {
+    return await storageService.get(DRAFTS_STORE_NAME, id)
   }
 
-  setDrafts(drafts) {
-    this.setDraft(drafts.reduce((acc, curr) => ({ ...acc, ...this.prepareDraft(curr)}), {}))
+  async getDrafts(ids) {
+    return (await storageService.getMany(DRAFTS_STORE_NAME, ids)).filter(draft => !!draft)
   }
 
-  prepareDraft(draft) {
-    return { [draft._id]: draft }
+  async setDraft(draft) {
+    await storageService.set(DRAFTS_STORE_NAME, draft)
   }
 
-  getDraft(draftId) {
-    return this.drafts[draftId]
-  }
-
-  getDrafts(draftIds) {
-    return draftIds.map(draftId => this.getDraft(draftId)).filter(draft => !!draft)
-  }
-
-  clearDrafts() {
-    this.drafts = {}
-    this.storeDrafts()
-  }
-
-  loadDrafts() {
-    this.drafts = JSON.parse(localStorage.getItem(this.storageKey))
-  }
-
-  storeDrafts() {
-    localStorage.setItem(this.storageKey, JSON.stringify(this.drafts))
+  async setDrafts(drafts) {
+    await storageService.setMany(DRAFTS_STORE_NAME, drafts)
   }
 }
 
