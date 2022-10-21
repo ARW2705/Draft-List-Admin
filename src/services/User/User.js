@@ -1,7 +1,8 @@
 import { BehaviorSubject } from 'rxjs'
 
 import { get, post } from '../HttpClient/HttpClient'
-import token from '../Token/Token'
+import tokenService from '../Token/Token'
+import storageService from '../Storage/Storage'
 
 import { userRouteURL } from './user-route-url'
 
@@ -65,7 +66,7 @@ class User {
       deviceList: user.deviceList
     }
     this.setUser(newUser)
-    token.setToken(user.token, remember)
+    tokenService.setToken(user.token, remember)
   }
 
   refreshUserDataFromServer() {
@@ -120,7 +121,8 @@ class User {
       deviceList: []
     })
     this.remember = false
-    token.removeToken()
+    storageService.clear()
+    tokenService.removeToken()
     localStorage.removeItem(this.storageKey)
   }
 
