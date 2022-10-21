@@ -13,15 +13,15 @@ class BeverageStore {
   }
 
   async getBeverages(ids) {
-    return (await storageService.getMany(BEVERAGES_STORE_NAME, ids)).filter(device => !!device)
+    return (await storageService.getMany(BEVERAGES_STORE_NAME, ids)).filter(beverage => !!beverage)
   }
 
-  async setBeverage(device) {
-    await storageService.set(BEVERAGES_STORE_NAME, device)
+  async setBeverage(beverage) {
+    await storageService.set(BEVERAGES_STORE_NAME, beverage)
   }
 
-  async setBeverages(devices) {
-    await storageService.setMany(BEVERAGES_STORE_NAME, devices)
+  async setBeverages(beverages) {
+    await storageService.setMany(BEVERAGES_STORE_NAME, beverages)
   }
 }
 
