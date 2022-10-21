@@ -32,7 +32,7 @@ async function getBeverageListByIds(idList) {
 async function queryBeveragesFromServer(type, term, page, count) {
   try {
     const beverages = await queryBeverages(type, term, page, count)
-    beverageQuery.cacheQuery(type, term, beverages)
+    await beverageQuery.setQuery(type, term, beverages)
     return beverages
   } catch(error) {
     return error
@@ -44,7 +44,7 @@ async function getBeverageList(page, count) {
 }
 
 async function getBeveragesByQuery(type, term, page, count) {
-  const cachedIds = beverageQuery.getIdsByQuery(type, term, page, count)
+  const cachedIds = await beverageQuery.getByQuery(type, term, page, count)
   let { beverages, errors } = await getBeverageListByIds(cachedIds)
   if (beverages.length === count) {
     return beverages
