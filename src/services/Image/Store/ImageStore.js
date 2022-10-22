@@ -1,33 +1,19 @@
+import storageService from '../../Storage/Storage'
+import { IMAGES_STORE_NAME } from '../../../shared/constants/db-store-names'
+
+
 class ImageStore {
   constructor() {
     if (ImageStore._instance) return ImageStore._instance
     ImageStore._instance = this
-    this.storageKey = 'images'
-    this.images = {} // core image defs
-    this.loadImages()
+  }
+  
+  async getImage(url) {
+    return await storageService.get(IMAGES_STORE_NAME, url)
   }
 
-  getImage(url) {
-    return this.images[url]
-  }
-
-  setImage(url, image) {
-    this.images = { ...this.images, [url]: image }
-    this.storeImages()
-  }
-
-  clearImages() {
-    this.image = {}
-    this.storeImages()
-  }
-
-  loadImages() {
-    const images = JSON.parse(localStorage.getItem(this.storageKey))
-    if (images) this.images = images
-  }
-
-  storeImages() {
-    localStorage.setItem(this.storageKey, JSON.stringify(this.images))
+  async setImage(url, image) {
+    await storageService.set(IMAGES_STORE_NAME, image, url)
   }
 }
 

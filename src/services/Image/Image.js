@@ -28,7 +28,7 @@ async function fetchImageAsBase64(url) {
 
 async function getImage(imageURL) {
   const url = `${IMAGE_BASE_URL}/${imageURL}`
-  const fromStore = imageStore.getImage(url)
+  const fromStore = await imageStore.getImage(url)
   if (fromStore) return fromStore
 
   const base64Image = await fetchImageAsBase64(url)
