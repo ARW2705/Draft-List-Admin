@@ -1,44 +1,31 @@
+import storageService from '../../Storage/Storage'
+import { CONTAINERS_STORE_NAME } from '../../../shared/constants/db-store-names'
+
+
 class ContainerStore {
   constructor() {
     if (ContainerStore._instance) return ContainerStore._instance
     ContainerStore._instance = this
-    this.storageKey = 'containers'
-    this.containers = {}
   }
 
-  getContainer(containerId) {
-    return this.containers[containerId]
+  async getContainer(id) {
+    return await storageService.get(CONTAINERS_STORE_NAME, id)
   }
 
-  getContainers(containerIds) {
-    return containerIds.map(containerId => this.getContainer(containerId).filter(container => !!container))
+  async getContainers(ids) {
+    return (await storageService.getMany(CONTAINERS_STORE_NAME, ids)).filter(container => !!container)
   }
 
-  getAllContainers() {
-    return this.containers
+  async getAllContainers() {
+    return (await storageService.getAll(CONTAINERS_STORE_NAME))
   }
 
-  setContainer(container) {
-    if (container.hasOwnProperty('_id')) {
-      container = this.prepareContainer(container)
-    }
-    this.containers = { ...this.containers, ...container }
+  async setContainer(container) {
+    await storageService.set(CONTAINERS_STORE_NAME, container)
   }
 
-  setContainers(containers) {
-    this.setContainer(containers.reduce((acc, curr) => ({ ...acc, ...this.prepareContainer(curr) }), {}))
-  }
-
-  prepareContainer(container) {
-    return { [container._id]: container }
-  }
-
-  loadContainers() {
-    this.containers = JSON.parse(localStorage.getItem(this.storageKey))
-  }
-
-  storeContainers() {
-    localStorage.setItem(this.storageKey, JSON.stringify(this.containers))
+  async setContainers(containers) {
+    await storageService.setMany(CONTAINERS_STORE_NAME, containers)
   }
 }
 
