@@ -1,9 +1,12 @@
-import { getAllContainers as getAllContainersFromServer, getContainerById as getContainerByIdFromServer } from './Http/ContainerHttp'
+import {
+  getAllContainers as getAllContainersFromServer,
+  getContainerById as getContainerByIdFromServer
+} from './Http/ContainerHttp'
 import containerStore from './Store/ContainerStore'
 
 
 async function getAllContainers() {
-  const storedContainers = containerStore.getAllContainers()
+  const storedContainers = await containerStore.getAllContainers()
   if (Object.keys(storedContainers).length) {
     return storedContainers
   }
@@ -14,7 +17,7 @@ async function getAllContainers() {
 }
 
 async function getContainerById(containerId) {
-  const storedContainer = containerStore.getContainer(containerId)
+  const storedContainer = await containerStore.getContainer(containerId)
   if (storedContainer) return storedContainer
 
   const container = await getContainerByIdFromServer(containerId)
