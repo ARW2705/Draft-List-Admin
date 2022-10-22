@@ -51,6 +51,10 @@ class Storage {
     return await this.promisifyAll(keys.map(key => this._db.get(storeName, key)))
   }
 
+  async getAll(storeName) {
+    return await this._db.getAll(storeName)
+  }
+
   async set(storeName, value, key) {
     let args = [storeName, value]
     if (key) args = [...args, key]
