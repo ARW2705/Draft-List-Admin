@@ -7,8 +7,10 @@ import './DropDown.css'
 
 function DropDown({ customClass, title, items, onSelect: handleOnSelect }) {
   const [ listItems, setListItems ] = useState([])
+  const [ showList, setShowList ] = useState({ show: false, latched: false })
 
   const handleOnClick = useCallback(({ name }) => {
+    setShowList({ show: false, latched: true })
     handleOnSelect(name.toLowerCase())
   }, [handleOnSelect])
 
@@ -27,12 +29,29 @@ function DropDown({ customClass, title, items, onSelect: handleOnSelect }) {
     }))
   }, [items, handleOnClick])
 
+  const handleOnHover = isHovering => {
+    if (isHovering && !showList.latched) {
+      setShowList({ show: true, latched: false })
+    } else {
+      setShowList({ show: false, latched: false })
+    }
+  }
+
   return (
-    <div className={ `drop-down-container ${customClass || ''}` }>
+    <div
+      className={ `drop-down-container ${customClass || ''}` }
+      onMouseEnter={ () => handleOnHover(true) }
+      onMouseLeave={ () => handleOnHover(false) }
+    >
       <span>{ title }</span>
-      <ul>
-        { listItems }
-      </ul>
+      {
+        showList.show
+        && (
+          <ul>
+            { listItems }
+          </ul>
+        )
+      }
     </div>
   )
 }

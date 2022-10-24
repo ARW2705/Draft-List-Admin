@@ -18,12 +18,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  visibility: hidden;
   z-index: 100;
-}
-
-.drop-down-container:hover > ul {
-  visibility: visible;
 }
 
 .drop-down-container > ul > li {
