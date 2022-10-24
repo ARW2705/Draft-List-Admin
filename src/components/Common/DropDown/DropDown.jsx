@@ -5,14 +5,16 @@ import Button from '../Button/Button'
 import './DropDown.css'
 
 
-function DropDown({ customClass, title, items, onSelect: handleOnSelect }) {
+function DropDown({ customClass, title, items, onSelect: handleOnSelect, isStaticTitle }) {
   const [ listItems, setListItems ] = useState([])
+  const [ menuTitle, setMenuTitle ] = useState(title)
   const [ showList, setShowList ] = useState({ show: false, latched: false })
 
   const handleOnClick = useCallback(({ name }) => {
     setShowList({ show: false, latched: true })
+    if (!isStaticTitle) setMenuTitle(name)
     handleOnSelect(name.toLowerCase())
-  }, [handleOnSelect])
+  }, [handleOnSelect, isStaticTitle])
 
   useEffect(() => {
     setListItems(items.map((item, index) => {
@@ -43,7 +45,7 @@ function DropDown({ customClass, title, items, onSelect: handleOnSelect }) {
       onMouseEnter={ () => handleOnHover(true) }
       onMouseLeave={ () => handleOnHover(false) }
     >
-      <span>{ title }</span>
+      <span>{ menuTitle }</span>
       {
         showList.show
         && (
