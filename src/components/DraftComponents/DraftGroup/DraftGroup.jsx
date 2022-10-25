@@ -10,21 +10,21 @@ import './DraftGroup.css'
 
 
 function DraftGroup({ deviceId, deviceName, drafts: initialDrafts }) {
-  const [ drafts, setDrafts ] = useState(initialDrafts)
+  const [ draftList, setDraftList ] = useState(initialDrafts)
   const [ draftComponents, setDraftComponents ] = useState([])
 
   const removeDraft = useCallback(async draftId => {
     const updatedDraftList = await archiveDraft(deviceId, draftId)
     const { drafts: populatedDrafts } = await getDraftListByIds(updatedDraftList)
-    setDrafts(populatedDrafts)
-  }, [deviceId, setDrafts])
+    setDraftList(populatedDrafts)
+  }, [deviceId, setDraftList])
 
   useEffect(() => {
     async function init() {
-      if (!drafts.length) return setDraftComponents(<p className='empty-list'>Device has no active drafts</p>)
+      if (!draftList.length) return setDraftComponents(<p className='empty-list'>Device has no active drafts</p>)
 
-      const populatedBeverages = await Promise.all(drafts.map(draft => getBeverageById(draft.beverage)))
-      setDraftComponents(drafts.map((draft, index) => (
+      const populatedBeverages = await Promise.all(draftList.map(draft => getBeverageById(draft.beverage)))
+      setDraftComponents(draftList.map((draft, index) => (
         <Draft
           key={ draft._id }
           draftId={ draft._id }
@@ -35,7 +35,7 @@ function DraftGroup({ deviceId, deviceName, drafts: initialDrafts }) {
       )))
     }
     init()
-  }, [drafts, setDraftComponents, removeDraft])
+  }, [draftList, setDraftComponents, removeDraft])
 
   return (
     <div className='draft-group-container'>
