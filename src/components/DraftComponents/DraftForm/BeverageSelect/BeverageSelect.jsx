@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 
+import Button     from '../../../Common/Button/Button'
 import SearchBar  from '../../../Common/SearchBar/SearchBar'
 import SimpleView from '../../../Common/SimpleView/SimpleView'
 import Spinner    from '../../../Common/Loaders/Spinner/Spinner'
@@ -30,14 +31,20 @@ function BeverageSelect({ onSelect: handleOnSelect }) {
               key={ index }
               className='beverage-list-item'
             >
-              <button
-                className='list-button'
-                onClick={ () => handleClick(beverage._id) }
-              >
-                <span>{ toTitleCase(beverage.title || beverage.name) }</span>
-                <span>{ toTitleCase(beverage.source) }</span>
-                <span>{ toTitleCase(beverage.style) }</span>
-              </button>
+              <Button
+                content={
+                  <>
+                    <span>{ toTitleCase(beverage.title || beverage.name) }</span>
+                    <span>{ toTitleCase(beverage.source) }</span>
+                    <span>{ toTitleCase(beverage.style) }</span>
+                  </>
+                }
+                onClick ={ () => handleClick(beverage._id) }
+                customClass='list-button'
+                name='select beverage button'
+                ariaLabel='select beverage'
+                isFlat={ true }
+              />
             </li>
           ))
         }
@@ -48,7 +55,7 @@ function BeverageSelect({ onSelect: handleOnSelect }) {
   const handleSearchOnSubmit = async searchTerm => {
     let result = <></>
     if (searchTerm !== null) {
-      const { beverages, errors } = await getBeveragesByQuery('name', searchTerm, 0, 1)
+      const { beverages } = await getBeveragesByQuery('name', searchTerm, 0, 1)
       const beverage = beverages[0]
       if (beverage) {
         result = (
@@ -69,7 +76,7 @@ function BeverageSelect({ onSelect: handleOnSelect }) {
 
   useEffect(() => {
     async function getRecentBeverages() {
-      const { beverages, errors } = await getBeverageList(0, 5)
+      const { beverages } = await getBeverageList(0, 5)
       console.log('got previous', beverages)
       setPreviousBeverages(buildPreviousList(beverages))
     }
