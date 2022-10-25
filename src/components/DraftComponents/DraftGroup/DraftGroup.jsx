@@ -27,6 +27,7 @@ function DraftGroup({ deviceId, deviceName, drafts: initialDrafts }) {
       setDraftComponents(draftList.map((draft, index) => (
         <Draft
           key={ draft._id }
+          deviceId={ deviceId }
           draftId={ draft._id }
           container={ draft.container }
           beverage={ populatedBeverages[index] }
@@ -35,7 +36,7 @@ function DraftGroup({ deviceId, deviceName, drafts: initialDrafts }) {
       )))
     }
     init()
-  }, [draftList, setDraftComponents, removeDraft])
+  }, [draftList, deviceId, setDraftComponents, removeDraft])
 
   return (
     <div className='draft-group-container'>

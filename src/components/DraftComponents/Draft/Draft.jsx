@@ -11,7 +11,7 @@ import Quantity from '../../Common/Quantity/Quantity'
 import './Draft.css'
 
 
-function Draft({ draftId, container: initialContainer, beverage, removeDraft }) {
+function Draft({ draftId, deviceId, container: initialContainer, beverage, removeDraft }) {
   const [ showQuantityModal, setShowQuantityModal ] = useState(false)
   const [ container, setContainer ] = useState(initialContainer)
 
@@ -24,7 +24,7 @@ function Draft({ draftId, container: initialContainer, beverage, removeDraft }) 
         break
       case 'edit-draft':
         console.log('edit')
-        navigate(`${location.pathname}/form`, { state: { draftId }})
+        navigate(`${location.pathname}/form`, { state: { draftId, deviceId }})
         break
       case 'finish-draft':
         removeDraft()
