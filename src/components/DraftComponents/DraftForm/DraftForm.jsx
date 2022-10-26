@@ -14,39 +14,31 @@ import { addNewDraft } from '../../../services/Draft/Draft'
 import './DraftForm.css'
 
 
-function DraftForm() {
-  const location = useLocation()
-  const deviceId = location.state?.deviceId
-  const draftId = location.state?.draftId
-  console.log(deviceId, draftId)
-  
-  const reducer = (state, action) => {
-    switch(action.type) {
-      case 'beverage':
-        return { ...state, beverage: action.beverage }
-      case 'container':
-        return { ...state, container: action.container }
-      case 'device':
-        return { ...state, device: action.device }
-      case 'color':
-        return { ...state, color: action.color }
-      default:
-        throw new Error(`Invalid form category type: ${action.type}`)
-    }
+function reducer(state, action) {
+  switch(action.type) {
+    case 'beverage':
+      return { ...state, beverage: action.beverage }
+    case 'container':
+      return { ...state, container: action.container }
+    case 'device':
+      return { ...state, device: action.device }
+    case 'color':
+      return { ...state, color: action.color }
+    default:
+      throw new Error(`Invalid form category type: ${action.type}`)
   }
+}
+
+function DraftForm() {
+  const [ disableSubmit, setDisableSubmit ] = useState(true)
+  const [ isLoading, setIsLoading ] = useState(false)
 
   const [ { beverage, container, device, color }, dispatch ] = useReducer(
     reducer,
     { beverage: null, container: null, device: null }
   )
 
-  const [ disableSubmit, setDisableSubmit ] = useState(true)
-  const [ isLoading, setIsLoading ] = useState(false)
-
-  useEffect(() => {
-    setDisableSubmit(!(beverage && container && device))
-  }, [beverage, container, device])
-  
+  const location = useLocation()
   const navigate = useNavigate()
   const navigateBack = useCallback(() => {
     console.log('nb', location)
@@ -65,19 +57,20 @@ function DraftForm() {
       }
 
       console.log('data build', draftData)
-      const response = await addNewDraft(device._id, draftData)
-      console.log('res', response)
-      setIsLoading(false)
+      await addNewDraft(device._id, draftData)
       navigateBack()
     }
     submitDraft()
   }, [beverage, container, device, color, navigateBack])
 
   useEffect(() => {
-    if (isLoading) {
-      submitForm()
-    }
+    if (isLoading) submitForm()
   }, [isLoading, submitForm])
+
+  useEffect(() => {
+    const draftId = location.state?.draftId
+    setDisableSubmit(!(beverage && container && (device || draftId)))
+  }, [beverage, container, device, location])
 
   const handleSubmit = buttonName => {
     if (buttonName === 'submit') {
@@ -87,23 +80,15 @@ function DraftForm() {
     }
   }
   
-  const handleOnSelect = (type, data) => dispatch({ type, [type]: data })
-
   return (
     <div className='draft-form-container'>
       {
-        isLoading
-        && (
-          <Spinner
-            isBlocking={ true }
-            text='Submitting'
-          />
-        )
+        isLoading && <Spinner isBlocking={ true } text='Submitting' />
       }
-      <DeviceSelect onSelect={ data => handleOnSelect('device', data) } />
-      <ContainerSelect onSelect={ data => handleOnSelect('container', data) } />
-      <BeverageSelect onSelect={ data => handleOnSelect('beverage', data) } />
-      <ColorSelect onSelect={ data => handleOnSelect('color', data) } />
+      <DeviceSelect    onSelect={ data => dispatch({ type: 'device'   , device: data    }) } />
+      <ContainerSelect onSelect={ data => dispatch({ type: 'container', container: data }) } />
+      <BeverageSelect  onSelect={ data => dispatch({ type: 'beverage' , beverage: data  }) } />
+      <ColorSelect     onSelect={ data => dispatch({ type: 'color'    , color: data     }) } />
       <SelectionPreview
         beverage={ beverage }
         container={ container }
