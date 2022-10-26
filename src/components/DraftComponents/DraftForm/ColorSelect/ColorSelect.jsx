@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { SliderPicker } from 'react-color'
 
 import FormInput from '../../../Common/Form/Input/Input'
 
@@ -14,20 +15,23 @@ function ColorSelect({ onSelect: handleOnSelect, beverageSRM }) {
     value: beverageSRM || ''
   })
 
-  const validators = [pattern(/^#([\da-f]{3}){1,2}$/)]
-  
-  const handleSelect = (name, value, errors) => {
-    setConfig(prevProps => ({ ...prevProps, value }))
-    if (!Object.keys(errors).length) handleOnSelect(value)
+  const handleSelect = (_, value, errors) => {
+    if (!Object.keys(errors).length) {
+      setConfig(prevProps => ({ ...prevProps, value }))
+      handleOnSelect(value)
+    }
   }
 
   return (
-    <div className='color-select'>
+    <div className='color-select-container'>
       <FormInput
         config={ config }
-        validators={ validators }
+        validators={ [pattern(/^#([\da-fA-F]{3}){1,2}$/)] }
         handleOnChange={ handleSelect }
-        customClass='color-select'
+      />
+      <SliderPicker
+        color={ config.value }
+        onChangeComplete={ ({ hex }) => handleSelect(null, hex, {}) }
       />
     </div>
   )
