@@ -12,6 +12,7 @@ function Button({ content, text, icon, customClass, isDisabled, name, onClick, a
 
   const handleClick = event => {
     event.preventDefault()
+    event.stopPropagation()
     const { target } = event
     const correctedTarget = target.tagName.toLowerCase() === 'button' ? target : target.parentElement
     onClick(correctedTarget)
