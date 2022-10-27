@@ -14,8 +14,8 @@ import FormSelect    from '../Select/Select'
  *     {
  *       value: value to apply on first load, default is undefined
  *       validators: array of form validators to apply
+ *       element: the type of form element, default is 'input'
  *       options: {
- *         element: the type of form element, default is 'input'
  *         label: element label
  *         type: form input 'type' eg 'number' or 'email', default is 'text'
  *         selectOptions: array of options for 'select' form elements
