@@ -7,7 +7,8 @@ import { getAllContainers } from '../../../../services/Container/Container'
 import './ContainerSelect.css'
 
 
-function ContainerSelect({ onSelect: handleOnSelect }) {
+function ContainerSelect({ onSelect: handleOnSelect, preselect }) {
+  const [ title, setTitle ] = useState('Select a Container')
   const [ containerOptions, setContainerOptions ] = useState([])
   const [ containers, setContainers ] = useState([])
 
@@ -32,10 +33,14 @@ function ContainerSelect({ onSelect: handleOnSelect }) {
     getContainers()
   }, [])
 
+  useEffect(() => {
+    if (preselect) setTitle(preselect)
+  }, [preselect])
+
   return (
     <div className='container-selection'>
       <DropDown
-        title='Select a Container'
+        title={ title }
         items={ containerOptions }
         customClass='container-dropdown'
         onSelect={ handleSelect }
