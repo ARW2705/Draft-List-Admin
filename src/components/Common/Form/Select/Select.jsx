@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
-import FormOption from '../Option/Option'
 import FormError from '../FormError/FormError'
+import DropDown from '../../DropDown/DropDown'
 
 import { validate } from '../../../../shared/validators/validators'
 import hyphenify    from '../../../../shared/utilities/hyphenify'
@@ -12,17 +12,28 @@ import './Select.css'
 
 function FormSelect(props) {
   const { config, validators, handleOnChange, customClass } = props
-  const { name, value, label, formOptions } = config
+  const { name, value, label, selectOptions } = config
+  
+  let initLabel = toTitleCase(label || name)
+  if (value) {
+    const option = selectOptions.find(option => {
+      if (typeof option === 'object') {
+        return JSON.stringify(option.value) === JSON.stringify(value)
+      }
+      return option.value === value
+    })
+    if (option) initLabel = option.label
+  }
 
   const [ attrs, setAttrs ] = useState({
     name,
     handleOnChange,
     value,
-    label: toTitleCase(label || name),
+    label: initLabel,
     id: hyphenify(`form-select-${name}`),
-    customClass: customClass || ''
+    customClass: customClass || '',
+    options: selectOptions.map(option => option.label)
   })
-  const [ formOptionComponents, setFormOptionComponents ] = useState(<></>)
   const [ touchStatus, setTouchStatus ] = useState({
     focus: false,
     touched: !!value,
@@ -32,16 +43,6 @@ function FormSelect(props) {
     errors: {},
     show: false
   })
-
-  const buildOptionComponents = useCallback(() => {
-    return formOptions.map((option, index) => (
-      <FormOption key={ index } label={ option.label } value={ option.value } />
-    ))
-  }, [formOptions])
-
-  useEffect(() => {
-    setFormOptionComponents(buildOptionComponents())
-  }, [buildOptionComponents])
 
   useEffect(() => {
     if (touchStatus.touched) {
@@ -55,56 +56,20 @@ function FormSelect(props) {
     attrs.handleOnChange(name, value, errors)
   }
 
-  const handleChange = ({ target }) => {
-    const { name, value } = target
+  const handleSelect = selectionLabel => {
+    const { value } = selectOptions.find(option => option.label === selectionLabel)
     checkValidity(name, value)
-    setAttrs(prevProps => {
-      return {
-        ...prevProps,
-        value
-      }
-    })
-  }
-
-  const handleOnFocusOrBlur = event => {
-    const { type, target } = event
-    let update
-    if (type.toLowerCase() === 'focus') {
-      update = { ...update, pristine: false, focus: true }
-    } else if (type.toLowerCase() === 'blur') {
-      update = { ...update, touched: true, focus: false }
-      const { name, value } = target
-      checkValidity(name, value)
-    }
-
-    if (update) {
-      setTouchStatus(prevProps => {
-        return {
-          ...prevProps,
-          ...update
-        }
-      })
-    }
+    setAttrs(prevProps => ({ ...prevProps, value }))
   }
 
   return (
     <div className={`form-select-container ${attrs.customClass}`}>
-      <label
-        className={`form-select`}
-        htmlFor={ attrs.id }
-      >
-        { attrs.label }
-      </label>
-      <select
-        id={ attrs.id }
-        name={ attrs.name }
-        value={ attrs.value }
-        onChange={ handleChange }
-        onFocus={ handleOnFocusOrBlur }
-        onBlur={ handleOnFocusOrBlur}
-      >
-        { formOptionComponents }
-      </select>
+      <DropDown
+        title={ attrs.label }
+        items={ attrs.options }
+        customClass='form-select-dropdown'
+        onSelect={ handleSelect }
+      />
       {
         errorState.show
         && (
