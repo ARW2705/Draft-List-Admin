@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 
-import Button from '../Button/Button'
 import FormInput from '../Form/Input/Input'
+import FormButtons from '../Form/FormButtons/FormButtons'
 
 import './Quantity.css'
 
@@ -45,20 +45,11 @@ function Quantity({ data, dismiss }) {
         customClass='new-quantity-input'
         handleOnChange={ handleOnChange }
       />
-      <div className='quantity-button-container'>
-        <Button
-          text='Cancel'
-          ariaLabel='cancel'
-          onClick={ () => handleOnClick('cancel') }
-          customClass='quantity-button'
-        />
-        <Button
-          text='Submit'
-          ariaLabel='submit quantity change'
-          onClick={ () => handleOnClick('submit') }
-          customClass='quantity-button'
-        />
-      </div>
+      <FormButtons
+        isDisabled={ false }
+        customClass='quantity-buttons'
+        onClick={ handleOnClick }
+      />
     </div>
   )
 }
