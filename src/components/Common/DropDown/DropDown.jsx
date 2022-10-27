@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import Button from '../Button/Button'
 
@@ -8,13 +8,11 @@ import './DropDown.css'
 function DropDown({ customClass, title, items, onSelect: handleOnSelect, isStaticTitle }) {
   const [ listItems, setListItems ] = useState([])
   const [ menuTitle, setMenuTitle ] = useState(title)
-  const [ showList, setShowList ] = useState({ show: false, latched: false })
+  const [ showList, setShowList ] = useState(false)
 
-  const handleOnClick = useCallback(({ name }) => {
-    setShowList({ show: false, latched: true })
-    if (!isStaticTitle) setMenuTitle(name)
-    handleOnSelect(name.toLowerCase())
-  }, [handleOnSelect, isStaticTitle])
+  useEffect(() => {
+    setMenuTitle(title)
+  }, [title])
 
   useEffect(() => {
     setListItems(items.map((item, index) => {
@@ -24,35 +22,32 @@ function DropDown({ customClass, title, items, onSelect: handleOnSelect, isStati
             customClass='drop-down'
             isDisabled={ false }
             text={ item }
-            onClick={ handleOnClick }
           />
         </li>
       )
     }))
-  }, [items, handleOnClick])
+  }, [items])
 
-  const handleOnHover = isHovering => {
-    if (isHovering && !showList.latched) {
-      setShowList({ show: true, latched: false })
-    } else {
-      setShowList({ show: false, latched: false })
+  const handleClick = event => {
+    event.preventDefault()
+    const { name } = event.target.tagName.toLowerCase() === 'button' ? event.target : event.target.parentElement
+    setShowList(!name)
+    if (name) {
+      if (!isStaticTitle) setMenuTitle(name)
+      setShowList(false)
+      handleOnSelect(name)
     }
   }
 
   return (
     <div
       className={ `drop-down-container ${customClass || ''}` }
-      onMouseEnter={ () => handleOnHover(true) }
-      onMouseLeave={ () => handleOnHover(false) }
+      onMouseLeave={ () => setShowList(false) }
+      onClick={ handleClick }
     >
       <span>{ menuTitle }</span>
       {
-        showList.show
-        && (
-          <ul>
-            { listItems }
-          </ul>
-        )
+        showList && <ul>{ listItems }</ul>
       }
     </div>
   )
