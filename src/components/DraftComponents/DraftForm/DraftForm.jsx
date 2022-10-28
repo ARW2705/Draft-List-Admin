@@ -4,70 +4,13 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import FormGroup from '../../Common/Form/FormGroup/FormGroup'
 import Spinner from '../../Common/Loaders/Spinner/Spinner'
 
-import {
-  getDraft,
-  addNewDraft,
-  updateDraft
-} from '../../../services/Draft/Draft'
-import {
-  getBeverageById,
-  getBeverageList
-} from '../../../services/Beverage/Beverage'
-import { getDevices } from '../../../services/Device/Device'
-import { getAllContainers } from '../../../services/Container/Container'
-import createForm from '../../../shared/form/create-form'
-import { required, pattern } from '../../../shared/validators/validators'
+import { getDraft, addNewDraft, updateDraft } from '../../../services/Draft/Draft'
+import { getBeverageById } from '../../../services/Beverage/Beverage'
+
+import { buildDraftForm } from './build-draft-form'
 
 import './DraftForm.css'
 
-
-async function buildForm({ containerPreselect, beveragePreselect, contentColorPreselect, isNewDraft }) {
-  const containers = await getAllContainers()
-  const containerOptions = containers.map(container => ({ label: container.name, value: container }))
-  const { beverages } = await getBeverageList(0, 5)
-  const beverageOptions = beverages.map(beverage => ({ label: beverage.name, value: beverage._id }))
-  
-  let fields = {}
-  if (isNewDraft) {
-    const { devices } = await getDevices()
-    fields = {
-      device: {
-        value: '',
-        validators: [required()],
-        element: 'select',
-        options: {
-          selectOptions: devices.map(device => ({ label: device.name || device.title, value: device._id }))
-        }
-      }
-    }
-  }
-
-  fields = {
-    ...fields,
-    container: {
-      value: containerPreselect,
-      validators: [required()],
-      element: 'select',
-      options: {
-        selectOptions: containerOptions
-      }
-    },
-    beverage: {
-      value: beveragePreselect,
-      validators: [required()],
-      element: 'select',
-      options: {
-        selectOptions: beverageOptions
-      }
-    },
-    contentColor: {
-      value: contentColorPreselect,
-      validators: [pattern(/^#([\da-fA-F]{3}){1,2}$/)]
-    }
-  }
-
-  return createForm({fields})
-}
 
 function DraftForm() {
   const location = useLocation()
@@ -84,9 +27,8 @@ function DraftForm() {
 
   const submitForm = useCallback(() => {
     async function submitDraft() {
-      console.log(formData.current)
       let draftData = {
-        beverage: formData.current.beverage,
+        beverage: formData.current.beverage || formData.current.previousBeverage,
         container: {
           containerInfo: formData.current.container._id,
           quantity: formData.current.container.capacity,
@@ -122,16 +64,16 @@ function DraftForm() {
         const draft = await getDraft(draftId)
         if (!draft) throw new Error('Draft not found')
         const beverage = await getBeverageById(draft.beverage)
-        setFormTitle(`Edit ${beverage ? beverage.name : ''} Draft`)
+        setFormTitle(`Editing ${beverage ? beverage.name : ''} Draft`)
         config = {
           contentColorPreselect: draft.container.contentColor,
-          beveragePreselect: beverage?._id || '',
+          beveragePreselect: beverage || '',
           containerPreselect: draft.container.containerInfo,
           isNewDraft: false
         }
       }
 
-      setForm(await buildForm(config))
+      setForm(await buildDraftForm(config))
       setIsLoading(false)
     }
     initForm()
