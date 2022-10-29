@@ -19,6 +19,12 @@ const errorMessages = {
       .replace(/,(?=[^,]*$)/, replacementText)
     }
     return `${subject} do not match`
+  },
+  eitherOr: (_, error) => {
+    const formattedFieldNames = error.eitherOr
+      .map(field => toTitleCase(hyphenify(field).split('-').join(' ').toLowerCase()))
+      .join('\' or \'')
+    return `Selecting either '${formattedFieldNames}' are required`
   }
 }
 
