@@ -19,7 +19,7 @@ function BeverageSummary({ abv, ibu, srm, description, customClass, onClick: han
           SRM <span className='value'>{ srm ? srm : '--' }</span>
         </span>
       </div>
-      { description && <p>{ description }</p> }
+      <p>{ description }</p>
       <Button
         text='Edit Beverage'
         customClass='beverage-edit-button'
