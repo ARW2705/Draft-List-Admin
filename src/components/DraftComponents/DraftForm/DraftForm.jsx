@@ -1,30 +1,30 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+
+import { addDraft, updateDraft } from '../../../services/draft/store/draft.slice'
 
 import FormGroup from '../../Common/Form/FormGroup/FormGroup'
-import Spinner from '../../Common/Loaders/Spinner/Spinner'
+import Spinner   from '../../Common/Loaders/Spinner/Spinner'
 
-import { getDraft, addNewDraft, updateDraft } from '../../../services/Draft/Draft'
-import { getBeverageById } from '../../../services/Beverage/Beverage'
-
-import { buildDraftForm } from './build-draft-form'
+import { configDraftForm } from './config-draft-form'
 
 import './DraftForm.css'
 
 
 function DraftForm() {
-  const location = useLocation()
-  const draftId = location.state?.draftId
-  const [ isLoading, setIsLoading ] = useState(!!draftId)
-  const [ form, setForm ] = useState(null)
-  const [ formTitle, setFormTitle ] = useState('New Draft')
+  const [ isLoading, setIsLoading ] = useState(false)
   const formData = useRef()
+  const location = useLocation()
+  const draft = location.state?.draft
+  const form = configDraftForm(draft)
 
   const navigate = useNavigate()
   const navigateBack = useCallback(() => {
     navigate(`/${location.pathname.split('/')[1]}`, { state: { refresh: true } })
   }, [location, navigate])
 
+  const dispatch = useDispatch()
   const submitForm = useCallback(() => {
     async function submitDraft() {
       let draftData = {
@@ -40,44 +40,23 @@ function DraftForm() {
       }
 
       console.log('data build', draftData)
-      if (draftId) await updateDraft(draftId, draftData)
-      else await addNewDraft(draftData.device, draftData)
+      if (draft) {
+        const updateDraftThunk = updateDraft(draft._id, draftData)
+        dispatch(updateDraftThunk)
+      } else {
+        const addDraftThunk = addDraft(draftData.device, draftData)
+        dispatch(addDraftThunk)
+      }
+
+      setIsLoading(false)
       navigateBack()
     }
     submitDraft()
-  }, [navigateBack, draftId])
+  }, [draft, dispatch, navigateBack])
 
   useEffect(() => {
     if (isLoading && formData.current) submitForm()
   }, [isLoading, submitForm])
-
-  useEffect(() => {
-    async function initForm() {
-      let config = {
-        contentColorPreselect: '',
-        beveragePreselect: '',
-        containerPreselect: '',
-        isNewDraft: true
-      }
-
-      if (draftId) {
-        const draft = await getDraft(draftId)
-        if (!draft) throw new Error('Draft not found')
-        const beverage = await getBeverageById(draft.beverage)
-        setFormTitle(`Editing ${beverage ? beverage.name : ''} Draft`)
-        config = {
-          contentColorPreselect: draft.container.contentColor,
-          beveragePreselect: beverage || '',
-          containerPreselect: draft.container.containerInfo,
-          isNewDraft: false
-        }
-      }
-
-      setForm(await buildDraftForm(config))
-      setIsLoading(false)
-    }
-    initForm()
-  }, [draftId])
 
   const handleSubmit = async data => {
     if (data) {
@@ -97,7 +76,7 @@ function DraftForm() {
             form={ form }
             submitHandler={ handleSubmit }
             customClass='draft-form'
-            title={ formTitle }
+            title={ `${draft ? 'Edit' : 'New'} Draft` }
           />
         )
       }
