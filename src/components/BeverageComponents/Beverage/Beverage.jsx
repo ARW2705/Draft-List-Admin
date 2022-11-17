@@ -1,4 +1,8 @@
 import React from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+
+import { selectBeverage } from '../../../services/beverage/store/beverage.slice'
 
 import BeverageHeader  from '../BeverageHeader/BeverageHeader'
 import BeverageSummary from '../BeverageSummary/BeverageSummary'
@@ -6,14 +10,18 @@ import BeverageSummary from '../BeverageSummary/BeverageSummary'
 import './Beverage.css'
 
 
-function Beverage({ beverage, onClick: handleOnClick }) {
+function Beverage({ beverageId }) {
+  const beverage = useSelector(state => selectBeverage(state, beverageId))
   const { name, style, source, abv, ibu, srm, description } = beverage
   
+  const location = useLocation()
+  const navigate = useNavigate()
+  const handleOnClick = () => {
+    navigate(`${location.pathname}/form`, { state: { beverage }})
+  }
+  
   return (
-    <article
-      className='beverage'
-      data-id={ beverage._id }
-    >
+    <article className='beverage'>
       <BeverageHeader
         name={ name }
         style={ style }
@@ -24,7 +32,7 @@ function Beverage({ beverage, onClick: handleOnClick }) {
         ibu={ ibu }
         srm={ srm }
         description={ description }
-        onClick={ () => handleOnClick(beverage) }
+        onClick={ handleOnClick }
       />
     </article>
   )
