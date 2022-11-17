@@ -4,3 +4,7 @@
   font-size: 1.35rem;
   color: var(--text-dark);
 }
+
+.transparent-background {
+  background: transparent;
+}

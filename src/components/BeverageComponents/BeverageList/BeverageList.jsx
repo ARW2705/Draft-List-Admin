@@ -1,64 +1,41 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 
-import { getBeverageList, getBeveragesByQuery } from '../../../services/Beverage/Beverage'
+import { selectBeverageIds, selectBeverageQuery } from '../../../services/beverage/store/beverage.slice'
 
 import Beverage from '../../BeverageComponents/Beverage/Beverage'
-import SpinnerLoader from '../../Common/Loaders/Spinner/Spinner'
+
+import shallowCompare from '../../../shared/utilities/shallow-compare'
 
 import './BeverageList.css'
 
 
 function BeverageList({ listConfig }) {
-  const { pageNum, pageCount, searchType, searchTerm } = listConfig
   const [ components, setComponents ] = useState([])
-  const [ isLoading, setIsLoading ] = useState(true)
-
-  const location = useLocation()
-  const navigate = useNavigate()
-  const handleOnClick = useCallback(beverage => {
-    navigate(`${location.pathname}/form`, { state: { beverage }})
-  }, [navigate, location.pathname])
-
-  const buildComponents = useCallback((beverages, loadStartTime) => {
-    const minLoaderTime = 250 // in ms
-    setTimeout(() => {
-      setIsLoading(false)
-    }, Date.now() - loadStartTime + minLoaderTime)
-
-    if (!beverages.length) return <p className='empty-list'>Nothing here...</p>
-
-    return beverages.map(beverage => {
-      return (
-        <Beverage
-          className='beverage-container'
-          key={ beverage._id }
-          beverage={ beverage }
-          onClick={ handleOnClick }
-        />
-      )
-    })
-  }, [handleOnClick])
+  
+  const { searchType, searchTerm } = listConfig
+  const selector = (searchType && searchTerm)
+    ? state => selectBeverageQuery(state, searchType, searchTerm)
+    : selectBeverageIds
+  const beverageIds = useSelector(selector, shallowCompare)
 
   useEffect(() => {
-    async function getList(loadStartTime, isQuery) {
-      if (isQuery) {
-        const { beverages, errors } = await getBeveragesByQuery(searchType, searchTerm, pageNum, pageCount)
-        setComponents(buildComponents(beverages, loadStartTime))
-      } else {
-        const { beverages, errors } = await getBeverageList(pageNum, pageCount)
-        setComponents(buildComponents(beverages, loadStartTime))
-      }
+    if (!beverageIds?.length) {
+      setComponents(<p className='empty-list'>Nothing here...</p>)
+    } else {
+      setComponents(beverageIds.map(id => (
+        <Beverage
+          className='beverage-container'
+          key={ id }
+          beverageId={ id }
+        />
+      )))
     }
-
-    if ((searchType && searchTerm) || (!searchType && !searchTerm)) {
-      getList(Date.now(), searchTerm && searchType)
-    }
-  }, [searchType, searchTerm, pageNum, pageCount, buildComponents])
+  }, [beverageIds])
 
   return (
     <div className='beverage-list'>
-      { isLoading ? <SpinnerLoader /> : components }
+      { components }
     </div>
   )
 }
