@@ -1,11 +1,22 @@
 import React from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+
+import { selectIsLoggedIn } from '../../services/user/store/user.slice'
+
+import { CLEAR_ALL } from '../../shared/constants/shared-event-names'
 
 import Button from '../Common/Button/Button'
 
 import './LoginSignupButtons.css'
 
 
-function LoginSignupButtons({ handleOnClick, isLoggedIn }) {
+function LoginSignupButtons() {
+  const isLoggedIn = useSelector(selectIsLoggedIn)
+  const dispatch = useDispatch()
+  const location = useLocation()
+  const navigate = useNavigate()
+
   return (
     <div className={`login-signup-buttons-container ${ isLoggedIn ? 'logout' : '' }`}>
       {
@@ -14,7 +25,7 @@ function LoginSignupButtons({ handleOnClick, isLoggedIn }) {
           <Button
             text='Logout'
             customClass='form-button'
-            onClick={ handleOnClick }
+            onClick={ () => dispatch({ type: CLEAR_ALL }) }
           />
         )
         : (
@@ -24,12 +35,12 @@ function LoginSignupButtons({ handleOnClick, isLoggedIn }) {
               <Button
                 text='Login'
                 customClass='form-button'
-                onClick={ handleOnClick }
+                onClick={ () => navigate(`${location.pathname}/login`) }
               />
               <Button
                 text='Signup'
                 customClass='form-button'
-                onClick={ handleOnClick }
+                onClick={ () => navigate(`${location.pathname}/signup`) }
               />
             </div>
           </>
@@ -39,4 +50,5 @@ function LoginSignupButtons({ handleOnClick, isLoggedIn }) {
   )
 }
 
-export default LoginSignupButtons
+
+export default React.memo(LoginSignupButtons)
