@@ -1,9 +1,9 @@
-import token from '../../../Token/Token'
+import store from '../../../../app/store'
 
 function appendAuthorizationHeader(axiosRef) {
   axiosRef.interceptors.request.use(
-    config => {
-      const jwt = token.getToken()
+    async config => {
+      const jwt = store.getState().token
       config.headers["Authorization"] = `bearer ${jwt}`
       return config
     },

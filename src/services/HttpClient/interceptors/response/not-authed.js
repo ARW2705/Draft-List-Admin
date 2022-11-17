@@ -1,13 +1,12 @@
-import token from '../../../Token/Token'
-
+import { removeToken } from '../../../token/token'
 
 function handleUnauthorizedResponse(axiosRef) {
   axiosRef.interceptors.response.use(
     response => response,
-    error => {
+    async error => {
       const { response } = error
       if (response.status === 401) {
-        token.removeToken()
+        removeToken()
         // Handle token expired
         return Promise.resolve()
       }
