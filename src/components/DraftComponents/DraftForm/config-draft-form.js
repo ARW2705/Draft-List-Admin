@@ -1,18 +1,20 @@
-import { getBeverageList, getBeveragesByQuery } from '../../../services/Beverage/Beverage'
-import { getDevices } from '../../../services/Device/Device'
-import { getAllContainers } from '../../../services/Container/Container'
+import store from '../../../app/store'
 
-import createForm from '../../../shared/form/create-form'
+import { selectBeverage, selectBeverageQuery } from '../../../services/beverage/store/beverage.slice'
+
+import createForm   from '../../../shared/form/create-form'
+import getPaginated from '../../../shared/utilities/get-paginated'
 import { required, pattern, eitherOr } from '../../../shared/validators/validators'
 
 
-async function buildDeviceList() {
-  const { devices } = await getDevices()
+function buildDeviceList() {
+  const { devices } = store.getState()
   return devices.map(device => ({ label: device.name || device.title, value: device._id }))
 }
 
-async function buildBeverageList(preselect) {
-  let { beverages: beverageList } = await getBeverageList(0, 5)
+function buildBeverageList(preselect) {
+  const { beverages } = store.getState()
+  const beverageList = getPaginated(beverages, 0, 5)
   if (!preselect) return beverageList
 
   const dupIndex = beverageList.findIndex(beverage => beverage._id === preselect._id)
@@ -21,24 +23,32 @@ async function buildBeverageList(preselect) {
   return [preselect, ...beverageList.slice(0, dupIndex), ...beverageList.slice(dupIndex + 1)]
 }
 
-async function buildContainerList() {
-  return (await getAllContainers()).map(container => ({ label: container.name, value: container }))
+function buildContainerList() {
+  const { containers } = store.getState()
+  return containers.map(container => ({ label: container.name, value: container }))
 }
 
-async function buildDraftForm({ containerPreselect, beveragePreselect, contentColorPreselect, isNewDraft }) {  
+export function configDraftForm(draft) {
+  let beveragePreselect = ''
+  let contentColorPreselect = ''
+  let containerPreselect = ''
   let fields = {}
 
-  if (isNewDraft) {
+  if (!draft) {
     fields = {
       device: {
         value: '',
         validators: [required()],
         element: 'select',
         options: {
-          selectOptions: await buildDeviceList()
+          selectOptions: buildDeviceList()
         }
       }
     }
+  } else {
+    beveragePreselect = selectBeverage(store.getState(), draft.beverage)
+    contentColorPreselect = draft.container.contentColor || ''
+    containerPreselect = draft.container.containerInfo
   }
 
   fields = {
@@ -48,7 +58,7 @@ async function buildDraftForm({ containerPreselect, beveragePreselect, contentCo
       validators: [required()],
       element: 'select',
       options: {
-        selectOptions: await buildContainerList()
+        selectOptions: buildContainerList()
       }
     },
     beverage: {
@@ -56,9 +66,10 @@ async function buildDraftForm({ containerPreselect, beveragePreselect, contentCo
       element: 'query',
       options: {
         label: 'Search Beverages',
-        queryFn: async queryTerm => {
-          const { beverages } = await getBeveragesByQuery('name', queryTerm, 0, 1)
-          return beverages[0]
+        queryFn: queryTerm => {
+          const beverages = selectBeverageQuery(store.getState(), 'name', queryTerm)
+          if (beverages.length) return beverages[0]
+          return beverages
         },
         queryKeys: ['name', 'source', 'style'],
         queryValue: '_id'
@@ -69,7 +80,7 @@ async function buildDraftForm({ containerPreselect, beveragePreselect, contentCo
       element: 'list',
       options: {
         label: 'Previously Used Beverages',
-        list: await buildBeverageList(beveragePreselect),
+        list: buildBeverageList(beveragePreselect),
         displayKeys: ['name', 'source', 'style']
       }
     },
@@ -93,6 +104,3 @@ async function buildDraftForm({ containerPreselect, beveragePreselect, contentCo
 
   return createForm({fields, onChanges, validators})
 }
-
-
-export { buildDraftForm }
