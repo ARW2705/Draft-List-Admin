@@ -1,97 +1,134 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
 
-import { getDraft, updateDraft } from '../../../services/Draft/Draft'
+import store from '../../../app/store'
 
-import Button from '../../Common/Button/Button'
-import Image from '../../Common/Image/Image'
-import Modal from '../../Common/Modal/Modal'
+import { updateDraft, selectDraft, remove as removeDraft, getFromAPI } from '../../../services/draft/store/draft.slice'
+import { selectBeverage } from '../../../services/beverage/store/beverage.slice'
+import { archiveDraft } from '../../../services/device/store/device.slice'
+
+import Spinner  from '../../Common/Loaders/Spinner/Spinner'
+import Button   from '../../Common/Button/Button'
+import Image    from '../../Common/Image/Image'
+import Modal    from '../../Common/Modal/Modal'
 import Quantity from '../../Common/Quantity/Quantity'
 
 import './Draft.css'
 
 
-function Draft({ draftId, deviceId, container: initialContainer, beverage, removeDraft }) {
+function Draft({ draftId, deviceId }) {
   const [ showQuantityModal, setShowQuantityModal ] = useState(false)
-  const [ container, setContainer ] = useState(initialContainer)
+  const [ draft, setDraft ] = useState(useSelector(state => selectDraft(state, draftId)))
+  const [ beverage, setBeverage ] = useState(useSelector(state => selectBeverage(state, draft?.beverage)))
+  const [ isLoading, setIsLoading ] = useState(!(draft && beverage))
 
   const location = useLocation()
   const navigate = useNavigate()
-  const handleOnClick = ({ name }) => {
+  const dispatch = useDispatch()
+  const handleOnClick = async name => {
     switch (name) {
       case 'change-quantity':
         setShowQuantityModal(true)
         break
       case 'edit-draft':
-        console.log('edit')
-        navigate(`${location.pathname}/form`, { state: { draftId, deviceId }})
+        navigate(`${location.pathname}/form`, { state: { draft }})
         break
       case 'finish-draft':
-        removeDraft()
+        const archiveDraftThunk = archiveDraft(deviceId, draftId)
+        dispatch(archiveDraftThunk)
+        dispatch(removeDraft(draftId))
         break
       default:
         throw new Error(`Invalid click event: ${name}`)
     }
   }
 
-  const updateQuantity = async newQuantity => {
-    const draft = await getDraft(draftId)
-    const draftBody = {
-      ...draft,
-      container: {
-        ...draft.container,
-        quantity: newQuantity
-      }
-    }
-    const { container: updatedContainer } = await updateDraft(draftId, draftBody)
-    setContainer(updatedContainer)
-  }
-
   const handleQuantityModalDismiss = data => {
-    if (data) updateQuantity(data.quantity)
+    if (data) {
+      const updatedDraft = {
+        ...draft,
+        container: {
+          ...draft.container,
+          quantity: data.quantity
+        }
+      }
+
+      dispatch(updateDraft(draftId, updatedDraft))
+      const updateDraftThunk = updateDraft(draftId, updatedDraft)
+      dispatch(updateDraftThunk)
+    }
     setShowQuantityModal(false)
   }
+
+  useEffect(() => {
+    const unsubscribe = store.subscribe(() => {
+      const state = store.getState()
+      const selectedDraft = selectDraft(state, draftId)
+      if (!selectedDraft) return
+
+      const selectedBeverage = selectBeverage(state, selectedDraft.beverage)
+      if (!selectedBeverage) return
+      // TODO: decide what to do if a draft is not found or a draft is found but not an associated beverage
+      setDraft(selectedDraft)
+      setBeverage(selectedBeverage)
+      setIsLoading(false)
+    })
+
+    if (!draft) {
+      console.log('missing draft, fetching from api')
+      dispatch(getFromAPI(draftId))
+    }
+
+    return () => unsubscribe()
+  }, [draftId, draft, dispatch])
 
   return (
     <>
       {
-        showQuantityModal
-        && <Modal
-          component={ Quantity }
-          data={ { quantity: container.quantity } }
-          dismiss={ handleQuantityModalDismiss }
-        />
+        isLoading
+        ? <Spinner />
+        : <>
+          {
+            showQuantityModal
+            && <Modal
+              component={ Quantity }
+              data={ { quantity: draft.container.quantity } }
+              dismiss={ handleQuantityModalDismiss }
+            />
+          }
+          <div className='draft-container'>
+            <Image
+              imageURL={ beverage.imageURL }
+              alt='beverage label'
+              customClass='draft-beverage-label'
+            />
+            <div className='draft-content-a'>{ beverage.title || beverage.name }</div>
+            <div className='draft-content-b'>•</div>
+            <div className='draft-content-c'>{ draft.container.containerInfo.name }</div>
+            <div className='draft-content-d'>•</div>
+            <div className='draft-content-e'>{ Math.floor(draft.container.quantity * 100 / draft.container.containerInfo.capacity) }%</div>
+            <Button
+              text='Change Quantity'
+              name='change-quantity'
+              customClass='draft-button-a'
+              onClick={ () => handleOnClick('change-quantity') }
+            />
+            <Button
+              text='Edit Draft'
+              name='edit-draft'
+              customClass='draft-button-b'
+              onClick={ () => handleOnClick('edit-draft') }
+            />
+            <Button
+              text='Finish Draft'
+              name='finish-draft'
+              customClass='draft-button-c'
+              onClick={ () => handleOnClick('finish-draft') }
+            />
+          </div>
+        </>
       }
-      <div className='draft-container'>
-        <Image
-          imageURL={ beverage.imageURL }
-          alt='beverage label'
-          customClass='draft-beverage-label'
-        />
-        <div className='draft-content-a'>{ beverage.title || beverage.name }</div>
-        <div className='draft-content-b'>•</div>
-        <div className='draft-content-c'>{ container.containerInfo.name }</div>
-        <div className='draft-content-d'>•</div>
-        <div className='draft-content-e'>{ Math.floor(container.quantity * 100 / container.containerInfo.capacity) }%</div>
-        <Button
-          text='Change Quantity'
-          name='change-quantity'
-          customClass='draft-button-a'
-          onClick={ handleOnClick }
-        />
-        <Button
-          text='Edit Draft'
-          name='edit-draft'
-          customClass='draft-button-b'
-          onClick={ handleOnClick }
-        />
-        <Button
-          text='Finish Draft'
-          name='finish-draft'
-          customClass='draft-button-c'
-          onClick={ handleOnClick }
-        />
-      </div>
     </>
   )
 }
