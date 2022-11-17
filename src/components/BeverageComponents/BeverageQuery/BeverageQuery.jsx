@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
 import DropDown  from '../../../components/Common/DropDown/DropDown'
 import SearchBar from '../../../components/Common/SearchBar/SearchBar'
@@ -16,18 +16,15 @@ function BeverageQuery({ onConfigUpdate }) {
     searchTerm: ''
   }
 
-  const [ searchLabel, setSearchLabel ] = useState(defaultSearchLabel)
+  const [ listConfig , setListConfig  ] = useState(defaultConfig)
   const [ searchError, setSearchError ] = useState(null)
-  const [ listConfig, setListConfig ] = useState(defaultConfig)
-
-  useEffect(() => {
-    onConfigUpdate(listConfig)
-  }, [onConfigUpdate, listConfig])
+  const [ searchLabel, setSearchLabel ] = useState(defaultSearchLabel)
 
   const handleSearchOnSubmit = searchTerm => {
     if (searchTerm === null) {
       setSearchError(null)
       setListConfig(defaultConfig)
+      onConfigUpdate(defaultConfig)
       return
     }
 
@@ -44,13 +41,15 @@ function BeverageQuery({ onConfigUpdate }) {
       setSearchError(errors)
     } else {
       setSearchError(null)
-      setListConfig(prevProps => ({ ...prevProps, searchTerm }))
+      const updateConfig = { ...listConfig, searchTerm }
+      setListConfig(updateConfig)
+      onConfigUpdate(updateConfig)
     }
   }
 
   const handleSearchOnSelect = searchType => {
     setSearchLabel(searchType)
-    setListConfig(prevProps => ({ ...prevProps, searchType }))
+    setListConfig(prevProps => ({ ...prevProps, searchType: searchType.toLowerCase() }))
   }
 
   return(
