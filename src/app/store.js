@@ -11,6 +11,7 @@ import userReducer       from '../services/user/store/user.slice'
 import { localStorageMiddleware } from './middleware/local-storage'
 import { clearAllStoresMiddleware } from './middleware/clear-all'
 import { preLoadDataMiddleware } from './middleware/pre-load'
+import { resetStateMiddleware } from './middleware/reset-state'
 
 import { persistState, clearPersistentState } from './persist/persist'
 
@@ -31,7 +32,8 @@ const store = configureStore({
       thunkMiddleware,
       localStorageMiddleware,
       preLoadDataMiddleware,
-      clearAllStoresMiddleware
+      clearAllStoresMiddleware,
+      resetStateMiddleware
     ])
   )
 })
