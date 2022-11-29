@@ -16,8 +16,13 @@ function Beverage({ beverageId }) {
   
   const location = useLocation()
   const navigate = useNavigate()
-  const handleOnClick = () => {
-    navigate(`${location.pathname}/form`, { state: { beverage }})
+  const handleOnClick = clickType => {
+    console.log('click type', clickType)
+    if (clickType === 'edit') {
+      navigate(`${location.pathname}/form`, { state: { beverage }})
+    } else {
+      // TODO add deletion modal
+    }
   }
   
   return (

@@ -34,8 +34,19 @@ p {
   font-size:2.25vw;
 }
 
+.beverage-button-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.beverage-delete-button {
+  border-radius: 0;
+  flex-grow: 1;
+}
+
 .beverage-edit-button {
   border-radius: 0 0 10px 0;
+  flex-grow: 1;
 }
 
 
