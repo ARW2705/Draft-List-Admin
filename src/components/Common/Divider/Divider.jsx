@@ -3,10 +3,10 @@ import React from 'react'
 import './Divider.css'
 
 
-function Divider({ color = 'primary', customClass = '' }) {
+function Divider({ color = 'primary', direction = 'horizontal', customClass = '' }) {
   return (
     <div
-      className={ `app-divider ${customClass}` }
+      className={ `app-divider ${direction} ${customClass}` }
       style={{ backgroundColor: `var(--${color})` }}
     >
     </div>
