@@ -51,9 +51,8 @@ export const selectIsLoggedIn = state => state.user._id !== null
 
 export const selectProfile = state => ({ username: state.user.username, email: state.user.email })
 
-function setUser(dispatch, user, token) {
-  dispatch(set(user))
-  dispatch(setToken(token))
+export function refreshUserLists(dispatch, getState) {
+  const { user } = getState()
   const refreshBeveragesThunk = refreshBeverages(user.beverageList)
   dispatch(refreshBeveragesThunk)
   const refreshDevicesThunk = refreshDevices(user.deviceList)
@@ -63,7 +62,7 @@ function setUser(dispatch, user, token) {
 }
 
 export function login({ username, password, remember }) {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     try {
       const response = await loginUser({ username, password })
       const { _id, email, beverageList, deviceList, token } = response
@@ -75,7 +74,9 @@ export function login({ username, password, remember }) {
         deviceList,
         remember
       }
-      setUser(dispatch, user, token)
+      dispatch(set(user))
+      dispatch(setToken(token))
+      refreshUserLists(dispatch, getState)
     } catch(error) {
       console.log('login error', error)
     }
@@ -83,7 +84,7 @@ export function login({ username, password, remember }) {
 }
 
 export function signup({ username, password, email, remember }) {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     try {
       const response = await signupUser({ username, password, email })
       const { _id, beverageList, deviceList, token } = response
@@ -95,7 +96,9 @@ export function signup({ username, password, email, remember }) {
         deviceList,
         remember
       }
-      setUser(dispatch, user, token)
+      dispatch(set(user))
+      dispatch(setToken(token))
+      refreshUserLists(dispatch, getState)
     } catch(error) {
       console.log('signup error', error)
     }
