@@ -3,7 +3,6 @@ import { useLocation, useNavigate, Outlet } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { selectIsLoggedIn } from './services/user/store/user.slice'
 
-import ErrorButton from './exp/ErrorButton'
 import ErrorBoundary from './components/Common/Error/ErrorBoundary/ErrorBoundary'
 import Header from './components/Header/Header'
 import Footer from './components/Footer/Footer'
@@ -36,7 +35,6 @@ function App() {
     <div className="App">
       <Header />
       <ErrorBoundary onErrorDismiss={ handleErrorDismiss }>
-        <ErrorButton />
         <Outlet />
       </ErrorBoundary>
       <Footer />
