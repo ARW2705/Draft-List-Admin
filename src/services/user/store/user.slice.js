@@ -4,7 +4,7 @@ import { login as loginUser, signup as signupUser } from '../http/user-http'
 
 import { refreshBeverages } from '../../beverage/store/beverage.thunk'
 import { refreshDevices } from '../../device/store/device.slice'
-import { setAllFromAPI as setAllContainers } from '../../container/store/container.slice'
+import { setAllFromAPI as setAllContainers } from '../../container/store/container.thunk'
 import { set as setToken } from '../../token/store/token.slice'
 
 
