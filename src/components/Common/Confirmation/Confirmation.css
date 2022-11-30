@@ -1,0 +1,10 @@
+.confirmation-header {
+  font-size: 1.75rem;
+  font-weight: normal;
+  margin: 1.75rem 0;
+}
+
+.confirmation-header > span {
+  color: var(--gray-dark);
+  font-weight: bold;
+}
