@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
-import { selectBeverageIds, selectBeverageQuery } from '../../../services/beverage/store/beverage.slice'
+import { selectActiveBeverageIds, selectBeverageQuery } from '../../../services/beverage/store/beverage.selector'
 
 import Beverage from '../../BeverageComponents/Beverage/Beverage'
 
@@ -16,7 +16,7 @@ function BeverageList({ listConfig }) {
   const { searchType, searchTerm } = listConfig
   const selector = (searchType && searchTerm)
     ? state => selectBeverageQuery(state, searchType, searchTerm)
-    : selectBeverageIds
+    : selectActiveBeverageIds
   const beverageIds = useSelector(selector, shallowCompare)
 
   useEffect(() => {

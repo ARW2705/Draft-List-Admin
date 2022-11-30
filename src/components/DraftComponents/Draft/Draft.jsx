@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import store from '../../../app/store'
 
 import { updateDraft, selectDraft, remove as removeDraft, getFromAPI } from '../../../services/draft/store/draft.slice'
-import { selectBeverage } from '../../../services/beverage/store/beverage.slice'
+import { selectBeverage } from '../../../services/beverage/store/beverage.selector'
 import { archiveDraft } from '../../../services/device/store/device.slice'
 
 import Spinner  from '../../Common/Loaders/Spinner/Spinner'

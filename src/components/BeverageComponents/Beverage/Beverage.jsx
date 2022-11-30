@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { selectBeverage, updateBeverage } from '../../../services/beverage/store/beverage.slice'
+import { selectBeverage } from '../../../services/beverage/store/beverage.selector'
+import { updateBeverage } from '../../../services/beverage/store/beverage.thunk'
 
 import BeverageHeader  from '../BeverageHeader/BeverageHeader'
 import BeverageSummary from '../BeverageSummary/BeverageSummary'

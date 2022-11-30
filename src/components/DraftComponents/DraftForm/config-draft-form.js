@@ -1,6 +1,6 @@
 import store from '../../../app/store'
 
-import { selectBeverage, selectBeverageQuery } from '../../../services/beverage/store/beverage.slice'
+import { selectBeverage, selectBeverageQuery } from '../../../services/beverage/store/beverage.selector'
 
 import createForm   from '../../../shared/form/create-form'
 import getPaginated from '../../../shared/utilities/get-paginated'
