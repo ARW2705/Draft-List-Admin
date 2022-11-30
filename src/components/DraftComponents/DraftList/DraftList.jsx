@@ -2,7 +2,7 @@ import React from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
-import { selectActiveDrafts } from '../../../services/draft/store/draft.slice'
+import { selectActiveDrafts } from '../../../services/draft/store/draft.selector'
 
 import Button     from '../../Common/Button/Button'
 import DraftGroup from '../DraftGroup/DraftGroup'

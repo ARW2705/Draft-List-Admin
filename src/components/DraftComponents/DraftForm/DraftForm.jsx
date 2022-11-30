@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
-import { addDraft, updateDraft } from '../../../services/draft/store/draft.slice'
+import { addDraft, updateDraft } from '../../../services/draft/store/draft.thunk'
 
 import FormGroup from '../../Common/Form/FormGroup/FormGroup'
 import Spinner   from '../../Common/Loaders/Spinner/Spinner'
