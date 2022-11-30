@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { login as loginUser, signup as signupUser } from '../http/user-http'
 
 import { refreshBeverages } from '../../beverage/store/beverage.thunk'
-import { refreshDevices } from '../../device/store/device.slice'
+import { refreshDevices } from '../../device/store/device.thunk'
 import { setAllFromAPI as setAllContainers } from '../../container/store/container.thunk'
 import { set as setToken } from '../../token/store/token.slice'
 

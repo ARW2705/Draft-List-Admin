@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
-import { selectDevice } from '../../../services/device/store/device.slice'
+import { selectDevice } from '../../../services/device/store/device.selector'
 
 import Button  from '../../Common/Button/Button'
 import Divider from '../../Common/Divider/Divider'

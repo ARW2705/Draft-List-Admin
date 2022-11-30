@@ -6,7 +6,7 @@ import store from '../../../app/store'
 
 import { updateDraft, selectDraft, remove as removeDraft, getFromAPI } from '../../../services/draft/store/draft.slice'
 import { selectBeverage } from '../../../services/beverage/store/beverage.selector'
-import { archiveDraft } from '../../../services/device/store/device.slice'
+import { archiveDraft } from '../../../services/device/store/device.thunk'
 
 import Spinner  from '../../Common/Loaders/Spinner/Spinner'
 import Button   from '../../Common/Button/Button'

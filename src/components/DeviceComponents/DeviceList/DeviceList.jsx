@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 
-import { selectDeviceIds } from '../../../services/device/store/device.slice'
+import { selectDeviceIds } from '../../../services/device/store/device.selector'
 
 import Device from '../Device/Device'
 

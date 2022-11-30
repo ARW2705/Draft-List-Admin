@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
-import { addDevice, updateDevice } from '../../../services/device/store/device.slice'
+import { addDevice, updateDevice } from '../../../services/device/store/device.thunk'
 import { blobifyBase64Image } from '../../../services/Image/Image'
 
 import FormGroup from '../../Common/Form/FormGroup/FormGroup'
