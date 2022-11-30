@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import { useLocation, useNavigate, Outlet } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { selectIsLoggedIn } from './services/user/store/user.slice'
+import { selectIsLoggedIn } from './services/user/store/user.selector'
 
 import { RESET_STATE } from './shared/constants/shared-event-names'
 

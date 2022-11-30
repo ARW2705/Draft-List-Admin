@@ -2,7 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
-import { login } from '../../../services/user/store/user.slice'
+import { login } from '../../../services/user/store/user.thunk'
 
 import FormGroup from '../../Common/Form/FormGroup/FormGroup'
 
