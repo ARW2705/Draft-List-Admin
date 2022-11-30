@@ -47,6 +47,9 @@ function FormInput(props) {
         }
       })
     }
+    if (hasValue(props.config, 'value')) {
+      setAttrs(prevProps => ({ ...prevProps, value: props.config.value }))
+    }
   }, [props.config])
 
   useEffect(() => {

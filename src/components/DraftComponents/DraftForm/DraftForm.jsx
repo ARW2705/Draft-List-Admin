@@ -1,118 +1,85 @@
-import React, { useCallback, useEffect, useReducer, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 
-import FormButtons from '../../Common/Form/FormButtons/FormButtons'
-import Spinner from '../../Common/Loaders/Spinner/Spinner'
-import BeverageSelect from './BeverageSelect/BeverageSelect'
-import ContainerSelect from './ContainerSelect/ContainerSelect'
-import SelectionPreview from './SelectionPreview/SelectionPreview'
-import DeviceSelect from './DeviceSelect/DeviceSelect'
-import ColorSelect from './ColorSelect/ColorSelect'
+import { addDraft, updateDraft } from '../../../services/draft/store/draft.thunk'
 
-import { addNewDraft } from '../../../services/Draft/Draft'
+import FormGroup from '../../Common/Form/FormGroup/FormGroup'
+import Spinner   from '../../Common/Loaders/Spinner/Spinner'
+
+import { configDraftForm } from './config-draft-form'
 
 import './DraftForm.css'
 
 
 function DraftForm() {
-  const location = useLocation()
-  const deviceId = location.state?.deviceId
-  const draftId = location.state?.draftId
-  console.log(deviceId, draftId)
-  
-  const reducer = (state, action) => {
-    switch(action.type) {
-      case 'beverage':
-        return { ...state, beverage: action.beverage }
-      case 'container':
-        return { ...state, container: action.container }
-      case 'device':
-        return { ...state, device: action.device }
-      case 'color':
-        return { ...state, color: action.color }
-      default:
-        throw new Error(`Invalid form category type: ${action.type}`)
-    }
-  }
-
-  const [ { beverage, container, device, color }, dispatch ] = useReducer(
-    reducer,
-    { beverage: null, container: null, device: null }
-  )
-
-  const [ disableSubmit, setDisableSubmit ] = useState(true)
   const [ isLoading, setIsLoading ] = useState(false)
+  const formData = useRef()
+  const location = useLocation()
+  const draft = location.state?.draft
+  const form = configDraftForm(draft)
 
-  useEffect(() => {
-    setDisableSubmit(!(beverage && container && device))
-  }, [beverage, container, device])
-  
   const navigate = useNavigate()
   const navigateBack = useCallback(() => {
-    console.log('nb', location)
     navigate(`/${location.pathname.split('/')[1]}`, { state: { refresh: true } })
   }, [location, navigate])
 
+  const dispatch = useDispatch()
   const submitForm = useCallback(() => {
     async function submitDraft() {
-      const draftData = {
-        beverage: beverage._id,
+      let draftData = {
+        beverage: formData.current.beverage || formData.current.previousBeverage,
         container: {
-          containerInfo: container._id,
-          quantity: container.capacity,
-          contentColor: color
+          containerInfo: formData.current.container._id,
+          quantity: formData.current.container.capacity,
+          contentColor: formData.current.contentColor
         }
+      }
+      if (formData.current.device) {
+        draftData = { ...draftData, device: formData.current.device }
       }
 
       console.log('data build', draftData)
-      const response = await addNewDraft(device._id, draftData)
-      console.log('res', response)
+      if (draft) {
+        const updateDraftThunk = updateDraft(draft._id, draftData)
+        dispatch(updateDraftThunk)
+      } else {
+        const addDraftThunk = addDraft(draftData.device, draftData)
+        dispatch(addDraftThunk)
+      }
+
       setIsLoading(false)
       navigateBack()
     }
     submitDraft()
-  }, [beverage, container, device, color, navigateBack])
+  }, [draft, dispatch, navigateBack])
 
   useEffect(() => {
-    if (isLoading) {
-      submitForm()
-    }
+    if (isLoading && formData.current) submitForm()
   }, [isLoading, submitForm])
 
-  const handleSubmit = buttonName => {
-    if (buttonName === 'submit') {
+  const handleSubmit = async data => {
+    if (data) {
+      formData.current = data
       setIsLoading(true)
-    } else if (buttonName === 'cancel') {
+    } else {
       navigateBack()
     }
   }
-  
-  const handleOnSelect = (type, data) => dispatch({ type, [type]: data })
 
   return (
     <div className='draft-form-container'>
+      { isLoading && <Spinner isBlocking={ true } text='Submitting' /> }
       {
-        isLoading
-        && (
-          <Spinner
-            isBlocking={ true }
-            text='Submitting'
+        form && (
+          <FormGroup
+            form={ form }
+            submitHandler={ handleSubmit }
+            customClass='draft-form'
+            title={ `${draft ? 'Edit' : 'New'} Draft` }
           />
         )
       }
-      <DeviceSelect onSelect={ data => handleOnSelect('device', data) } />
-      <ContainerSelect onSelect={ data => handleOnSelect('container', data) } />
-      <BeverageSelect onSelect={ data => handleOnSelect('beverage', data) } />
-      <ColorSelect onSelect={ data => handleOnSelect('color', data) } />
-      <SelectionPreview
-        beverage={ beverage }
-        container={ container }
-        device={ device }
-      />
-      <FormButtons
-        isDisabled={ disableSubmit }
-        onClick={ handleSubmit }
-      />
     </div>
   )
 }

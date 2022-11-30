@@ -22,12 +22,10 @@ function FormGroup(props) {
   useEffect(() => {
     if (!onInit) {
       const errors = validateForm(formFields, validators)
-      setDisabledButton(() => {
-        return Object.keys(errors).length > 1 || !!Object.keys(errors.formLevel).length
-      })
-      setFormErrors(() => errors.formLevel)
+      setDisabledButton(Object.keys(errors).length > 1 || !!Object.keys(errors.formLevel).length)
+      setFormErrors(errors.formLevel)
     } else {
-      setOnInit(() => false)
+      setOnInit(false)
     }
   }, [ formFields, onInit, validators ])
 

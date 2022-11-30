@@ -1,6 +1,7 @@
 import React from 'react'
 
 import Button from '../../Common/Button/Button'
+import Divider from '../../Common/Divider/Divider'
 
 import './BeverageSummary.css'
 
@@ -19,14 +20,27 @@ function BeverageSummary({ abv, ibu, srm, description, customClass, onClick: han
           SRM <span className='value'>{ srm ? srm : '--' }</span>
         </span>
       </div>
-      { description && <p>{ description }</p> }
-      <Button
-        text='Edit Beverage'
-        customClass='beverage-edit-button'
-        ariaLabel='edit beverage'
-        onClick={ handleOnClick }
-        isFlat={ true }
-      />
+      <p>{ description }</p>
+      <div className='beverage-button-container'>
+        <Button
+          text='Archive Beverage'
+          customClass='beverage-archive-button'
+          ariaLabel='archive beverage'
+          onClick={ () => handleOnClick('archive') }
+          isFlat={ true }
+        />
+        <Divider
+          color='secondary'
+          direction='vertical'
+        />
+        <Button
+          text='Edit Beverage'
+          customClass='beverage-edit-button'
+          ariaLabel='edit beverage'
+          onClick={ () => handleOnClick('edit') }
+          isFlat={ true }
+        />
+      </div>
     </div>
   )
 }

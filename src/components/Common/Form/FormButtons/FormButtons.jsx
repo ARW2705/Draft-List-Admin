@@ -5,9 +5,9 @@ import Button from '../../Button/Button'
 import './FormButtons.css'
 
 
-function FormButtons({ isDisabled = false, onClick: handleOnClick }) {
+function FormButtons({ isDisabled = false, customClass = '', onClick: handleOnClick }) {
   return (
-    <div className='form-button-container'>
+    <div className={`form-button-container ${customClass}`}>
       <Button
         text='Cancel'
         customClass='form-button'

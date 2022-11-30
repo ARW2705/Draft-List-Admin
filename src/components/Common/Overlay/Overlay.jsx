@@ -7,12 +7,12 @@ import './Overlay.css'
 function Overlay(InnerComponent) {
   function wrapper(props) {
     const handleClick = ({ target }) => {
-      if (target.dataset.overlay) props.dismiss(null)
+      if (target.dataset.overlay && props.dismiss) props.dismiss(null)
     }
     
     return ReactDOM.createPortal(
       <div
-        className='overlay-container'
+        className={ `overlay-container ${props?.customOverlayClass ? props.customOverlayClass : ''}` }
         data-overlay
         onClick={ handleClick }
       >

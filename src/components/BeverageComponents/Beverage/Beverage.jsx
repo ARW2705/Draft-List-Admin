@@ -1,19 +1,54 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+
+import { selectBeverage } from '../../../services/beverage/store/beverage.selector'
+import { updateBeverage } from '../../../services/beverage/store/beverage.thunk'
 
 import BeverageHeader  from '../BeverageHeader/BeverageHeader'
 import BeverageSummary from '../BeverageSummary/BeverageSummary'
+import Modal from '../../Common/Modal/Modal'
+import Confirmation from '../../Common/Confirmation/Confirmation'
 
 import './Beverage.css'
 
 
-function Beverage({ beverage, onClick: handleOnClick }) {
+function Beverage({ beverageId }) {
+  const beverage = useSelector(state => selectBeverage(state, beverageId))
   const { name, style, source, abv, ibu, srm, description } = beverage
+  const [ showConfirmationModal, setShowConfirmationModal ] = useState(false)
+
+  const location = useLocation()
+  const navigate = useNavigate()
+  const handleOnClick = clickType => {
+    console.log('click type', clickType)
+    if (clickType === 'edit') {
+      navigate(`${location.pathname}/form`, { state: { beverage }})
+    } else {
+      setShowConfirmationModal(true)
+    }
+  }
+
+  const dispatch = useDispatch()
+  const handleConfirmationModalDismiss = data => {
+    if (data) {
+      const updateBeverageThunk = updateBeverage(beverageId, { data: { isArchived: true } })
+      dispatch(updateBeverageThunk)
+    }
+
+    setShowConfirmationModal(false)
+  }
   
   return (
-    <article
-      className='beverage'
-      data-id={ beverage._id }
-    >
+    <div className='beverage'>
+      {
+        showConfirmationModal
+        && <Modal
+          component={ Confirmation }
+          data={ { actionMessage: <>Archive "<span>{ name }</span>" ?</> } }
+          dismiss={ handleConfirmationModalDismiss }
+        />
+      }
       <BeverageHeader
         name={ name }
         style={ style }
@@ -24,9 +59,9 @@ function Beverage({ beverage, onClick: handleOnClick }) {
         ibu={ ibu }
         srm={ srm }
         description={ description }
-        onClick={ () => handleOnClick(beverage) }
+        onClick={ handleOnClick }
       />
-    </article>
+    </div>
   )
 }
 

@@ -1,4 +1,9 @@
-.app-divider {
+.app-divider.horizontal {
   width: 100%;
   height: 3px;
+}
+
+.app-divider.vertical {
+  height: 100%;
+  width: 3px;
 }

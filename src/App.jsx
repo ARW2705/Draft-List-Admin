@@ -1,24 +1,24 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useLocation, useNavigate, Outlet } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
 
-import TokenService from './services/Token/Token'
-import UserService from './services/User/User'
+import { selectIsLoggedIn } from './services/user/store/user.selector'
 
-import Header from './components/Header/Header'
-import Footer from './components/Footer/Footer'
+import { RESET_STATE } from './shared/constants/shared-event-names'
+
+import ErrorBoundary from './components/Common/Error/ErrorBoundary/ErrorBoundary'
+import Header        from './components/Header/Header'
+import Footer        from './components/Footer/Footer'
 
 import './App.css'
 
 
 function App() {
-  TokenService.init()
-  UserService.init()
-  
-  const [ isLoggedIn, setIsLoggedIn ] = useState(false)
-  
+  const isLoggedIn = useSelector(selectIsLoggedIn)  
   const location = useLocation()
   const navigate = useNavigate()
   const onInit = useRef(true)
+  
   useEffect(() => {
     if (!onInit.current && location.pathname === '/') {
       navigate(isLoggedIn ? '/draft' : '/user')
@@ -26,20 +26,19 @@ function App() {
       onInit.current = false
     }
   }, [isLoggedIn, location, navigate])
-
-  useEffect(() => {
-    const subscription = UserService.getUser()
-      .subscribe({
-        next: user => setIsLoggedIn(user._id !== null),
-        error: error => console.error('user error', error)
-      })
-    return () => subscription.unsubscribe()
-  }, [])
+  
+  const dispatch = useDispatch()
+  const handleErrorDismiss = () => {
+    dispatch({ type: RESET_STATE })
+    navigate('/')
+  }
 
   return (
     <div className="App">
       <Header />
-      <Outlet />
+      <ErrorBoundary onErrorDismiss={ handleErrorDismiss }>
+        <Outlet />
+      </ErrorBoundary>
       <Footer />
     </div>
   );

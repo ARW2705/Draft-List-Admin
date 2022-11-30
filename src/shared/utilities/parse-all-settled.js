@@ -18,4 +18,4 @@ function parseAllSettled(promiseResult) {
   return { values, errors }
 }
 
-export { parseAllSettled }
+export default parseAllSettled

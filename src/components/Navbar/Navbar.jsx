@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { useMediaQuery } from 'react-responsive'
+import { useSelector } from 'react-redux'
 
-import UserService from '../../services/User/User'
+import { selectIsLoggedIn } from '../../services/user/store/user.selector'
 
-import Nav from '../Common/Nav/Nav'
 import BurgerMenu from '../Common/BurgerMenu/BurgerMenu'
+import Nav        from '../Common/Nav/Nav'
 
 import './Navbar.css'
 
 
 function Navbar() {
+  const isLoggedIn = useSelector(selectIsLoggedIn)
   const [ overrideOpen, setOverrideOpen ] = useState(false)
-  const [ homeRoute, setHomeRoute ] = useState('/')
   const links = ['Draft', 'Device', 'Beverage', 'User'].map(pageName => {
     return <Nav name={ pageName } key={ pageName } />
   })
@@ -23,20 +24,11 @@ function Navbar() {
     setOverrideOpen({ isOpen: false })
   }, [location.pathname])
 
-  useEffect(() => {
-    const subscription = UserService.getUser()
-    .subscribe({
-      next: user => setHomeRoute(user._id !== null ? '/draft' : '/user'),
-      error: error => console.error('user error', error)
-    })
-    return () => subscription.unsubscribe()
-  }, [])
-
   return (
     <nav className='navbar'>
       <Nav
         name='Draft List'
-        route={ homeRoute }
+        route={ isLoggedIn ? '/draft' : '/user'}
         customClass='home-link'
       />
       {

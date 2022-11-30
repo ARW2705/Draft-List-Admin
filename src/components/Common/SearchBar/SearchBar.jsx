@@ -44,7 +44,7 @@ function SearchBar({ label, handleOnSubmit, customClass }) {
 
   return (
     <div
-      className={ `search-bar ${ customClass }` }
+      className={ `search-bar ${ customClass || '' }` }
       onKeyDown={ handleKeyPress }
     >
       <FormInput
@@ -67,7 +67,7 @@ function SearchBar({ label, handleOnSubmit, customClass }) {
         )
       }
       <Button
-        text='search'
+        text='Search'
         isIcon={ true }
         isDisabled={ false }
         customClass='search-button'

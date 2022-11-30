@@ -5,6 +5,8 @@ import FormFileInput from '../FileInput/FileInput'
 import ImageUpload   from '../ImageUpload/ImageUpload'
 import FormInput     from '../Input/Input'
 import FormSelect    from '../Select/Select'
+import FormQuery     from '../Query/Query'
+import FormList      from '../List/List'
 
 /**
  * Construct a form element component for each form field
@@ -14,8 +16,8 @@ import FormSelect    from '../Select/Select'
  *     {
  *       value: value to apply on first load, default is undefined
  *       validators: array of form validators to apply
+ *       element: the type of form element, default is 'input'
  *       options: {
- *         element: the type of form element, default is 'input'
  *         label: element label
  *         type: form input 'type' eg 'number' or 'email', default is 'text'
  *         selectOptions: array of options for 'select' form elements
@@ -54,6 +56,7 @@ const buildFormElements = (formFields, handleOnChange) => {
           <FormCheckbox
             key={ key }
             config={ config }
+            validators={ validators }
             handleOnChange={ handleOnChange }
           />
         ]
@@ -64,6 +67,7 @@ const buildFormElements = (formFields, handleOnChange) => {
           <FormFileInput
             key={ key }
             config={ config }
+            validators={ validators }
             handleOnChange={ handleOnChange }
           />
         ]
@@ -74,6 +78,7 @@ const buildFormElements = (formFields, handleOnChange) => {
           <ImageUpload
             key={ key }
             config={ config }
+            validators={ validators }
             handleOnChange={ handleOnChange }
           />
         ]
@@ -84,6 +89,29 @@ const buildFormElements = (formFields, handleOnChange) => {
           <FormSelect
             key={ key }
             config={ config }
+            validators={ validators }
+            handleOnChange={ handleOnChange }
+          />
+        ]
+        break
+      case 'query':
+        formComponents = [
+          ...formComponents,
+          <FormQuery
+            key={ key }
+            config={ config }
+            validators={ validators }
+            handleOnChange={ handleOnChange }
+          />
+        ]
+        break
+      case 'list':
+        formComponents = [
+          ...formComponents,
+          <FormList
+            key={ key }
+            config={ config }
+            validators={ validators }
             handleOnChange={ handleOnChange }
           />
         ]

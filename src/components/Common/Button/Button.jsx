@@ -3,14 +3,16 @@ import React, { useEffect, useState } from 'react'
 import './Button.css'
 
 
-function Button({ text, icon, customClass, isDisabled, name, onClick, ariaLabel, isFlat }) {
+function Button({ content, text, icon, customClass, isDisabled, name, onClick, ariaLabel, isFlat }) {
   const [ isButtonDisabled, setIsButtonDisabled ] = useState(isDisabled)
+  
   useEffect(() => {
     setIsButtonDisabled(() => isDisabled)
   }, [ isDisabled ])
 
   const handleClick = event => {
     event.preventDefault()
+    event.stopPropagation()
     const { target } = event
     const correctedTarget = target.tagName.toLowerCase() === 'button' ? target : target.parentElement
     onClick(correctedTarget)
@@ -24,6 +26,7 @@ function Button({ text, icon, customClass, isDisabled, name, onClick, ariaLabel,
       name={ name ?? text }
       onClick={ onClick ? handleClick : undefined }
     >
+      { content && content }
       { icon && <span>{ icon }</span> }
       { text && <span>{ text }</span> }
     </button>

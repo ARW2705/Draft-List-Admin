@@ -1,7 +1,8 @@
 import React from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 
-import user from '../../../services/User/User'
+import { login } from '../../../services/user/store/user.thunk'
 
 import FormGroup from '../../Common/Form/FormGroup/FormGroup'
 
@@ -45,16 +46,16 @@ function LoginForm() {
     }
   })
 
-  const location = useLocation()
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const handleSubmit = async data => {
     if (!data) {
-      navigate(`/${location.pathname.split('/')[1]}`)
+      navigate(-1)
     } else {
-      const { username, password, remember } = data
       try {
-        await user.login({ username, password, remember })
-        console.log('login complete')
+        const loginThunk = login(data)
+        dispatch(loginThunk)
+        navigate(-1)
       } catch(error) {
         console.log('error on login', error)
       }
@@ -71,4 +72,4 @@ function LoginForm() {
   )
 }
 
-export default LoginForm
+export default React.memo(LoginForm)

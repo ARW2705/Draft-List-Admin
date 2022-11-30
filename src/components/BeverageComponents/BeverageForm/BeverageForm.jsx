@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 
-import FormGroup from '../../Common/Form/FormGroup/FormGroup'
-import Spinner from '../../Common/Loaders/Spinner/Spinner'
-
+import { addBeverage, updateBeverage } from '../../../services/beverage/store/beverage.thunk'
 import { blobifyBase64Image } from '../../../services/Image/Image'
 
-import { addNewBeverage, updateBeverage } from '../../../services/Beverage/Beverage'
-import createForm from '../../../shared/form/create-form'
-import { min, max, minLength, maxLength, required } from '../../../shared/validators/validators'
+import FormGroup from '../../Common/Form/FormGroup/FormGroup'
+import Spinner   from '../../Common/Loaders/Spinner/Spinner'
+
+import { configBeverageForm } from './config-beverage-form'
 
 
 function BeverageForm() {
@@ -16,73 +16,15 @@ function BeverageForm() {
   const formData = useRef()
   const location = useLocation()
   const beverage = location.state?.beverage
-
-  let fields = {
-    description: {
-      value: beverage?.description || '',
-      validators: [minLength(2), maxLength(120)]
-    },
-    abv: {
-      value: beverage?.abv || '',
-      options: {
-        type: 'number'
-      },
-      validators: [min(0), max(100)]
-    },
-    ibu: {
-      value: beverage?.ibu || '',
-      options: {
-        type: 'number'
-      },
-      validators: [min(0), max(200)]
-    },
-    srm: {
-      value: beverage?.srm || '',
-      options: {
-        type: 'number'
-      },
-      validators: [min(0), max(200)]
-    },
-    contentColor: {
-      value: beverage?.contentColor || '',
-      options: {
-        label: 'Content Color'
-      }
-    } 
-  }
-
-  if (!beverage) {
-    fields = {
-      name: {
-        value: beverage?.name || '',
-        validators: [required(), minLength(2), maxLength(50)]
-      },
-      source: {
-        value: beverage?.source || '',
-        validators: [required(), minLength(2), maxLength(50)]
-      },
-      style: {
-        value: beverage?.style || '',
-        validators: [required(), minLength(2), maxLength(50)]
-      },
-
-      ...fields,
-      
-      image: {
-        element: 'image'
-      }
-    }
-  }
-
-  const form = createForm({ fields })
+  const form = configBeverageForm(beverage)
 
   const navigate = useNavigate()
   const navigateBack = useCallback(() => {
     navigate(-1)
   }, [navigate])
 
+  const dispatch = useDispatch()
   const submitForm = useCallback(() => {
-    console.log('submitting')
     async function prepareDevice() {
       const image = await blobifyBase64Image(formData.current.image)
       const beverageData = {
@@ -99,18 +41,21 @@ function BeverageForm() {
           image
         }
 
-      console.log('data build', beverageData)
-      const response = await (
-        !beverage
-        ? addNewBeverage(beverageData)
-        : updateBeverage(beverage._id, beverageData)
-      )
-      console.log(response)
+      console.log('submit beverage data', beverageData)
+      if (beverage) {
+        const updateBeverageThunk = updateBeverage(beverage._id, beverageData)
+        dispatch(updateBeverageThunk)
+      } else {
+        const addBeverageThunk = addBeverage(beverageData)
+        dispatch(addBeverageThunk)
+      }
+
       setIsLoading(false)
       navigateBack()
     }
+
     prepareDevice()
-  }, [beverage, navigateBack])
+  }, [beverage, dispatch, navigateBack])
 
   useEffect(() => {
     if (isLoading && formData.current) {

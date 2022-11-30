@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 
-import FormGroup from '../../Common/Form/FormGroup/FormGroup'
-import Spinner from '../../Common/Loaders/Spinner/Spinner'
-
+import { addDevice, updateDevice } from '../../../services/device/store/device.thunk'
 import { blobifyBase64Image } from '../../../services/Image/Image'
 
-import { addNewDevice, updateDevice } from '../../../services/Device/Device'
-import createForm from '../../../shared/form/create-form'
-import { minLength, maxLength, required } from '../../../shared/validators/validators'
+import FormGroup from '../../Common/Form/FormGroup/FormGroup'
+import Spinner   from '../../Common/Loaders/Spinner/Spinner'
+
+import { configDeviceForm } from './config-device-form'
 
 import './DeviceForm.css'
 
@@ -18,56 +18,17 @@ function DeviceForm() {
   const formData = useRef()
   const location = useLocation()
   const device = location.state?.device
-
-  let fields = {
-    title: {
-      value: device?.title || '',
-      validators: [minLength(2), maxLength(40)]
-    },
-    city: {
-      value: device?.locale.city || '',
-      validators: [minLength(2), maxLength(25)]
-    },
-    region: {
-      value: device?.locale.region || '',
-      validators: [minLength(2), maxLength(25)]
-    },
-    country: {
-      value: device?.locale.country || '',
-      validators: [minLength(2), maxLength(25)]
-    }
-  }
-
-  if (!device) {
-    fields = {
-      name: {
-        validators: [required(), minLength(2), maxLength(40)]
-      },
-      hardwareId: {
-        validators: [required()],
-        options: {
-          label: 'Hardware ID'
-        }
-      },
-      ...fields,
-      image: {
-        element: 'image'
-      }
-    }
-  }
-
-  const form = createForm({ fields })
+  const form = configDeviceForm(device)
 
   const navigate = useNavigate()
   const navigateBack = useCallback(() => {
     navigate(-1)
   }, [navigate])
 
+  const dispatch = useDispatch()
   const submitForm = useCallback(() => {
-    console.log('submitting', formData.current)
     async function prepareDevice() {
       const image = await blobifyBase64Image(formData.current.image)
-      console.log('?', image)
       let deviceData = {
         data: {
           name      : formData.current.name || device.name,
@@ -82,18 +43,20 @@ function DeviceForm() {
         image
       }
 
-      console.log('data build', deviceData)
-      const response = await (
-        !device
-        ? addNewDevice(deviceData)
-        : updateDevice(device._id, deviceData)
-      )
-      console.log(response)
+      if (device) {
+        const updateDeviceThunk = updateDevice(device._id, deviceData)
+        dispatch(updateDeviceThunk)
+      } else {
+        const addDeviceThunk = addDevice(deviceData)
+        dispatch(addDeviceThunk)
+      }
+
       setIsLoading(false)
       navigateBack()
     }
+
     prepareDevice()
-  }, [device, navigateBack])
+  }, [device, dispatch, navigateBack])
 
   useEffect(() => {
     if (isLoading && formData.current) {

@@ -1,14 +1,15 @@
 import React from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 
-import user from '../../../services/User/User'
+import { signup } from '../../../services/user/store/user.thunk'
 
 import FormGroup from '../../Common/Form/FormGroup/FormGroup'
 
 import createForm from '../../../shared/form/create-form'
 import { minLength, maxLength, required, pattern, isEqual } from '../../../shared/validators/validators'
 import { PASSWORD_PATTERN } from '../../../shared/constants/password-pattern'
-import { EMAIL_PATTERN } from '../../../shared/constants/email-pattern'
+import { EMAIL_PATTERN }    from '../../../shared/constants/email-pattern'
 
 
 function SignupForm() {
@@ -65,16 +66,16 @@ function SignupForm() {
     }
   })
 
-  const location = useLocation()
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const handleSubmit = async data => {
     if (!data) {
-      navigate(`/${location.pathname.split('/')[1]}`)
+      navigate(-1)
     } else {
-      const { username, password, email, remember } = data
       try {
-        await user.signup({ username, password, email, remember })
-        console.log('signup complete')
+        const signupThunk = signup(data)
+        dispatch(signupThunk)
+        navigate(-1)
       } catch(error) {
         console.log('signup error', error)
       }
@@ -91,4 +92,4 @@ function SignupForm() {
   )
 }
 
-export default SignupForm
+export default React.memo(SignupForm)
