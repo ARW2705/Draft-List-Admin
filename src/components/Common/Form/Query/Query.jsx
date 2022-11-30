@@ -91,10 +91,10 @@ function FormQuery(props) {
       onFocus={ handleOnFocusOrBlur }
       onBlur={ handleOnFocusOrBlur }
     >
-      <h2>Select a Beverage</h2>
+      <h2>{ attrs.label || 'Search' }</h2>
       <SearchBar
         handleOnSubmit={ handleSearchOnSubmit }
-        label={ attrs.label }
+        label={ attrs.label || 'Search' }
       />
       { searchResult ?? <></> }
       {
