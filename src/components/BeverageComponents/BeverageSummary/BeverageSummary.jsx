@@ -23,10 +23,10 @@ function BeverageSummary({ abv, ibu, srm, description, customClass, onClick: han
       <p>{ description }</p>
       <div className='beverage-button-container'>
         <Button
-          text='Delete Beverage'
-          customClass='beverage-delete-button'
-          ariaLabel='delete beverage'
-          onClick={ () => handleOnClick('delete') }
+          text='Archive Beverage'
+          customClass='beverage-archive-button'
+          ariaLabel='archive beverage'
+          onClick={ () => handleOnClick('archive') }
           isFlat={ true }
         />
         <Divider

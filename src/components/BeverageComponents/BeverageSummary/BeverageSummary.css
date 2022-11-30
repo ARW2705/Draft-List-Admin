@@ -39,7 +39,7 @@ p {
   justify-content: space-between;
 }
 
-.beverage-delete-button {
+.beverage-archive-button {
   border-radius: 0;
   flex-grow: 1;
 }
