@@ -1,4 +1,4 @@
-import { get, patch, post } from '../../HttpClient/HttpClient'
+import { get, patch, post } from '../../http-client/http-client.service'
 import { beverageRouteURL } from './beverage-route-url'
 
 

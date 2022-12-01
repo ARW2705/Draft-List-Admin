@@ -1,4 +1,4 @@
-import { post } from '../../HttpClient/HttpClient'
+import { post } from '../../http-client/http-client.service'
 
 import { userRouteURL } from './user-route-url'
 

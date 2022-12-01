@@ -1,4 +1,4 @@
-import { get } from '../../HttpClient/HttpClient'
+import { get } from '../../http-client/http-client.service'
 import { imageRouteURL } from './image-route-url'
 
 
