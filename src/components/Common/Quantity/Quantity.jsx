@@ -36,9 +36,9 @@ function Quantity({ data, dismiss }) {
 
   return (
     <div className='quantity'>
-      <h2 className='current-quantity'>
-        Current Quantity: <span>{ currentQuantity } oz</span>
-      </h2>
+      <h1 className='current-quantity'>
+        Current Quantity <span>{ currentQuantity } oz</span>
+      </h1>
       <FormInput
         config={ config }
         value={ config.value }

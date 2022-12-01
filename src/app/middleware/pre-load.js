@@ -1,5 +1,5 @@
 import { ON_INIT } from '../../shared/constants/shared-event-names'
-import { setAllFromAPI as setAllContainers } from '../../services/container/store/container.slice'
+import { setAllFromAPI as setAllContainers } from '../../services/container/store/container.thunk'
 
 export const preLoadDataMiddleware = store => next => action => {
   if (action.type === ON_INIT) {

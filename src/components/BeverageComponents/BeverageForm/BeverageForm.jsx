@@ -2,8 +2,8 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
-import { addBeverage, updateBeverage } from '../../../services/beverage/store/beverage.slice'
-import { blobifyBase64Image } from '../../../services/Image/Image'
+import { addBeverage, updateBeverage } from '../../../services/beverage/store/beverage.thunk'
+import { blobifyBase64Image } from '../../../services/image/image.service'
 
 import FormGroup from '../../Common/Form/FormGroup/FormGroup'
 import Spinner   from '../../Common/Loaders/Spinner/Spinner'

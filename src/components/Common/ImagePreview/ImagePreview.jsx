@@ -6,8 +6,7 @@ import './ImagePreview.css'
 
 
 function ImagePreview({ preview, resetCrop }) {
-  const handleClick = event => {
-    event.stopPropagation()
+  const handleClick = () => {
     resetCrop()
   }
 

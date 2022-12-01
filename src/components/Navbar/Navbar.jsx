@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom'
 import { useMediaQuery } from 'react-responsive'
 import { useSelector } from 'react-redux'
 
-import { selectIsLoggedIn } from '../../services/user/store/user.slice'
+import { selectIsLoggedIn } from '../../services/user/store/user.selector'
 
 import BurgerMenu from '../Common/BurgerMenu/BurgerMenu'
 import Nav        from '../Common/Nav/Nav'

@@ -5,12 +5,14 @@ import beveragesReducer  from '../services/beverage/store/beverage.slice'
 import containersReducer from '../services/container/store/container.slice'
 import devicesReducer    from '../services/device/store/device.slice'
 import draftsReducer     from '../services/draft/store/draft.slice'
+import imagesReducer     from '../services/image/store/image.slice'
 import tokenReducer      from '../services/token/store/token.slice'
 import userReducer       from '../services/user/store/user.slice'
 
 import { localStorageMiddleware } from './middleware/local-storage'
 import { clearAllStoresMiddleware } from './middleware/clear-all'
 import { preLoadDataMiddleware } from './middleware/pre-load'
+import { resetStateMiddleware } from './middleware/reset-state'
 
 import { persistState, clearPersistentState } from './persist/persist'
 
@@ -23,6 +25,7 @@ const store = configureStore({
     containers: containersReducer,
     devices   : devicesReducer,
     drafts    : draftsReducer,
+    images    : imagesReducer,
     token     : tokenReducer,
     user      : userReducer
   },
@@ -31,7 +34,8 @@ const store = configureStore({
       thunkMiddleware,
       localStorageMiddleware,
       preLoadDataMiddleware,
-      clearAllStoresMiddleware
+      clearAllStoresMiddleware,
+      resetStateMiddleware
     ])
   )
 })

@@ -67,7 +67,7 @@ function SearchBar({ label, handleOnSubmit, customClass }) {
         )
       }
       <Button
-        text='search'
+        text='Search'
         isIcon={ true }
         isDisabled={ false }
         customClass='search-button'

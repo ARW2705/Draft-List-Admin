@@ -4,6 +4,7 @@ import { clear as clearToken } from '../../services/token/store/token.slice'
 import { clear as clearDevices } from '../../services/device/store/device.slice'
 import { clear as clearBeverages } from '../../services/beverage/store/beverage.slice'
 import { clear as clearDrafts } from '../../services/draft/store/draft.slice'
+import { clear as clearImages } from '../../services/image/store/image.slice'
 
 
 export const clearAllStoresMiddleware = store => next => action => {
@@ -14,6 +15,7 @@ export const clearAllStoresMiddleware = store => next => action => {
     next(clearDevices())
     next(clearBeverages())
     next(clearDrafts())
+    next(clearImages())
   }
 
   return next(action)

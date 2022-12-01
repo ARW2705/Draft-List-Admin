@@ -1,8 +1,0 @@
-export const DEVICES_STORE_NAME      = 'devices'
-export const BEVERAGES_STORE_NAME    = 'beverages'
-export const DRAFTS_STORE_NAME       = 'drafts'
-export const IMAGES_STORE_NAME       = 'images'
-export const CONTAINERS_STORE_NAME   = 'containers'
-export const QUERY_NAME_STORE_NAME   = 'query-name'
-export const QUERY_SOURCE_STORE_NAME = 'query-source'
-export const QUERY_STYLE_STORE_NAME  = 'query-style'

@@ -6,6 +6,12 @@
 
 .current-quantity {
   text-align: center;
+  font-size: 1.75rem;
+  font-weight: normal;
+}
+
+.current-quantity > span {
+  font-weight: bold;
 }
 
 .new-quantity-input {

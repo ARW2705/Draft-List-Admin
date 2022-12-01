@@ -4,9 +4,11 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import store from '../../../app/store'
 
-import { updateDraft, selectDraft, remove as removeDraft, getFromAPI } from '../../../services/draft/store/draft.slice'
-import { selectBeverage } from '../../../services/beverage/store/beverage.slice'
-import { archiveDraft } from '../../../services/device/store/device.slice'
+import { selectDraft } from '../../../services/draft/store/draft.selector'
+import { remove as removeDraft } from '../../../services/draft/store/draft.slice'
+import { updateDraft, getFromAPI } from '../../../services/draft/store/draft.thunk'
+import { selectBeverage } from '../../../services/beverage/store/beverage.selector'
+import { archiveDraft } from '../../../services/device/store/device.thunk'
 
 import Spinner  from '../../Common/Loaders/Spinner/Spinner'
 import Button   from '../../Common/Button/Button'
