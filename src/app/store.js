@@ -5,6 +5,7 @@ import beveragesReducer  from '../services/beverage/store/beverage.slice'
 import containersReducer from '../services/container/store/container.slice'
 import devicesReducer    from '../services/device/store/device.slice'
 import draftsReducer     from '../services/draft/store/draft.slice'
+import imagesReducer     from '../services/image/store/image.slice'
 import tokenReducer      from '../services/token/store/token.slice'
 import userReducer       from '../services/user/store/user.slice'
 
@@ -24,6 +25,7 @@ const store = configureStore({
     containers: containersReducer,
     devices   : devicesReducer,
     drafts    : draftsReducer,
+    images    : imagesReducer,
     token     : tokenReducer,
     user      : userReducer
   },

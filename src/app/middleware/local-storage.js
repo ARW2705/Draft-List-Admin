@@ -6,6 +6,7 @@ import { set as setDevices } from '../../services/device/store/device.slice'
 import { set as setBeverages } from '../../services/beverage/store/beverage.slice'
 import { set as setDrafts } from '../../services/draft/store/draft.slice'
 import { set as setContainers } from '../../services/container/store/container.slice'
+import { set as setImages } from '../../services/image/store/image.slice'
 
 
 export const localStorageMiddleware = store => next => action => {
@@ -17,12 +18,14 @@ export const localStorageMiddleware = store => next => action => {
     const beverages = loadState('beverages')
     const drafts = loadState('drafts')
     const containers = loadState('containers')
+    const images = loadState('images')
     if (devices) next(setDevices(devices))
     if (token) next(setToken(token))
     if (user) next(setUser(user))
     if (beverages) next(setBeverages(beverages))
     if (drafts) next(setDrafts(drafts))
     if (containers) next(setContainers(containers))
+    if (images) next(setImages(images))
   }
 
   if (action.type === CLEAR_ALL) {
