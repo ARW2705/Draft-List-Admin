@@ -20,6 +20,10 @@ function selectArchivedBeverageIds(state) {
 }
 
 function selectBeverageQuery(state, searchType, searchTerm) {
+  return matchQuery(state.beverages, searchType, searchTerm)
+}
+
+function selectBeverageQueryId(state, searchType, searchTerm) {
   return matchQuery(state.beverages, searchType, searchTerm, '_id')
 }
 
@@ -28,5 +32,6 @@ export {
   selectBeverage,
   selectActiveBeverageIds,
   selectArchivedBeverageIds,
-  selectBeverageQuery
+  selectBeverageQuery,
+  selectBeverageQueryId
 }
