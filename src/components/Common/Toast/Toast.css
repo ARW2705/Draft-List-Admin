@@ -1,7 +1,68 @@
 .toast-container {
-  
+  position: absolute;
+  max-width: 75%;
+  display: flex;
+  border-radius: 12px;
+  border: 1px solid var(--secondary-dark);
+  background-color: var(--secondary-light);
+  animation-name: slideUp, fadeIn;
+  animation-duration: 250ms;
+}
+
+.toast-message {
+  align-self: center;
+  margin: 10px;
 }
 
 .toast-button {
-  
+  border-radius: 0 10px 10px 0;
+  background-color: var(--secondary-dark);
+  border-color: var(--secondary-dark);
+  border: none;
+}
+
+.toast-button:hover .toast-button-icon {
+  stroke: var(--secondary-dark);
+}
+
+.toast-button-icon {
+  width: 70%;
+  height: 70%;
+  stroke: var(--background);
+}
+
+.toast-button-icon > path {
+  stroke-width: 64;
+}
+
+.toast-container.bottom {
+  bottom: 10vh;
+}
+
+.toast-container.top {
+  top: 10vh;
+  animation-name: slideDown, fadeIn;
+}
+
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }

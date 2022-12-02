@@ -7,20 +7,17 @@ import Overlay from '../Overlay/Overlay'
 import './Toast.css'
 
 
-function Toast({ message, position = 'bottom', customClass = '' }) {
-  const cancelButtonIcon = {
-    icon: <IoCloseOutline />,
-    label: 'cancel-button'
-  }
-  
+function Toast({ message, position = 'middle', customClass = '', dismiss = () => {} }) {
   return (
     <div className={ `toast-container ${position} ${customClass}` }>
-      <p>{ message }</p>
+      <p className='toast-message'>{ message }</p>
       <Button
-        icon={ cancelButtonIcon }
+        icon={ <IoCloseOutline className='toast-button-icon' /> }
         customClass='toast-button'
-        name={ cancelButtonIcon.label }
-        ariaLabel={ cancelButtonIcon.label }
+        name={ 'cancel-button' }
+        ariaLabel={ 'cancel-button' }
+        onClick={ dismiss }
+        isFlat={ true }
       />
     </div>
   )
