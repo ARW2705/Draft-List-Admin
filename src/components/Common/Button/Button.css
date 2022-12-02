@@ -12,7 +12,7 @@
 
 .button:disabled,
 .button:disabled:hover {
-  color: var(--gray-medium);
+  color: var(--gray);
   background-color: var(--primary-light);
   border-color: var(--primary-light);
   box-shadow: 0 2px 3px var(--primary-light);

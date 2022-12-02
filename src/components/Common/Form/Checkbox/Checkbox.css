@@ -7,7 +7,7 @@
 .form-checkbox-container > input[type='checkbox'] {
   -webkit-appearance: none;
   background-color: var(--background);
-  border: 2px solid var(--gray-medium);
+  border: 2px solid var(--gray);
   box-shadow: 0 3px 5px var(--primary-light), inset 0 -10px 15px -12px var(--primary-light);
   padding: 10px;
   border-radius: 5px;

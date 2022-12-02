@@ -27,7 +27,7 @@ function Button({ content, text, icon, customClass, isDisabled, name, onClick, a
       onClick={ onClick ? handleClick : undefined }
     >
       { content && content }
-      { icon && <span>{ icon }</span> }
+      { icon && icon }
       { text && <span>{ text }</span> }
     </button>
   )
