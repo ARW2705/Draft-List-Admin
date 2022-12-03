@@ -5,7 +5,6 @@ function handleUnauthorizedResponse(axiosRef) {
       const { response } = error
       if (response.status === 401) {
         // Handle token error
-        return Promise.resolve()
       }
       return Promise.reject(error)
     }
