@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
-import { signup } from '../../../services/user/store/user.thunk'
+import { set as setToken } from '../../../services/token/store/token.slice'
+import { set as setUser } from '../../../services/user/store/user.slice'
+import { signup } from '../../../services/user/user.service'
+import { refreshUserLists } from '../../../services/user/store/user.action'
 
 import FormGroup from '../../Common/Form/FormGroup/FormGroup'
+import Toast from '../../Common/Toast/Toast'
 
 import createForm from '../../../shared/form/create-form'
 import { minLength, maxLength, required, pattern, isEqual } from '../../../shared/validators/validators'
@@ -13,6 +17,8 @@ import { EMAIL_PATTERN }    from '../../../shared/constants/email-pattern'
 
 
 function SignupForm() {
+  const [ error, setError ] = useState(null)
+
   const form = createForm({
     fields: {
       username: {
@@ -73,22 +79,34 @@ function SignupForm() {
       navigate(-1)
     } else {
       try {
-        const signupThunk = signup(data)
-        dispatch(signupThunk)
+        const { user, token } = await signup(data)
+        dispatch(setUser(user))
+        dispatch(setToken(token))
+        refreshUserLists()
         navigate(-1)
       } catch(error) {
-        console.log('signup error', error)
+        setError(`Signup error: ${error.publicMessage}`)
       }
     }
   }
 
   return (
-    <FormGroup
-      form={ form }
-      submitHandler={ handleSubmit }
-      customClass='signup'
-      title='Signup'
-    />
+    <>
+      {
+        error
+        && <Toast
+          customOverlayClass='toast-background'
+          message={ error }
+          dismiss={ () => setError(null) }
+        />
+      }
+      <FormGroup
+        form={ form }
+        submitHandler={ handleSubmit }
+        customClass='signup'
+        title='Signup'
+      />
+    </>
   )
 }
 
