@@ -65,7 +65,7 @@ export function configDraftForm(draft) {
       value: '',
       element: 'query',
       options: {
-        label: 'Search Beverages',
+        label: 'Search By Beverage Name',
         queryFn: queryTerm => {
           const beverages = selectBeverageQuery(store.getState(), 'name', queryTerm)
           if (beverages.length) return beverages[0]
