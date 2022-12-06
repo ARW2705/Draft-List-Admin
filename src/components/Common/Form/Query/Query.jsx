@@ -57,7 +57,6 @@ function FormQuery(props) {
           <SimpleView
             keysToDisplay={ queryKeys }
             data={ queryResult }
-            customClass='beverage-view'
           />
         )
         checkValidity(name, queryResult[queryValue])
@@ -91,7 +90,7 @@ function FormQuery(props) {
       onFocus={ handleOnFocusOrBlur }
       onBlur={ handleOnFocusOrBlur }
     >
-      <h2>{ attrs.label || 'Search' }</h2>
+      <h3>{ attrs.label || 'Search' }</h3>
       <SearchBar
         handleOnSubmit={ handleSearchOnSubmit }
         label={ attrs.label || 'Search' }

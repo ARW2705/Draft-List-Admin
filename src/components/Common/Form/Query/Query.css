@@ -6,9 +6,9 @@
   margin-bottom: 20px;
 }
 
-.form-query-container > h2 {
+.form-query-container > h3 {
   text-align: center;
   margin: 0;
   color: var(--gray-dark);
-  font-size: 1.75rem;
+  font-size: 1.25rem;
 }
