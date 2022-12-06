@@ -3,9 +3,8 @@
   position: relative;
 }
 
-.drop-down-container > span {
-  display: block;
-  align-self: center;
+.drop-down-container > h3 {
+  font-size: 1rem;
 }
 
 .drop-down-container > ul {

@@ -45,7 +45,7 @@ function DropDown({ customClass, title, items, onSelect: handleOnSelect, isStati
       onMouseLeave={ () => setShowList(false) }
       onClick={ handleClick }
     >
-      <span>{ menuTitle }</span>
+      <h3>{ menuTitle }</h3>
       {
         showList && <ul>{ listItems }</ul>
       }
