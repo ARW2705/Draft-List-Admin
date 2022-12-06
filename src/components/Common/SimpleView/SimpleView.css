@@ -1,0 +1,9 @@
+.simple-view-container {
+  display: flex;
+  justify-content: space-around;
+  margin: 20px 0 10px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--secondary-dark);
+  border-bottom: 2px solid var(--secondary-dark);
+}
