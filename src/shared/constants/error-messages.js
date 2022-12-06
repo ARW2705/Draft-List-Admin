@@ -24,7 +24,7 @@ const errorMessages = {
     const formattedFieldNames = error.eitherOr
       .map(field => toTitleCase(hyphenify(field).split('-').join(' ').toLowerCase()))
       .join('\' or \'')
-    return `Selecting either '${formattedFieldNames}' are required`
+    return `Selecting either '${formattedFieldNames}' is required`
   }
 }
 
