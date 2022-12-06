@@ -5,6 +5,11 @@
   background-color: white;
 }
 
+.form-select-dropdown > h3 {
+  font-size: 1.25rem;
+  margin: 0;
+}
+
 .form-select-dropdown {
   display: flex;
   justify-content: center;
