@@ -9,6 +9,7 @@ import { refreshUserLists } from '../../../services/user/store/user.action'
 
 import FormGroup from '../../Common/Form/FormGroup/FormGroup'
 import Toast from '../../Common/Toast/Toast'
+import Spinner from '../../Common/Loaders/Spinner/Spinner'
 
 import createForm from '../../../shared/form/create-form'
 import { required } from '../../../shared/validators/validators'
@@ -18,6 +19,7 @@ import './Login.css'
 
 function LoginForm() {
   const [ error, setError ] = useState(null)
+  const [ isLoading, setIsLoading ] = useState(false)
 
   const form = createForm({
     fields: {
@@ -61,6 +63,7 @@ function LoginForm() {
       navigate(-1)
     } else {
       try {
+        setIsLoading(true)
         const { user, token } = await login(data)
         dispatch(setUser(user))
         dispatch(setToken(token))
@@ -68,6 +71,8 @@ function LoginForm() {
         navigate(-1)
       } catch(error) {
         setError(`Login error: ${error.publicMessage}`)
+      } finally {
+        setIsLoading(false)
       }
     }
   }
@@ -81,6 +86,9 @@ function LoginForm() {
           message={ error }
           dismiss={ () => setError(null) }
         />
+      }
+      {
+        isLoading && <Spinner text='Loggin in'/>
       }
       <FormGroup
         form={ form }
