@@ -16,15 +16,18 @@ function BeverageQuery({ onConfigUpdate }) {
     searchTerm: ''
   }
 
-  const [ listConfig , setListConfig  ] = useState(defaultConfig)
-  const [ searchError, setSearchError ] = useState(null)
-  const [ searchLabel, setSearchLabel ] = useState(defaultSearchLabel)
+  const [ listConfig    , setListConfig     ] = useState(defaultConfig)
+  const [ searchError   , setSearchError    ] = useState(null)
+  const [ searchLabel   , setSearchLabel    ] = useState(defaultSearchLabel)
+  const [ resetDropDown , setResetDropDown  ] = useState(0)
 
   const handleSearchOnSubmit = searchTerm => {
     if (searchTerm === null) {
       setSearchError(null)
       setListConfig(defaultConfig)
       onConfigUpdate(defaultConfig)
+      setSearchLabel(defaultSearchLabel)
+      setResetDropDown(prevProps => prevProps + 1)
       return
     }
 
@@ -56,6 +59,7 @@ function BeverageQuery({ onConfigUpdate }) {
     <div className='beverage-query'>
       <div className='search-container'>
         <DropDown
+          key={ resetDropDown }
           customClass='search-by-menu'
           title='Search By'
           items={ ['Name', 'Source', 'Style'] }
