@@ -87,7 +87,7 @@ function BeverageForm() {
         form={ form }
         submitHandler={ handleSubmit }
         customClass='beverage-form'
-        title='New Beverage'
+        title={ beverage ? `Edit ${beverage.title || beverage.name}` : 'New Beverage' }
       />
     </>
   )
