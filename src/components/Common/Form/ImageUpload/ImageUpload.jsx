@@ -9,10 +9,7 @@ import './ImageUpload.css'
 function ImageUpload({ config, handleOnChange, customClass }) {
   const [ image, setImage ] = useState(null)
   const handleOnImageCrop = image => handleOnChange(config.name, image)
-  const handleChange = (name, value) => {
-    setImage(value)
-    handleOnChange(name, value)
-  }
+  const handleChange = (_, value) => setImage(value)
 
   return (
     <div className='form-input-container image-upload'>
