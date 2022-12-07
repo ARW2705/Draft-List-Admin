@@ -9,12 +9,14 @@ function Spinner({ text = 'Loading...', customClass = '' }) {
   return (
     <div className={ `spinner-container ${customClass}` }>
       <svg
+        version="1.1"
+        xmlns="http://www.w3.org/2000/svg"
         className='spinner-svg'
         viewBox="0 0 100 100"
       >
         <circle
-          cx="50%"
-          cy="50%"
+          cx="50"
+          cy="50"
           r="42"
         />
         <text
@@ -22,6 +24,7 @@ function Spinner({ text = 'Loading...', customClass = '' }) {
           y="50%"
           textAnchor="middle"
           dominantBaseline="middle"
+          textLength="75%"
         >
           { text }
         </text>
