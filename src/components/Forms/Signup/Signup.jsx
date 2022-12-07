@@ -9,6 +9,7 @@ import { refreshUserLists } from '../../../services/user/store/user.action'
 
 import FormGroup from '../../Common/Form/FormGroup/FormGroup'
 import Toast from '../../Common/Toast/Toast'
+import Spinner from '../../Common/Loaders/Spinner/Spinner'
 
 import createForm from '../../../shared/form/create-form'
 import { minLength, maxLength, required, pattern, isEqual } from '../../../shared/validators/validators'
@@ -18,6 +19,7 @@ import { EMAIL_PATTERN }    from '../../../shared/constants/email-pattern'
 
 function SignupForm() {
   const [ error, setError ] = useState(null)
+  const [ isLoading, setIsLoading ] = useState(false)
 
   const form = createForm({
     fields: {
@@ -79,6 +81,7 @@ function SignupForm() {
       navigate(-1)
     } else {
       try {
+        setIsLoading(true)
         const { user, token } = await signup(data)
         dispatch(setUser(user))
         dispatch(setToken(token))
@@ -86,6 +89,8 @@ function SignupForm() {
         navigate(-1)
       } catch(error) {
         setError(`Signup error: ${error.publicMessage}`)
+      } finally {
+        setIsLoading(false)
       }
     }
   }
@@ -99,6 +104,9 @@ function SignupForm() {
           message={ error }
           dismiss={ () => setError(null) }
         />
+      }
+      {
+        isLoading && <Spinner text='Loggin in'/>
       }
       <FormGroup
         form={ form }
