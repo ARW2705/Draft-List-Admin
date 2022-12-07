@@ -21,9 +21,9 @@
 }
 
 .spinner-svg text {
+  font-size: 0.85em;
   opacity: 1;
   fill: var(--primary-dark);
-  animation: pulse 1s infinite ease-in-out;
 }
 
 @keyframes rubberCircle {
@@ -45,10 +45,4 @@
     stroke-dashoffset: 280;
     opacity: 0.5;
   }
-}
-
-@keyframes pulse {
-  0%       { opacity: 0.25; }
-  45%, 55% { opacity: 1;    }
-  100%     { opacity: 0.25; }
 }

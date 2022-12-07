@@ -1,11 +1,17 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import Overlay from '../../Overlay/Overlay'
 
 import './Spinner.css'
 
 
-function Spinner({ text = 'Loading...', customClass = '' }) {
+function Spinner({ text, customClass = '' }) {
+  const [ messageText, setMessageText ] = useState('Loading...')
+
+  useEffect(() => {
+    if (text && text.length < 12) setMessageText(text)
+  }, [text])
+
   return (
     <div className={ `spinner-container ${customClass}` }>
       <svg
@@ -26,7 +32,7 @@ function Spinner({ text = 'Loading...', customClass = '' }) {
           dominantBaseline="middle"
           textLength="75%"
         >
-          { text }
+          { messageText }
         </text>
       </svg>
     </div>
