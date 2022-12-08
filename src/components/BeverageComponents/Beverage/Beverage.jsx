@@ -41,14 +41,12 @@ function Beverage({ beverageId }) {
   
   return (
     <div className='beverage'>
-      {
-        showConfirmationModal
-        && <Modal
-          component={ Confirmation }
-          data={ { actionMessage: <>Archive "<span>{ name }</span>" ?</> } }
-          dismiss={ handleConfirmationModalDismiss }
-        />
-      }
+      <Modal
+        isOpen={ showConfirmationModal }
+        component={ Confirmation }
+        data={ { actionMessage: <>Archive "<span>{ name }</span>" ?</> } }
+        dismiss={ handleConfirmationModalDismiss }
+      />
       <BeverageHeader
         name={ name }
         style={ style }

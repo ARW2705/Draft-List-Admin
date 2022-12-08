@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useSelector } from 'react-redux'
 
 import { selectBeverage, selectActiveBeverageIds, selectBeverageQueryId } from '../../../services/beverage/store/beverage.selector'
@@ -15,6 +15,7 @@ import './BeverageList.css'
 function BeverageList({ listConfig }) {
   const [ components, setComponents ] = useState([])
   const [ toast, setToast ] = useState(null)
+  const toastDuration = 2 * 1000 // 2 seconds
 
   const { searchType, searchTerm } = listConfig
   const selector = (searchType && searchTerm)
@@ -25,19 +26,11 @@ function BeverageList({ listConfig }) {
   const beverageIdsDiff = beverageIds.length - previousBeverageIds.current.length
   const newBeverage = useSelector(state => selectBeverage(state, findUniqueInArrays(beverageIds, previousBeverageIds.current)[0]))
 
-  const setToastFeedback = useCallback(message => {
-    const toastTimeoutDuration = 2 * 1000 // 2 seconds
-    setToast(message)
-    setTimeout(() => {
-      setToast(null)
-    }, toastTimeoutDuration)
-  }, [])
-
   useEffect(() => {
     if (beverageIdsDiff > 0) {
-      setToastFeedback(`Added ${newBeverage.title || newBeverage.name}`)
+      setToast(`Added ${newBeverage.title || newBeverage.name}`)
     } else if (beverageIdsDiff < 0) {
-      setToastFeedback('Archived Beverage')
+      setToast('Archived Beverage')
     }
 
     if (!beverageIds.length) {
@@ -53,11 +46,16 @@ function BeverageList({ listConfig }) {
     }
 
     previousBeverageIds.current = beverageIds
-  }, [beverageIds, beverageIdsDiff, newBeverage, setToastFeedback])
+  }, [beverageIds, beverageIdsDiff, newBeverage])
 
   return (
     <div className='beverage-list'>
-      { toast && <Toast message={ toast } /> }
+      <Toast
+        isOpen={ !!toast }
+        message={ toast }
+        dismiss={ () => setToast(null) }
+        duration={ toastDuration }
+      />
       { components }
     </div>
   )
