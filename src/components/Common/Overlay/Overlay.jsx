@@ -11,13 +11,20 @@ function Overlay(InnerComponent) {
     }
     
     return ReactDOM.createPortal(
-      <div
-        className={ `overlay-container ${props?.customOverlayClass ? props.customOverlayClass : ''}` }
-        data-overlay
-        onClick={ handleClick }
-      >
-        <InnerComponent { ...props } /> 
-      </div>,
+      <>
+        {
+          props.isOpen
+          && (
+            <div
+              className={ `overlay-container ${props?.customOverlayClass ? props.customOverlayClass : ''}` }
+              data-overlay
+              onClick={ handleClick }
+            >
+              <InnerComponent { ...props } /> 
+            </div>
+          )
+        }
+      </>,
       document.querySelector('#overlay-root')
     )
   }
