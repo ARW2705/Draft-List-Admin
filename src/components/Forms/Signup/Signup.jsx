@@ -97,17 +97,13 @@ function SignupForm() {
 
   return (
     <>
-      {
-        error
-        && <Toast
-          customOverlayClass='toast-background'
-          message={ error }
-          dismiss={ () => setError(null) }
-        />
-      }
-      {
-        isLoading && <Spinner text='Loggin in'/>
-      }
+      { isLoading && <Spinner text='Loggin in'/> }
+      <Toast
+        isOpen={ error }
+        customOverlayClass='toast-background'
+        message={ error }
+        dismiss={ () => setError(null) }
+      />
       <FormGroup
         form={ form }
         submitHandler={ handleSubmit }

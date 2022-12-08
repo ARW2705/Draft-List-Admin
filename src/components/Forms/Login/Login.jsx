@@ -8,8 +8,8 @@ import { login } from '../../../services/user/user.service'
 import { refreshUserLists } from '../../../services/user/store/user.action'
 
 import FormGroup from '../../Common/Form/FormGroup/FormGroup'
-import Toast from '../../Common/Toast/Toast'
-import Spinner from '../../Common/Loaders/Spinner/Spinner'
+import Spinner   from '../../Common/Loaders/Spinner/Spinner'
+import Toast     from '../../Common/Toast/Toast'
 
 import createForm from '../../../shared/form/create-form'
 import { required } from '../../../shared/validators/validators'
@@ -79,17 +79,13 @@ function LoginForm() {
 
   return (
     <>
-      {
-        error
-        && <Toast
-          customOverlayClass='toast-background'
-          message={ error }
-          dismiss={ () => setError(null) }
-        />
-      }
-      {
-        isLoading && <Spinner text='Loggin in'/>
-      }
+      { isLoading && <Spinner text='Loggin in'/> }
+      <Toast
+        isOpen={ error }
+        customOverlayClass='toast-background'
+        message={ error }
+        dismiss={ () => setError(null) }
+      />
       <FormGroup
         form={ form }
         submitHandler={ handleSubmit }
