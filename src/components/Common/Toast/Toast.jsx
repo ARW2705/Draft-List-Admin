@@ -7,7 +7,11 @@ import Overlay from '../Overlay/Overlay'
 import './Toast.css'
 
 
-function Toast({ message, position = 'middle', customClass = '', dismiss = () => {} }) {
+function Toast({ message, position = 'middle', duration = 1000, customClass = '', dismiss = () => {} }) {
+  setTimeout(() => {
+    dismiss()
+  }, duration)
+  
   return (
     <div className={ `toast-container ${position} ${customClass}` }>
       <p className='toast-message'>{ message }</p>
