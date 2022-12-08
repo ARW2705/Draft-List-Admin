@@ -91,14 +91,12 @@ function Draft({ draftId, deviceId }) {
         isLoading
         ? <Spinner />
         : <>
-          {
-            showQuantityModal
-            && <Modal
-              component={ Quantity }
-              data={ { quantity: draft.container.quantity } }
-              dismiss={ handleQuantityModalDismiss }
-            />
-          }
+          <Modal
+            isOpen={ showQuantityModal }
+            component={ Quantity }
+            data={ { quantity: draft.container.quantity } }
+            dismiss={ handleQuantityModalDismiss }
+          />
           <div className='draft-container'>
             <Image
               imageURL={ beverage.imageURL }
