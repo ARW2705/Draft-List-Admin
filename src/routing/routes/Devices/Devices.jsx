@@ -16,7 +16,7 @@ function Devices() {
   }
 
   return (
-    <main className='route devices-router'>
+    <main className='route devices-router fade-in'>
       <Routes>
         <Route
           path='/'

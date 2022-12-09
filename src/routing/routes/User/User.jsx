@@ -9,7 +9,7 @@ import LoginSignupButtons from '../../../components/LoginSignupButtons/LoginSign
 
 function User() {
   return (
-    <main className="route user">
+    <main className='route user fade-in'>
       <Routes>
         <Route path='/signup' element={ <SignupForm /> } />
         <Route path='/login' element={ <LoginForm /> } />

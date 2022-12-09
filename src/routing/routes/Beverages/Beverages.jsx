@@ -20,12 +20,13 @@ function Beverages() {
   const [ listConfig, setListConfig ] = useState(defaultConfig)
 
   const onConfigUpdate = config => setListConfig(config ?? defaultConfig)
+  
   const location = useLocation()
   const navigate = useNavigate()
   const handleOnClick = () => navigate(`${location.pathname}/form`)
 
   return (
-    <main className='route beverages-router'>
+    <main className='route beverages-router fade-in'>
       <Routes>
         <Route
           path='/'

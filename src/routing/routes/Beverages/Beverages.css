@@ -1,3 +1,7 @@
+.fade-in {
+  animation: fadeIn 200ms linear;
+}
+
 .beverage-container {
   display: flex;
   flex-direction: column;

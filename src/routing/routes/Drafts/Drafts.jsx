@@ -9,7 +9,7 @@ import './Drafts.css'
 
 function Drafts() {
   return (
-    <main className='route drafts-router'>
+    <main className='route drafts-router fade-in'>
       <Routes>
         <Route
           path='/'
