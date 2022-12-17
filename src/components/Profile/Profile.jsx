@@ -10,15 +10,10 @@ function Profile() {
   const { username, email } = useSelector(selectProfile)
 
   return (
-    <>
-      {
-        (username && email) &&
-        <div className="profile-container">
-          <p>Username: <span className='user-value'>{ username }</span></p>
-          <p>Email: <span className='user-value'>{ email }</span></p>
-        </div>
-      }
-    </>
+    <div className="profile-container">
+      { username && <p>Username: <span className='user-value'>{ username }</span></p> }
+      { email && <p>Email: <span className='user-value'>{ email }</span></p> }
+    </div>
   )
 }
 
