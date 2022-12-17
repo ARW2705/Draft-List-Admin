@@ -1,5 +1,5 @@
 @import 'normalize.css';
-@import './animations.css';
+@import './animations/animations.css';
 @import './colors.css';
 @import './sizes.css';
 
@@ -9,12 +9,11 @@ body {
 }
 
 #app-root {
-  height: 100vh;
   position: absolute;
   top: 0;
   left: 0;
-  right: 0px;
-  bottom: -20px;
+  right: 0;
+  bottom: 0;
   overflow-y: scroll;
 }
 
