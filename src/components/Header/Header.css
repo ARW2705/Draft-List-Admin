@@ -26,7 +26,7 @@
 
 @media screen and (max-width: 600px) {
   .app-header {
-    height: 7.5vh;
+    height: 8vh;
     background-color: var(--primary);
   }
 }
