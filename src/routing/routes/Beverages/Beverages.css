@@ -1,8 +1,5 @@
-.fade-in {
-  animation: fadeIn 200ms linear;
-}
-
 .beverage-container {
+  width: 100%;
   display: flex;
   flex-direction: column;
 }

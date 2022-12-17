@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Route, Routes, useNavigate, useLocation } from 'react-router-dom'
+import { Route, Routes, useNavigate } from 'react-router-dom'
 
 import BeverageForm  from '../../../components/BeverageComponents/BeverageForm/BeverageForm'
 import BeverageList  from '../../../components/BeverageComponents/BeverageList/BeverageList'
@@ -20,13 +20,10 @@ function Beverages() {
   const [ listConfig, setListConfig ] = useState(defaultConfig)
 
   const onConfigUpdate = config => setListConfig(config ?? defaultConfig)
-  
-  const location = useLocation()
   const navigate = useNavigate()
-  const handleOnClick = () => navigate(`${location.pathname}/form`)
 
   return (
-    <main className='route beverages-router fade-in'>
+    <div className='route beverages-router'>
       <Routes>
         <Route
           path='/'
@@ -38,7 +35,7 @@ function Beverages() {
                 customClass='new-beverage'
                 isDisabled={ false }
                 name='new-beverage'
-                onClick={ handleOnClick }
+                onClick={ () => navigate('form') }
               />
               <BeverageList listConfig={ listConfig } />
             </div>
@@ -46,7 +43,7 @@ function Beverages() {
         />
         <Route path='/form' element={ <BeverageForm /> } />
       </Routes>
-    </main>
+    </div>
   )
 }
 
