@@ -1,9 +1,10 @@
 import React from 'react'
 import * as ReactDOMClient from 'react-dom/client'
-import { Provider } from 'react-redux'
+import { Provider as ReduxProvider } from 'react-redux'
+
 import store from './app/store'
 
-import Router from './routing/Router/Router'
+import AppRouter from './routing/router/AppRouter'
 
 import './styles/style.css'
 
@@ -20,9 +21,9 @@ container.addEventListener('scroll', event => {
 
 root.render(
   <React.StrictMode>
-    <Provider store={ store }>
-      <Router />
-    </Provider>
+    <ReduxProvider store={ store }>
+      <AppRouter />
+    </ReduxProvider>
   </React.StrictMode>
 )
 
