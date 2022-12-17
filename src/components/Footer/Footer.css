@@ -7,4 +7,5 @@
   font-size: 1.35rem;
   color: var(--text-light);
   text-align: center;
+  z-index: 10;
 }
