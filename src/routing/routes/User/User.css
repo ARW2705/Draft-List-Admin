@@ -1,8 +1,5 @@
-.user {
+.user-container {
+  width: 100%; 
   display: flex;
-  justify-content: center;
-}
-
-.fade-in {
-  animation: fadeIn 200ms linear;
+  flex-direction: column;
 }
