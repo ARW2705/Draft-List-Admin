@@ -1,3 +1,5 @@
-.fade-in {
-  animation: fadeIn 200ms linear;
+.drafts-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }

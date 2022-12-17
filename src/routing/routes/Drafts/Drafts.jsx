@@ -9,7 +9,7 @@ import './Drafts.css'
 
 function Drafts() {
   return (
-    <main className='route drafts-router fade-in'>
+    <div className='route drafts-router'>
       <Routes>
         <Route
           path='/'
@@ -21,7 +21,7 @@ function Drafts() {
         />
         <Route path='/form' element={ <DraftForm /> } />
       </Routes>
-    </main>
+    </div>
   )
 }
 
