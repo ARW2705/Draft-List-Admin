@@ -1,0 +1,109 @@
+.app-router-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--background);
+  --animation-speed: 250ms;
+}
+
+.router {
+  display: flex;
+  flex-direction: row;
+  min-height: 82vh;
+}
+
+.left-enter,
+.right-enter {
+  height: 100%;
+  opacity: 0;
+}
+
+.left-enter-active,
+.right-enter-active {
+  width: 100%;
+  position: absolute;
+  top: 10vh;
+  left: 0;
+  opacity: 1;
+}
+
+.left-enter-active {
+  animation:
+    fadeIn      var(--animation-speed) linear,
+    slideInLeft var(--animation-speed) linear;
+}
+
+.right-enter-active {
+  animation:
+    fadeIn       var(--animation-speed) linear,
+    slideInRight var(--animation-speed) linear;
+}
+
+.left-exit,
+.right-exit {
+  opacity: 1;
+}
+
+.left-exit-active,
+.right-exit-active {
+  width: 100%;
+  position: absolute;
+  top: 10vh;
+  left: 0;
+}
+
+.left-exit-active {
+  animation:
+    fadeOut      var(--animation-speed) linear,
+    slideOutLeft var(--animation-speed) linear;
+}
+
+.right-exit-active {
+  animation:
+    fadeOut       var(--animation-speed) linear,
+    slideOutRight var(--animation-speed) linear;
+}
+
+.expansion-enter {
+  opacity: 0;
+}
+
+.expansion-exit {
+  opacity: 1;
+}
+
+.expansion-enter-active,
+.expansion-exit-active {
+  width: 100%;
+  position: absolute;
+  top: 10vh;
+  left: 0;
+}
+
+.expansion-enter-active {
+  animation:
+    fadeIn var(--animation-speed) linear,
+    expand var(--animation-speed) linear;
+}
+
+.expansion-exit-active {
+  animation:
+    fadeOut  var(--animation-speed) linear,
+    collapse var(--animation-speed) linear;
+}
+
+
+@media screen and (max-width: 600px) {
+  .router {
+    min-height: 85vh;
+  }
+
+  .left-enter-active,
+  .right-enter-active,
+  .left-exit-active,
+  .right-exit-active,
+  .expansion-enter-active,
+  .expansion-exit-active {
+    top: 8vh;
+  }
+}
