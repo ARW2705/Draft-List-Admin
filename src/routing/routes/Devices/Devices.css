@@ -1,8 +1,5 @@
-.fade-in {
-  animation: fadeIn 200ms linear;
-}
-
 .device-container {
+  width: 100%;
   display: flex;
   flex-direction: column;
 }

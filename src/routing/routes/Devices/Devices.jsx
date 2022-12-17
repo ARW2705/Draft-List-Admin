@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Routes, useNavigate, useLocation } from 'react-router-dom'
+import { Route, Routes, useNavigate } from 'react-router-dom'
 
 import Button     from '../../../components/Common/Button/Button'
 import DeviceForm from '../../../components/DeviceComponents/DeviceForm/DeviceForm'
@@ -9,14 +9,10 @@ import './Devices.css'
 
 
 function Devices() {
-  const location = useLocation()
   const navigate = useNavigate()
-  const handleOnClick = () => {
-    navigate(`${location.pathname}/form`)
-  }
 
   return (
-    <main className='route devices-router fade-in'>
+    <div className='route devices-router'>
       <Routes>
         <Route
           path='/'
@@ -26,7 +22,7 @@ function Devices() {
                 text='Add New Device'
                 customClass='new-device'
                 name='new-device'
-                onClick={ handleOnClick }
+                onClick={ () => navigate('form') }
               />
               <DeviceList />
             </div>
@@ -34,7 +30,7 @@ function Devices() {
         />
         <Route path='/form' element={ <DeviceForm /> } />
       </Routes>
-    </main>
+    </div>
   )
 }
 
