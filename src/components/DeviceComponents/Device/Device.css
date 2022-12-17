@@ -1,6 +1,6 @@
 .device {
   width: 90%;
-  margin: 5% auto;
+  margin: 2.5% auto;
   display: flex;
   border-radius: 15px;
   background-color: var(--gray-light);
