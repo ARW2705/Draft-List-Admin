@@ -6,6 +6,9 @@
 }
 
 .burger-button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   color: var(--primary-light);
   border: none;
   background-color: var(--gray-dark);
