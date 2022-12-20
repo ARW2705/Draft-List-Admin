@@ -20,10 +20,3 @@ body {
 #app-root::-webkit-scrollbar {
   display: none;
 }
-
-.route {
-  min-height: 75vh;
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-}
