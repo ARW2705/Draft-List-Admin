@@ -20,10 +20,10 @@ function Drafts() {
           element={
             <div className='drafts-container'>
               <Button
-                text='Add New Draft'
-                name='add-draft'
-                onClick={ () => navigate('form') }
                 customClass='new-draft-button'
+                name='add-draft'
+                text='Add New Draft'
+                onClick={ () => navigate('form') }
               />
               <DraftList />
             </div>

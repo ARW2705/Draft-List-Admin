@@ -17,11 +17,11 @@ function Devices() {
         <Route
           path='/'
           element={
-            <div className='device-container'>
+            <div className='devices-container'>
               <Button
-                text='Add New Device'
-                customClass='new-device'
+                customClass='new-device-button'
                 name='new-device'
+                text='Add New Device'
                 onClick={ () => navigate('form') }
               />
               <DeviceList />

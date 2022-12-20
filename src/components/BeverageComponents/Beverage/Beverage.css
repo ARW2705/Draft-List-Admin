@@ -1,10 +1,9 @@
 .beverage {
-  width: 90%;
   aspect-ratio: 3;
   border-radius: 15px;
   display: flex;
   position: relative;
-  margin: 5% auto;
+  margin: 5% 0;
   background-color: var(--gray-dark);
   border-bottom: 10px solid var(--gray-dark);
 }

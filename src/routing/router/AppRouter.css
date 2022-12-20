@@ -11,11 +11,13 @@
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  max-width: 80%;
 }
 
 .router {
   display: flex;
   flex-direction: row;
+  justify-content: center;
   min-height: 82vh;
 }
 
@@ -101,6 +103,10 @@
 
 
 @media screen and (max-width: 600px) {
+  .route {
+    max-width: 95%;
+  }
+
   .router {
     min-height: 85vh;
   }
