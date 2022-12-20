@@ -41,7 +41,7 @@ function getMovementDirection(from, to) {
 }
 
 function AppRouter() {
-  const animationDuration = 200 // 200ms animation speed
+  const animationDuration = 150 // 150ms animation speed
   const isLoggedIn = useSelector(selectIsLoggedIn)  
   const location = useLocation()
   const navigate = useNavigate()
