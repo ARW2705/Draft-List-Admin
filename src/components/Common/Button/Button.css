@@ -7,7 +7,7 @@
   color: var(--gray-light);
   background-color: var(--primary);
   transition: all linear 10ms;
-  font-size: 5vw;
+  font-size: 4vw;
 }
 
 .button:disabled,
