@@ -1,4 +1,10 @@
 :root {
   --header-height: 10vh;
+  --header-height-small: 8vh;
   --footer-height: 8vh;
+
+  --small-screen-margin: 5%;
+  --medium-screen-margin: 20%;
+  
+  --full-font-size: 2.25vw;
 }
