@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import React, { useCallback, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
+
+import { useMediaQuery } from '../../../shared/hooks/media-query-hook'
 
 import store from '../../../app/store'
 
@@ -24,17 +26,18 @@ function Draft({ draftId, deviceId }) {
   const [ draft, setDraft ] = useState(useSelector(state => selectDraft(state, draftId)))
   const [ beverage, setBeverage ] = useState(useSelector(state => selectBeverage(state, draft?.beverage)))
   const [ isLoading, setIsLoading ] = useState(!(draft && beverage))
+  const [ content, setContent ] = useState(<></>)
+  const isSmallScreen = useMediaQuery('sm')
 
-  const location = useLocation()
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const handleOnClick = async name => {
+  const handleOnClick = useCallback(async name => {
     switch (name) {
       case 'change-quantity':
         setShowQuantityModal(true)
         break
       case 'edit-draft':
-        navigate(`${location.pathname}/form`, { state: { draft }})
+        navigate('form', { state: { draft }})
         break
       case 'finish-draft':
         const archiveDraftThunk = archiveDraft(deviceId, draftId)
@@ -44,7 +47,7 @@ function Draft({ draftId, deviceId }) {
       default:
         throw new Error(`Invalid click event: ${name}`)
     }
-  }
+  }, [dispatch, navigate, deviceId, draftId, draft])
 
   const handleQuantityModalDismiss = data => {
     if (data) {
@@ -85,6 +88,62 @@ function Draft({ draftId, deviceId }) {
     return () => unsubscribe()
   }, [draftId, draft, dispatch])
 
+  useEffect(() => {
+    const displayElements = <>
+      <Image
+        imageURL={ beverage.imageURL }
+        alt='beverage label'
+        customClass='draft-beverage-label'
+      />
+      <div className='draft-content-a'>{ beverage.title || beverage.name }</div>
+      <div className={`draft-content-b ${isSmallScreen ? 'bullet-icon' : ''}`}>•</div>
+      <div className='draft-content-c'>{ draft.container.containerInfo.name }</div>
+      <div className={`draft-content-d ${isSmallScreen ? 'bullet-icon' : ''}`}>•</div>
+      <div className='draft-content-e'>{ Math.floor(draft.container.quantity * 100 / draft.container.containerInfo.capacity) }%</div>
+    </>
+
+    const buttonElements = <>
+      <Button
+        customClass='draft-button-a'
+        name='edit-draft'
+        text='Edit Draft'
+        onClick={ () => handleOnClick('edit-draft') }
+      />
+      <Button
+        customClass='draft-button-b'
+        name='change-quantity'
+        text='Change Quantity'
+        onClick={ () => handleOnClick('change-quantity') }
+      />
+      <Button
+        customClass='draft-button-c'
+        name='finish-draft'
+        text='Finish Draft'
+        onClick={ () => handleOnClick('finish-draft') }
+      />
+    </>
+    
+    if (isSmallScreen) {
+      setContent(
+        <>
+          <div className='draft-display-container'>
+            { displayElements }
+          </div>
+          <div className='draft-buttons-container'>
+            { buttonElements }
+          </div>
+        </>
+      )
+    } else {
+      setContent(
+        <>
+          { displayElements }
+          { buttonElements }
+        </>
+      )
+    }
+  }, [isSmallScreen, beverage, draft, handleOnClick])
+
   return (
     <>
       {
@@ -98,34 +157,7 @@ function Draft({ draftId, deviceId }) {
             dismiss={ handleQuantityModalDismiss }
           />
           <div className='draft-container'>
-            <Image
-              imageURL={ beverage.imageURL }
-              alt='beverage label'
-              customClass='draft-beverage-label'
-            />
-            <div className='draft-content-a'>{ beverage.title || beverage.name }</div>
-            <div className='draft-content-b'>•</div>
-            <div className='draft-content-c'>{ draft.container.containerInfo.name }</div>
-            <div className='draft-content-d'>•</div>
-            <div className='draft-content-e'>{ Math.floor(draft.container.quantity * 100 / draft.container.containerInfo.capacity) }%</div>
-            <Button
-              text='Change Quantity'
-              name='change-quantity'
-              customClass='draft-button-a'
-              onClick={ () => handleOnClick('change-quantity') }
-            />
-            <Button
-              text='Edit Draft'
-              name='edit-draft'
-              customClass='draft-button-b'
-              onClick={ () => handleOnClick('edit-draft') }
-            />
-            <Button
-              text='Finish Draft'
-              name='finish-draft'
-              customClass='draft-button-c'
-              onClick={ () => handleOnClick('finish-draft') }
-            />
+            { content }
           </div>
         </>
       }
