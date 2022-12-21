@@ -20,8 +20,15 @@
 .draft-device-name {
   margin: 0;
   padding: 1%;
-  font-size: 3.5vw;
+  font-size: 5vw;
   text-align: center;
   background-color: var(--gray-dark);
   color: var(--light);
+}
+
+
+@media screen and (min-width: 600px) {
+  .draft-device-name {
+    font-size: 3.5vw;
+  }
 }
