@@ -3,13 +3,14 @@
   display: flex;
   flex-direction: column;
   background-color: var(--background);
-  --animation-speed: 200ms;
+  --transition-animation-speed: 200ms;
 }
 
 .router {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  align-items: center;
   min-height: 85vh;
 }
 
@@ -18,7 +19,9 @@
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  max-width: 95%;
+  justify-content: center;
+  align-items: center;
+  max-width: calc(100% - var(--small-screen-margin));
 }
 
 /* CSSTransition component classes */
@@ -40,14 +43,14 @@
 
 .left-enter-active {
   animation:
-    fadeIn      var(--animation-speed) linear,
-    slideInLeft var(--animation-speed) linear;
+    fadeIn      var(--transition-animation-speed) linear,
+    slideInLeft var(--transition-animation-speed) linear;
 }
 
 .right-enter-active {
   animation:
-    fadeIn       var(--animation-speed) linear,
-    slideInRight var(--animation-speed) linear;
+    fadeIn       var(--transition-animation-speed) linear,
+    slideInRight var(--transition-animation-speed) linear;
 }
 
 .left-exit,
@@ -65,14 +68,14 @@
 
 .left-exit-active {
   animation:
-    fadeOut      var(--animation-speed) linear,
-    slideOutLeft var(--animation-speed) linear;
+    fadeOut      var(--transition-animation-speed) linear,
+    slideOutLeft var(--transition-animation-speed) linear;
 }
 
 .right-exit-active {
   animation:
-    fadeOut       var(--animation-speed) linear,
-    slideOutRight var(--animation-speed) linear;
+    fadeOut       var(--transition-animation-speed) linear,
+    slideOutRight var(--transition-animation-speed) linear;
 }
 
 .expansion-enter {
@@ -87,20 +90,21 @@
 .expansion-exit-active {
   width: 100%;
   position: absolute;
-  top: 8vh;
-  left: 0;
+  top: var(--header-height-small);
+  left: calc(var(--small-screen-margin) / 2);
+  right: calc(var(--small-screen-margin) / 2);
 }
 
 .expansion-enter-active {
   animation:
-    fadeIn var(--animation-speed) linear,
-    expand var(--animation-speed) linear;
+    fadeIn var(--transition-animation-speed) linear,
+    expand var(--transition-animation-speed) linear;
 }
 
 .expansion-exit-active {
   animation:
-    fadeOut  var(--animation-speed) linear,
-    collapse var(--animation-speed) linear;
+    fadeOut  var(--transition-animation-speed) linear,
+    collapse var(--transition-animation-speed) linear;
 }
 
 /* End CSSTransition component classes */
@@ -110,11 +114,11 @@
 
 @media screen and (min-width: 600px) {
   .route {
-    max-width: 80%;
+    max-width: calc(100% - var(--medium-screen-margin));
   }
 
   .router {
-    min-height: 82vh;
+    min-height: calc(100vh - var(--header-height) - var(--footer-height));
   }
 
   .left-enter-active,
@@ -123,7 +127,9 @@
   .right-exit-active,
   .expansion-enter-active,
   .expansion-exit-active {
-    top: 10vh;
+    top: var(--header-height);
+    left: calc(var(--medium-screen-margin) / 2);
+    right: calc(var(--medium-screen-margin) / 2);
   }
 }
 
