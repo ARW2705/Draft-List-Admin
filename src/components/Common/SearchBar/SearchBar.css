@@ -14,8 +14,16 @@
 
 .search-button {
   margin: 15px 0;
+  font-size: 4vw;
 }
 
 .reset-button {
   margin: 15px 10px 15px 0;
+}
+
+
+@media screen and (min-width: 600px) {
+  .search-button {
+    font-size: 3vw;
+  }
 }
