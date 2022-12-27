@@ -5,7 +5,6 @@
 .beverage-query
 .search-container {
   display: flex;
-  flex-wrap: wrap;
   padding: 0 0.5rem;
   margin-top: 1%;
 }
@@ -38,8 +37,8 @@
 }
 
 
-@media screen and (max-width: 600px) {
-  .beverage-query
+@media screen and (min-width: 600px) {
+  /* .beverage-query
   .search-container {
     display: flex;
     flex-wrap: nowrap;
@@ -53,5 +52,5 @@
   div {
     width: calc(75% - 70px) !important;
     flex-grow: 0 !important;
-  }
+  } */
 }
