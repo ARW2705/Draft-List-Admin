@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { selectBeverage } from '../../../services/beverage/store/beverage.selector'
@@ -7,23 +7,26 @@ import { updateBeverage } from '../../../services/beverage/store/beverage.thunk'
 
 import BeverageHeader  from '../BeverageHeader/BeverageHeader'
 import BeverageSummary from '../BeverageSummary/BeverageSummary'
-import Modal from '../../Common/Modal/Modal'
-import Confirmation from '../../Common/Confirmation/Confirmation'
+import Modal           from '../../Common/Modal/Modal'
+import Confirmation    from '../../Common/Confirmation/Confirmation'
 
 import './Beverage.css'
 
 
-function Beverage({ beverageId }) {
+function Beverage({ beverageId, showArchived }) {
   const beverage = useSelector(state => selectBeverage(state, beverageId))
-  const { name, style, source, abv, ibu, srm, description } = beverage
+  const { name, style, source, abv, ibu, srm, description, isArchived } = beverage
   const [ showConfirmationModal, setShowConfirmationModal ] = useState(false)
+  const [ showBeverage, setShowBeverage ] = useState()
 
-  const location = useLocation()
+  useEffect(() => {
+    setShowBeverage(!isArchived || showArchived)
+  }, [showArchived, isArchived])
+
   const navigate = useNavigate()
   const handleOnClick = clickType => {
-    console.log('click type', clickType)
     if (clickType === 'edit') {
-      navigate(`${location.pathname}/form`, { state: { beverage }})
+      navigate('form', { state: { beverage }})
     } else {
       setShowConfirmationModal(true)
     }
@@ -40,26 +43,31 @@ function Beverage({ beverageId }) {
   }
   
   return (
-    <div className='beverage'>
-      <Modal
-        isOpen={ showConfirmationModal }
-        component={ Confirmation }
-        data={ { actionMessage: <>Archive "<span>{ name }</span>" ?</> } }
-        dismiss={ handleConfirmationModalDismiss }
-      />
-      <BeverageHeader
-        name={ name }
-        style={ style }
-        source={ source }
-      />
-      <BeverageSummary
-        abv={ abv }
-        ibu={ ibu }
-        srm={ srm }
-        description={ description }
-        onClick={ handleOnClick }
-      />
-    </div>
+    <>
+      {
+        showBeverage &&
+        <div className='beverage'>
+          <Modal
+            isOpen={ showConfirmationModal }
+            component={ Confirmation }
+            data={ { actionMessage: <>Archive "<span>{ name }</span>" ?</> } }
+            dismiss={ handleConfirmationModalDismiss }
+          />
+          <BeverageHeader
+            name={ name }
+            style={ style }
+            source={ source }
+          />
+          <BeverageSummary
+            abv={ abv }
+            ibu={ ibu }
+            srm={ srm }
+            description={ description }
+            onClick={ handleOnClick }
+          />
+        </div>
+      }
+    </>
   )
 }
 
