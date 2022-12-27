@@ -1,24 +1,19 @@
 .beverage-summary {
   width: 67%;
-  height: 100%;
   background-color: var(--gray-light);
   border-radius: 50px 15px 15px 0;
   border: 5px solid var(--secondary);
-  position: absolute;
-  top: 0;
-  right: 0;
   color: var(--dark);
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  padding-top: 5%;
 }
 
 .beverage-summary
 .number-values {
-  margin: 5% 0 0 0;
   display: flex;
   justify-content: space-around;
-  font-size: 3vw;
+  font-size: var(--small-screen-font-size);
 }
 
 .beverage-summary
@@ -29,9 +24,10 @@
 
 .beverage-summary
 p {
+  min-height: 2vh;
+  flex-grow: 1;
   padding: 0 5%;
-  margin-bottom: auto;
-  font-size:2.25vw;
+  font-size: 1rem;
 }
 
 .beverage-button-container {
@@ -47,15 +43,20 @@ p {
 .beverage-edit-button {
   border-radius: 0 0 10px 0;
   flex-grow: 1;
+  font-size: var(--small-screen-font-size);
 }
 
 
-@media screen and (max-width: 600px) {
-  .beverage-summary {
-    border-radius: 50px 0 0 0;
+@media screen and (min-width: 600px) {
+  .beverage-summary
+  .number-values {
+    display: flex;
+    justify-content: space-around;
+    font-size: var(--medium-screen-font-size);
   }
 
+  .beverage-archive-button,
   .beverage-edit-button {
-    border-radius: 0;
+    font-size: var(--medium-screen-font-size);
   }
 }
