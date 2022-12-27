@@ -1,27 +1,24 @@
 .beverage-header {
   width: 33%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
   color: var(--background);
   border-radius: 15px 0 0 15px;
 }
 
 .beverage-header
 .header-inner {
-  width: calc(100% - 10px);
-  height: 100%;
+  width: calc(100% - 20px);
+  height: 90%;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+  padding: 5%;
 }
 
 .beverage-header
 .header-inner
 span {
-  font-size: 3.5vw;
+  font-size: calc(var(--small-screen-font-size) * 1.1);
   padding: 0 5px;
 }
 
@@ -37,7 +34,6 @@ span {
 .header-inner
 .header-title
 span:first-child {
-  font-size: 3.5vw;
   font-weight: bold;
   margin-bottom: 10px;
 }
@@ -46,10 +42,27 @@ span:first-child {
 .header-inner
 .header-title
 span:nth-child(2) {
-  font-size: 2.5vw;
+  font-size: calc(var(--small-screen-font-size) * 0.7);
   font-style: italic;
 }
 
 .header-style {
   text-align: center;
+}
+
+
+@media screen and (min-width: 600px) {
+  .beverage-header
+  .header-inner
+  span {
+    font-size: calc(var(--medium-screen-font-size) * 1.1);
+    padding: 0 5px;
+  }
+
+  .beverage-header
+  .header-inner
+  .header-title
+  span:nth-child(2) {
+    font-size: calc(var(--medium-screen-font-size) * 0.8);
+  }
 }
