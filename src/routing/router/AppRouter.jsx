@@ -27,7 +27,7 @@ import './AppRouter.css'
  */
 function getMovementDirection(from, to) {
   // routes array matches order displayed in navbar
-  const routes = ['/draft', '/device', '/beverage', '/user']
+  const routes = ['/drafts', '/devices', '/beverages', '/user']
   let fromIndex, toIndex
   routes.forEach((route, index) => {
     if (from.includes(route)) fromIndex = index
@@ -53,7 +53,7 @@ function AppRouter() {
 
   useEffect(() => {
     if (!onInit.current && location.pathname === '/') {
-      navigate(isLoggedIn ? '/draft' : '/user')
+      navigate(isLoggedIn ? '/drafts' : '/user')
     } else {
       onInit.current = false
     }
