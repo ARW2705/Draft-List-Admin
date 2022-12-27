@@ -18,21 +18,31 @@ function BeverageList({ listConfig }) {
   const toastDuration = 2 * 1000 // 2 seconds
 
   const { searchType, searchTerm } = listConfig
-  const selector = (searchType && searchTerm)
-    ? state => selectBeverageQueryId(state, searchType, searchTerm)
-    : selectActiveBeverageIds
-  const beverageIds = useSelector(selector, shallowCompare)
-  const previousBeverageIds = useRef(beverageIds)
-  const beverageIdsDiff = beverageIds.length - previousBeverageIds.current.length
-  const newBeverage = useSelector(state => selectBeverage(state, findUniqueInArrays(beverageIds, previousBeverageIds.current)[0]))
+  const activeIds = useSelector(selectActiveBeverageIds, shallowCompare)
+  const previousActiveIds = useRef(activeIds)
+  const queryIds = useSelector(
+    state => {
+      if (!searchType && !searchTerm) return []
+      return selectBeverageQueryId(state, searchType, searchTerm)
+    },
+    shallowCompare
+  )
+  const beverageIds = (searchType && searchTerm) ? queryIds : activeIds
+  const activeIdsDiff = activeIds.length - previousActiveIds.current.length
+  const newBeverage = useSelector(state => {
+    const ids = findUniqueInArrays(beverageIds, previousActiveIds.current)
+    return selectBeverage(state, ids.length ? ids[0] : '')
+  })
 
   useEffect(() => {
-    if (beverageIdsDiff > 0) {
+    if (activeIdsDiff > 0) {
       setToast(`Added ${newBeverage.title || newBeverage.name}`)
-    } else if (beverageIdsDiff < 0) {
+    } else if (activeIdsDiff < 0) {
       setToast('Archived Beverage')
     }
+  }, [activeIdsDiff, newBeverage])
 
+  useEffect(() => {
     if (!beverageIds.length) {
       setComponents(<p className='empty-list'>Nothing here...</p>)
     } else {
@@ -41,12 +51,13 @@ function BeverageList({ listConfig }) {
           className='beverage-container'
           key={ id }
           beverageId={ id }
+          showArchived={ false }
         />
       )))
     }
 
-    previousBeverageIds.current = beverageIds
-  }, [beverageIds, beverageIdsDiff, newBeverage])
+    previousActiveIds.current = activeIds
+  }, [beverageIds, activeIds])
 
   return (
     <div className='beverage-list'>
