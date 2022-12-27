@@ -5,7 +5,10 @@
 
 .search-input {
   flex-grow: 1;
-  margin-right: 10px;
+}
+
+.search-input > input {
+  width: calc(90% - 15px);
 }
 
 .search-input:hover {
@@ -13,6 +16,7 @@
 }
 
 .search-button {
+  padding: 0 5%;
   margin: 15px 0;
   font-size: 4vw;
 }
@@ -25,5 +29,13 @@
 @media screen and (min-width: 600px) {
   .search-button {
     font-size: 3vw;
+  }
+
+  .search-input {
+    margin-right: 10px;
+  }
+
+  .search-input > input {
+    width: auto;
   }
 }
