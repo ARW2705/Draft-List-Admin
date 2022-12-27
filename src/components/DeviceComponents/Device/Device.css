@@ -32,9 +32,7 @@
 
 .device-edit-button,
 .draft-count-button {
-  width: 100%;
-  height: 100%;
-  font-size: 3vw;
+  font-size: var(--small-screen-font-size);
 }
 
 .device-edit-button {
@@ -43,4 +41,12 @@
 
 .draft-count-button {
   border-radius: 0 0 15px 0;
+}
+
+
+@media screen and (min-width: 600px) {
+  .device-edit-button,
+  .draft-count-button {
+    font-size: var(--medium-screen-font-size);
+  }
 }

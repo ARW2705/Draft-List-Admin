@@ -31,10 +31,10 @@ function Beverages() {
             <div className='beverage-container'>
               <BeverageQuery onConfigUpdate={ onConfigUpdate } />
               <Button
-                text='Add New Beverage'
-                customClass='new-beverage'
+                customClass='new-beverage-button'
                 isDisabled={ false }
                 name='new-beverage'
+                text='Add New Beverage'
                 onClick={ () => navigate('form') }
               />
               <BeverageList listConfig={ listConfig } />

@@ -6,6 +6,14 @@
   align-items: center;
 }
 
-.new-beverage {
+.new-beverage-button {
   align-self: center;
+  font-size: var(--small-screen-font-size);
+}
+
+
+@media screen and (min-width: 600px) {
+  .new-beverage-button {
+    font-size: var(--medium-screen-font-size);
+  }
 }
