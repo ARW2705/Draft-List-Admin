@@ -1,6 +1,7 @@
 .draft-container {
   --border-radius-size-internal: var(--border-radius-size, 15px);
   --inner-border-radius-size-internal: var(--inner-border-radius-size, 10px);
+  --divider-width-internal: var(--divider-width, 3px);
 
   width: 100%;
   font-size: var(--medium-font-size);
@@ -48,7 +49,7 @@
 }
 
 .draft-change-quantity-button {
-  width: 49%;
+  width: calc(50% - calc(var(--divider-width-internal) * 2));
 }
 
 .draft-change-quantity-button {
