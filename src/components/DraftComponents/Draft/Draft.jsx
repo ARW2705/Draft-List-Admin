@@ -1,8 +1,6 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-
-import { useMediaQuery } from '../../../shared/hooks/media-query-hook'
 
 import store from '../../../app/store'
 
@@ -12,11 +10,12 @@ import { updateDraft, getFromAPI } from '../../../services/draft/store/draft.thu
 import { selectBeverage } from '../../../services/beverage/store/beverage.selector'
 import { archiveDraft } from '../../../services/device/store/device.thunk'
 
-import Spinner  from '../../Common/Loaders/Spinner/Spinner'
-import Button   from '../../Common/Button/Button'
-import Image    from '../../Common/Image/Image'
-import Modal    from '../../Common/Modal/Modal'
-import Quantity from '../../Common/Quantity/Quantity'
+import DraftContent from '../DraftContent/DraftContent'
+import ButtonGroup  from '../../Common/ButtonGroup/ButtonGroup'
+import Image        from '../../Common/Image/Image'
+import Modal        from '../../Common/Modal/Modal'
+import Quantity     from '../../Common/Quantity/Quantity'
+import Spinner      from '../../Common/Loaders/Spinner/Spinner'
 
 import './Draft.css'
 
@@ -26,12 +25,10 @@ function Draft({ draftId, deviceId }) {
   const [ draft, setDraft ] = useState(useSelector(state => selectDraft(state, draftId)))
   const [ beverage, setBeverage ] = useState(useSelector(state => selectBeverage(state, draft?.beverage)))
   const [ isLoading, setIsLoading ] = useState(!(draft && beverage))
-  const [ content, setContent ] = useState(<></>)
-  const isSmallScreen = useMediaQuery('sm')
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const handleOnClick = useCallback(async name => {
+  const handleOnClick = async name => {
     switch (name) {
       case 'change-quantity':
         setShowQuantityModal(true)
@@ -47,7 +44,7 @@ function Draft({ draftId, deviceId }) {
       default:
         throw new Error(`Invalid click event: ${name}`)
     }
-  }, [dispatch, navigate, deviceId, draftId, draft])
+  }
 
   const handleQuantityModalDismiss = data => {
     if (data) {
@@ -88,61 +85,29 @@ function Draft({ draftId, deviceId }) {
     return () => unsubscribe()
   }, [draftId, draft, dispatch])
 
-  useEffect(() => {
-    const displayElements = <>
-      <Image
-        imageURL={ beverage.imageURL }
-        alt='beverage label'
-        customClass='draft-beverage-label'
-      />
-      <div className='draft-content-a'>{ beverage.title || beverage.name }</div>
-      <div className={`draft-content-b ${isSmallScreen ? 'bullet-icon' : ''}`}>•</div>
-      <div className='draft-content-c'>{ draft.container.containerInfo.name }</div>
-      <div className={`draft-content-d ${isSmallScreen ? 'bullet-icon' : ''}`}>•</div>
-      <div className='draft-content-e'>{ Math.floor(draft.container.quantity * 100 / draft.container.containerInfo.capacity) }%</div>
-    </>
-
-    const buttonElements = <>
-      <Button
-        customClass='draft-button-a'
-        name='edit-draft'
-        text='Edit Draft'
-        onClick={ () => handleOnClick('edit-draft') }
-      />
-      <Button
-        customClass='draft-button-b'
-        name='change-quantity'
-        text='Change Quantity'
-        onClick={ () => handleOnClick('change-quantity') }
-      />
-      <Button
-        customClass='draft-button-c'
-        name='finish-draft'
-        text='Finish Draft'
-        onClick={ () => handleOnClick('finish-draft') }
-      />
-    </>
-    
-    if (isSmallScreen) {
-      setContent(
-        <>
-          <div className='draft-display-container'>
-            { displayElements }
-          </div>
-          <div className='draft-buttons-container'>
-            { buttonElements }
-          </div>
-        </>
-      )
-    } else {
-      setContent(
-        <>
-          { displayElements }
-          { buttonElements }
-        </>
-      )
+  const draftButtons = [
+    {
+      customClass: 'draft-edit-button',
+      isFlat: true,
+      name: 'edit-draft',
+      text: 'Edit',
+      onClick: () => handleOnClick('edit-draft')
+    },
+    {
+      customClass: 'draft-change-quantity-button',
+      isFlat: true,
+      name: 'change-quantity',
+      text: 'Change Quantity',
+      onClick: () => handleOnClick('change-quantity')
+    },
+    {
+      customClass: 'draft-finish-button',
+      isFlat: true,
+      name: 'finish-draft',
+      text: 'Finish',
+      onClick: () => handleOnClick('finish-draft')
     }
-  }, [isSmallScreen, beverage, draft, handleOnClick])
+  ]
 
   return (
     <>
@@ -156,8 +121,22 @@ function Draft({ draftId, deviceId }) {
             data={ { quantity: draft.container.quantity } }
             dismiss={ handleQuantityModalDismiss }
           />
-          <div className='draft-container'>
-            { content }
+          <div className='draft-container grid'>
+            <Image
+              imageURL={ beverage.imageURL }
+              alt='beverage label'
+              customClass='draft-grid-image'
+            />
+            <DraftContent
+              customClass='draft-grid-content'
+              beverageDisplayName={ beverage.title || beverage.name }
+              containerDisplayName={ draft.container.containerInfo.name }
+              percentRemaining={ Math.floor(draft.container.quantity * 100 / draft.container.containerInfo.capacity) }
+            />
+            <ButtonGroup
+              buttons={ draftButtons }
+              customClass='draft-grid-buttons'
+            />
           </div>
         </>
       }
