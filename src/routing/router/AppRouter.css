@@ -109,13 +109,15 @@
 /* Media Queries */
 
 @media screen and (min-width: 600px) {
-  .route {
-    min-height: calc(100vh - var(--header-height) - var(--footer-height));
-    max-width: calc(100vw - var(--medium-screen-margin));
-  }
-
+  .route,
   .router {
     min-height: calc(100vh - var(--header-height) - var(--footer-height));
+  }
+}
+
+@media screen and (min-width: 600px) and (max-width: 899px) {
+  .route {
+    max-width: calc(100vw - var(--medium-screen-margin));
   }
 
   .left-enter-active,
@@ -127,6 +129,12 @@
     top: var(--header-height);
     left: calc(var(--medium-screen-margin) / 2);
     right: calc(var(--medium-screen-margin) / 2);
+  }
+}
+
+@media screen and (min-width: 900px) {
+  .route {
+    max-width: calc(100vw - var(--large-screen-margin));
   }
 }
 
