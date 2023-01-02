@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
-import { useMediaQuery } from 'react-responsive'
 import { useSelector } from 'react-redux'
+
+import { useMediaQuery } from '../../shared/hooks/media-query-hook'
 
 import { selectIsLoggedIn } from '../../services/user/store/user.selector'
 
@@ -17,7 +18,7 @@ function Navbar() {
   const links = ['Drafts', 'Devices', 'Beverages', 'User'].map(pageName => {
     return <Nav name={ pageName } key={ pageName } />
   })
-  const isSmallScreen = useMediaQuery({ query: '(max-width: 600px)' })
+  const isExtraSmallScreen = useMediaQuery('xs')
   const location = useLocation()
   
   useEffect(() => {
@@ -32,7 +33,7 @@ function Navbar() {
         customClass='home-link'
       />
       {
-        isSmallScreen
+        isExtraSmallScreen
         ? (
           <BurgerMenu
             menuItems={ links }

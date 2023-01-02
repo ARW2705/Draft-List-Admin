@@ -9,8 +9,8 @@
 }
 
 .nav-link.home-link {
-  padding: 0 1% 0 0;
   font-size: 2rem;
+  border-bottom: none !important;
 }
 
 .other-links a.active,
@@ -28,7 +28,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0 10px;
 }
 
 .navbar a,
@@ -50,18 +49,9 @@
   height: 100%;
 }
 
-@media screen and (max-width: 600px) {
-  .nav-link.home-link {
-    border-bottom: none !important;
-  }
 
-  .navbar a:hover {
-    color: var(--text-dark);
-    background-color: var(--primary-light);
-    border-bottom: 5px solid var(--primary-light);
-  }
-
-  .navbar a.active:hover {
-    color: var(--text-dark);
+@media screen and (min-width: 600px) {
+  .navbar a {
+    padding: 0 5px;
   }
 }
