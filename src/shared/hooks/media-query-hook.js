@@ -8,7 +8,9 @@ function useMediaQuery(screenSize) {
 
   useEffect(() => {
     const { min, max } = screenBreakPoints[screenSize]
-    const query = `(min-width: ${min}px) and (max-width: ${max}px)`
+    const minQuery = `${min ? `(min-width: ${min}px)` : ''}`
+    const maxQuery = `${max ? `(max-width: ${max}px)` : ''}`
+    const query = `${minQuery} ${minQuery && maxQuery ? 'and' : ''} ${maxQuery}`
     const media = window.matchMedia(query)
     if (media.matches !== match) {
       setMatch(media.matches)
