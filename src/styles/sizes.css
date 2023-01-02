@@ -5,7 +5,11 @@
 
   --small-screen-margin: 5%;
   --medium-screen-margin: 20%;
+  --large-screen-margin: 5%;
   
-  --medium-screen-font-size: 3vw;
-  --small-screen-font-size: 4vw;
+  --extra-small-font-size: 1.5vw;
+  --small-font-size: 2vw;
+  --medium-font-size: 3vw;
+  --large-font-size: 4vw;
+  --extra-large-font-size: 5vw;
 }
