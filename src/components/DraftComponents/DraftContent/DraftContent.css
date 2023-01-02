@@ -1,0 +1,7 @@
+.draft-content-container.draft-grid-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 98%;
+  margin: auto 1%;
+}
