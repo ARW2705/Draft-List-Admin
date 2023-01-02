@@ -1,12 +1,14 @@
 .draft-group-container {
   width: 100%;
-  margin: 10px auto;
+  height: 100%;
+  margin: 10px 0;
   border: 2px solid var(--gray-dark);
   border-radius: 15px;
   overflow: hidden;
 }
 
 .draft-group {
+  background-color: var(--gray-light);
   padding: 1%;
 }
 
@@ -20,7 +22,7 @@
 .draft-device-name {
   margin: 0;
   padding: 1%;
-  font-size: 5vw;
+  font-size: var(--extra-large-font-size);
   text-align: center;
   background-color: var(--gray-dark);
   color: var(--light);
@@ -29,6 +31,32 @@
 
 @media screen and (min-width: 600px) {
   .draft-device-name {
-    font-size: 3.5vw;
+    font-size: var(--large-font-size);
+  }
+}
+
+@media screen and (min-width: 900px) {
+  .draft-device-name {
+    font-size: var(--medium-font-size);
+  }
+
+  .draft-group {
+    padding: 2%;
+  }
+}
+
+@media screen and (min-width: 900px) and (max-width: 1199px) {
+  .draft-group-container {
+    width: 45%;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .draft-device-name {
+    font-size: var(--small-font-size);
+  }
+
+  .draft-group-container {
+    width: 30%;
   }
 }

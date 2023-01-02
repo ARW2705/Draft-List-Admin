@@ -2,4 +2,15 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  width: 100%;
+}
+
+
+@media screen and (min-width: 900px) {
+  .draft-list-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: flex-start;
+  }
 }
