@@ -1,6 +1,8 @@
 @import 'normalize.css';
 @import './animations/animations.css';
+@import './borders.css';
 @import './colors.css';
+@import './grid.css';
 @import './sizes.css';
 
 body {
