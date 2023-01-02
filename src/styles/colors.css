@@ -12,13 +12,14 @@
   --tertiary-dark: #00b185;
 
   --gray: #727e87;
-  --gray-light: #cbd6de;
+  --gray-light: #d9c9dd;
   --gray-dark: #282f34;
 
   --light: #eee;
   --dark: #111;
   
-  --error: #fa1f0f;
+  --warning: #ffcc00;
+  --danger: #fa1f0f;
 
   --background: var(--light);
   --text-light: var(--gray-light);
