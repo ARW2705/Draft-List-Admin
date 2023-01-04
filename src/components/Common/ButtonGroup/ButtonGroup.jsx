@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 
 import Button  from '../Button/Button'
 import Divider from '../Divider/Divider'
@@ -6,19 +6,23 @@ import Divider from '../Divider/Divider'
 import './ButtonGroup.css'
 
 
-function ButtonGroup({ buttons, customClass = '' }) {
+function ButtonGroup({ buttons, direction = 'horizontal', dividerColor = 'primary', customClass = '' }) {
   if (!buttons || !buttons.length) return <></>
 
+  const isHorizontal = direction === 'horizontal'
+
   return (
-    <div className={`draft-buttons-container ${customClass}`}>
+    <div className={`buttons-container button-direction-${direction} ${customClass}`}>
       {
         buttons.map((buttonProps, index) => {
-          const button = <Button key={ index } { ...buttonProps } />
-          if (index === 0) return button
-          return <>
-            <Divider color='light' direction='vertical' />
-            { button }
-          </>
+          if (index === 0) return <Button key={ index } { ...buttonProps } />
+          
+          return (
+            <Fragment key={ index }>
+              <Divider color={ dividerColor } direction={ isHorizontal ? 'vertical' : 'horizontal'} />
+              <Button { ...buttonProps } />
+            </Fragment>
+          )
         })
       }
     </div>

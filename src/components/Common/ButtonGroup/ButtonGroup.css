@@ -1,6 +1,11 @@
-.draft-buttons-container {
+.buttons-container {
   display: flex;
+}
+
+.button-direction-horizontal {
   flex-direction: row;
-  justify-content: space-between;
-  width: 100%;
+}
+
+.button-direction-vertical {
+  flex-direction: column;
 }
