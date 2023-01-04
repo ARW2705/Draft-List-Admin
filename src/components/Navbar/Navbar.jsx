@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
-import { useMediaQuery } from '../../shared/hooks/media-query-hook'
+import { useMediaQuery } from '../../shared/hooks/media-query/media-query-hook'
 
 import { selectIsLoggedIn } from '../../services/user/store/user.selector'
 
