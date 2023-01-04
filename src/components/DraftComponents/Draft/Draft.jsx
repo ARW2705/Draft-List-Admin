@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
+import { useNavigate }                from 'react-router-dom'
+import { useSelector, useDispatch }   from 'react-redux'
 
 import store from '../../../app/store'
 
-import { selectDraft } from '../../../services/draft/store/draft.selector'
-import { remove as removeDraft } from '../../../services/draft/store/draft.slice'
+import { selectBeverage }          from '../../../services/beverage/store/beverage.selector'
+import { archiveDraft }            from '../../../services/device/store/device.thunk'
+import { selectDraft }             from '../../../services/draft/store/draft.selector'
+import { remove as removeDraft }   from '../../../services/draft/store/draft.slice'
 import { updateDraft, getFromAPI } from '../../../services/draft/store/draft.thunk'
-import { selectBeverage } from '../../../services/beverage/store/beverage.selector'
-import { archiveDraft } from '../../../services/device/store/device.thunk'
 
 import DraftContent from '../DraftContent/DraftContent'
 import ButtonGroup  from '../../Common/ButtonGroup/ButtonGroup'
@@ -136,6 +136,7 @@ function Draft({ draftId, deviceId }) {
             <ButtonGroup
               buttons={ draftButtons }
               customClass='draft-grid-buttons'
+              dividerColor='primary-light'
             />
           </div>
         </>
