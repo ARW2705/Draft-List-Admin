@@ -38,7 +38,18 @@ function FormList(props) {
             <li key={ index } className='form-list-item'>
               <Button
                 content={<>
-                  { displayKeys.map(key => (<span key={ key }>{ toTitleCase(item[key]) }</span>)) }
+                  {
+                    displayKeys.map((key, index) => {
+                      let content = <span key={ key }>{ toTitleCase(item[key]) }</span>
+                      if (index !== displayKeys.length - 1) {
+                        content = <>
+                          { content }
+                          <span className='display-separator'>•</span>
+                        </>
+                      }
+                      return content
+                    })
+                  }
                 </>}
                 onClick ={ () => handleClick(index) }
                 customClass={`list-button ${selectedIndex === index ? 'active' : ''}`}
