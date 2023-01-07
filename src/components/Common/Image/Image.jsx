@@ -20,7 +20,6 @@ function Image({ imageURL, alt, customClass }) {
     if (imageURL) {
       async function getAsyncImage() {
         setImageAlt(alt || imageURL)
-        // setbase64Image(await getImage(imageURL))
         if (image) {
           setbase64Image(image)
         } else {
