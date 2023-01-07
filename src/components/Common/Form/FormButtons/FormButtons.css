@@ -1,9 +1,11 @@
 .form-button-container {
+  --medium-font-size-internal: var(--medium-font-size, 1.5rem);
+
   display: flex;
   justify-content: space-around;
 }
 
 .form-button {
-  font-size: 1.5rem;
+  font-size: var(--medium-font-size-internal);
   margin: 15px 0;
 }
