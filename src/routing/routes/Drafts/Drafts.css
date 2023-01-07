@@ -9,12 +9,4 @@
 .new-draft-button {
   margin: 10px auto;
   padding: 0 10px;
-  font-size: var(--small-screen-font-size);
-}
-
-
-@media screen and (min-width: 600px) {
-  .new-draft-button {
-    font-size: var(--medium-screen-font-size);
-  }
 }
