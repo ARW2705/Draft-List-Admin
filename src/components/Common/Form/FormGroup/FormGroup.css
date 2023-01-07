@@ -7,7 +7,26 @@
 
 .form-title {
   text-align: center;
-  color: var(--primary);
+  color: var(--gray-dark);
   font-size: 2rem;
   margin: 2% 0;
+}
+
+
+@media screen and (min-width: 900px) {
+  .form-group {
+    margin: 0 auto;
+  }
+}
+
+@media screen and (min-width: 900px) and (max-width: 1199px) {
+  .form-group {
+    width: 75%;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .form-group {
+    width: 50%;
+  }
 }
