@@ -1,7 +1,11 @@
-.draft-content-container.draft-grid-content {
+.draft-content-container {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
   height: 98%;
   margin: auto 1%;
+}
+
+.draft-content-container span:nth-child(2) {
+  margin: 5px 0;
 }
