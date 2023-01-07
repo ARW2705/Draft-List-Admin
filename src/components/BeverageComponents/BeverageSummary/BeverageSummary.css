@@ -1,4 +1,8 @@
 .beverage-summary {
+  --extra-small-font-size-internal: var(--extra-small-font-size, 0.75rem);
+  --small-font-size-internal: var(--small-font-size, 1rem);
+  --medium-font-size-internal: var(--medium-font-size, 1.5rem);
+
   width: 67%;
   background-color: var(--gray-light);
   border-radius: 50px 15px 15px 0;
@@ -13,7 +17,8 @@
 .number-values {
   display: flex;
   justify-content: space-around;
-  font-size: var(--small-screen-font-size);
+  text-align: center;
+  font-size: calc(var(--small-font-size-internal) * 1.2);
 }
 
 .beverage-summary
@@ -27,36 +32,28 @@ p {
   min-height: 2vh;
   flex-grow: 1;
   padding: 0 5%;
-  font-size: 1rem;
+  font-size: var(--small-font-size-internal);
 }
 
-.beverage-button-container {
-  display: flex;
-  justify-content: space-between;
+.beverage-archive-button,
+.beverage-edit-button {
+  flex-grow: 1;
+  width: 50%;
+  font-size: var(--small-font-size-internal);
 }
 
 .beverage-archive-button {
   border-radius: 0;
-  flex-grow: 1;
 }
 
 .beverage-edit-button {
   border-radius: 0 0 10px 0;
-  flex-grow: 1;
-  font-size: var(--small-screen-font-size);
 }
 
 
-@media screen and (min-width: 600px) {
+@media screen and (min-width: 900px) and (max-width: 1799px) {
   .beverage-summary
-  .number-values {
-    display: flex;
-    justify-content: space-around;
-    font-size: var(--medium-screen-font-size);
-  }
-
-  .beverage-archive-button,
-  .beverage-edit-button {
-    font-size: var(--medium-screen-font-size);
+  .number-values span {
+    margin: 0 5px;
   }
 }
