@@ -1,23 +1,29 @@
 .form-input-container {
+  --border-radius-size-internal: var(--border-radius-size, 15px);
+  --inner-border-radius-size-internal: var(--inner-border-radius-size, 10px);
+  --extra-small-font-size-internal: var(--extra-small-font-size, 0.75rem);
+  --small-font-size-internal: var(--small-font-size, 1rem);
+  --medium-font-size-internal: var(--medium-font-size, 0.75rem);
+  --top-offset: 15px;
+  --placeholder-animation-speed: 300ms;
+
   display: flex;
   flex-direction: column;
   position: relative;
 }
 
 .form-input {
-  margin: 15px 0;
+  margin: var(--top-offset) 0;
 }
 
 .placeholder-default {
   position: absolute;
-  top: 15px;
+  top: var(--top-offset);
   left: 10px;
   opacity: 0.7;
-  font-size: 1rem;
+  font-size: var(--small-font-size-internal);
   line-height: calc(48px - 1.5rem);
-  -webkit-transition: all 0.3s;
-  -moz-transition: all 0.3s;
-  transition: all 0.3s;
+  transition: all var(--placeholder-animation-speed);
 }
 
 .placeholder-aside {
@@ -25,10 +31,8 @@
   top: -20px;
   left: 0;
   opacity: 1;
-  font-size: 0.9rem;
-  -webkit-transition: all 0.3s;
-  -moz-transition: all 0.3s;
-  transition: all 0.3s;
+  font-size: var(--extra-small-font-size-internal);
+  transition: all var(--placeholder-animation-speed);
 }
 
 input[type=text],
@@ -38,10 +42,10 @@ input[type=number] {
   padding: 0.75rem;
   margin: 15px 0;
   border: 2px solid var(--gray);
-  border-radius: 10px;
+  border-radius: var(--inner-border-radius-size-internal);
   box-shadow: 0 3px 5px var(--primary-light);
   background-image: none;
-  font-size: 1rem;
+  font-size: var(--small-font-size-internal);
   min-height: calc(48px - 1.5rem);
 }
 
