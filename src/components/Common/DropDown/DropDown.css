@@ -1,35 +1,46 @@
 .drop-down-container {
+  --border-radius-size-internal: var(--border-radius-size, 15px);
+  --small-font-size-internal: var(--small-font-size, 1rem);
+  --medium-font-size-internal: var(--medium-font-size, 1.5rem);
+  --large-font-size-internal: var(--large-font-size, 2rem);
+  --border-width: 2px;
+
   display: flex;
+  justify-content: center;
   position: relative;
+  border: var(--border-width) solid var(--gray);
+  border-radius: var(--border-radius-size-internal);
+  background-color: white;
 }
 
-.drop-down-container > h3 {
-  font-size: 1rem;
+.drop-down-container h3 {
+  font-size: var(--medium-font-size-internal);
+  margin: 1%;
 }
 
-.drop-down-container > ul {
+.drop-down-container ul {
   width: 100%;
   padding: 0;
-  margin: -2px 0 0 -2px;
-  border: 2px solid var(--gray);
-  border-radius: 5px;
+  margin: 0;
+  border: var(--border-width) solid var(--primary);
+  border-radius: 15px;
   background-color: var(--background);
   position: absolute;
-  top: 0;
-  left: 0;
+  top: calc(var(--border-width) * -1);
+  overflow: hidden;
   z-index: 100;
 }
 
-.drop-down-container > ul > li {
+.drop-down-container ul li {
   list-style: none;
 }
 
-.drop-down-container > ul > li:hover .drop-down {
+.drop-down-container ul li:hover .drop-down {
   background-color: var(--primary-light);
   color: var(--background);
 }
 
-.drop-down-container > ul > li:not(:last-child) {
+.drop-down-container ul li:not(:last-child) {
   border-bottom: 1px solid rgba(0, 0, 0, 0.25);
 }
 
@@ -41,5 +52,5 @@
   border: none;
   border-radius: 0;
   box-shadow: none;
-  font-size: 1rem;
+  font-size: var(--small-font-size-internal);
 }
