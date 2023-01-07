@@ -5,3 +5,28 @@
   background-color: var(--gray-dark);
   min-height: 30vw;
 }
+
+
+@media screen and (min-width: 600px) {
+  .beverage {
+    margin: 2% 0;
+  }
+}
+
+@media screen and (min-width: 900px) {
+  .beverage {
+    min-height: 20vw;
+  }
+}
+
+@media screen and (min-width: 900px) and (max-width: 1799px) {
+  .beverage {
+    width: 45%;
+  }
+}
+
+@media screen and (min-width: 1800px) {
+  .beverage {
+    width: 30%;
+  }
+}
