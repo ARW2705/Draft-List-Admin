@@ -1,5 +1,6 @@
 .button {
   --text-font-size: var(--large-font-size, 4vw);
+  --small-font-size-internal: var(--small-font-size, 1rem);
 
   display: flex;
   justify-content: center;
@@ -12,7 +13,7 @@
   color: var(--gray-light);
   background-color: var(--primary);
   transition: all linear 10ms;
-  font-size: var(--text-font-size);
+  font-size: var(--small-font-size-internal);
 }
 
 .button:disabled,
@@ -48,23 +49,4 @@
 .flat-button:enabled:active {
   transform: none !important;
   box-shadow: none !important;
-}
-
-
-@media screen and (min-width: 600px) and (max-width: 899px) {
-  .button {
-    --text-font-size: var(--medium-font-size, 3vw);
-  }
-}
-
-@media screen and (min-width: 900px) and (max-width: 1199px) {
-  .button {
-    --text-font-size: var(--small-font-size, 2vw);
-  }
-}
-
-@media screen and (min-width: 1200px) {
-  .button {
-    --text-font-size: var(--extra-small-font-size, 1.5vw);
-  }
 }

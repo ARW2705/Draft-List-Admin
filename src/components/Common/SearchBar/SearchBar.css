@@ -1,4 +1,6 @@
 .search-bar {
+  --medium-font-size-internal: var(--medium-font-size, 1.5rem);
+
   display: flex;
   flex-grow: 1;
 }
@@ -18,7 +20,7 @@
 .search-button {
   padding: 0 5%;
   margin: 15px 0;
-  font-size: 4vw;
+  font-size: var(--medium-font-size-internal);
 }
 
 .reset-button {
@@ -27,10 +29,6 @@
 
 
 @media screen and (min-width: 600px) {
-  .search-button {
-    font-size: 3vw;
-  }
-
   .search-input {
     margin-right: 10px;
   }

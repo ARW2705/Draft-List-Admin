@@ -1,12 +1,14 @@
 .login-signup-buttons-container {
+  --medium-font-size-internal: var(--medium-font-size, 1.5rem);
+
   display: flex;
   flex-direction: column;
   margin: 0 5%;
 }
 
-.login-signup-buttons-container > h2 {
+.login-signup-buttons-container h2 {
   text-align: center;
-  font-size: 1.75rem;
+  font-size: var(--medium-font-size-internal);
 }
 
 .login-signup-buttons {

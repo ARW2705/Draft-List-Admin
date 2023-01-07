@@ -1,17 +1,14 @@
 .locale {
+  --small-font-size-internal: var(--small-font-size, 1rem);
+  --medium-font-size-internal: var(--medium-font-size, 1.5rem);
+
   min-height: 3vw;
-  font-size: var(--medium-font-size);
+  font-size: var(--small-font-size-internal);
 }
 
-
-@media screen and (min-width: 900px) and (max-width: 1199px) {
-  .locale {
-    font-size: var(--small-font-size);
-  }
-}
 
 @media screen and (min-width: 1200px) {
   .locale {
-    font-size: var(--small-font-size);
+    font-size: var(--medium-font-size);
   }
 }

@@ -1,4 +1,7 @@
 .draft-group-container {
+  --medium-font-size-internal: var(--medium-font-size, 1rem);
+  --large-font-size-internal: var(--large-font-size, 2rem);
+
   width: 100%;
   height: 100%;
   margin: 10px 0;
@@ -22,22 +25,16 @@
 .draft-device-name {
   margin: 0;
   padding: 1%;
-  font-size: var(--extra-large-font-size);
+  font-size: var(--large-font-size-internal);
   text-align: center;
   background-color: var(--gray-dark);
   color: var(--light);
 }
 
 
-@media screen and (min-width: 600px) {
-  .draft-device-name {
-    font-size: var(--large-font-size);
-  }
-}
-
 @media screen and (min-width: 900px) {
   .draft-device-name {
-    font-size: var(--medium-font-size);
+    font-size: var(--medium-font-size-internal);
   }
 
   .draft-group {
@@ -52,10 +49,6 @@
 }
 
 @media screen and (min-width: 1200px) {
-  .draft-device-name {
-    font-size: var(--small-font-size);
-  }
-
   .draft-group-container {
     width: 30%;
   }

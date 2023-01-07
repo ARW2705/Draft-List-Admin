@@ -1,15 +1,17 @@
 .navbar {
-  height: 100%;
+  --medium-font-size-internal: var(--medium-font-size, 1.5rem);
+  --large-font-size-internal: var(--large-font-size, 2rem);
+
   width: 100%;
-  position: relative;
+  height: 100%;
   display: flex;
   justify-content: space-between;
-  font-size: 1.5rem;
+  font-size: var(--medium-font-size-internal);
   padding: 0 10px;
 }
 
 .nav-link.home-link {
-  font-size: 2rem;
+  font-size: var(--large-font-size-internal);
   border-bottom: none !important;
 }
 
