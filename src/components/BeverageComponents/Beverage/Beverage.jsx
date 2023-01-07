@@ -15,7 +15,7 @@ import './Beverage.css'
 
 function Beverage({ beverageId, showArchived }) {
   const beverage = useSelector(state => selectBeverage(state, beverageId))
-  const { name, style, source, abv, ibu, srm, description, isArchived } = beverage
+  const { name, style, source, abv, ibu, srm, description, imageURL, isArchived } = beverage
   const [ showConfirmationModal, setShowConfirmationModal ] = useState(false)
   const [ showBeverage, setShowBeverage ] = useState()
 
@@ -57,6 +57,7 @@ function Beverage({ beverageId, showArchived }) {
             name={ name }
             style={ style }
             source={ source }
+            imageURL={ imageURL }
           />
           <BeverageSummary
             abv={ abv }
