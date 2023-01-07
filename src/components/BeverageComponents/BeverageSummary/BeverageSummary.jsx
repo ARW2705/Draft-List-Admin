@@ -1,12 +1,30 @@
 import React from 'react'
 
-import Button from '../../Common/Button/Button'
-import Divider from '../../Common/Divider/Divider'
+import ButtonGroup from '../../Common/ButtonGroup/ButtonGroup'
 
 import './BeverageSummary.css'
 
 
 function BeverageSummary({ abv, ibu, srm, description, customClass, onClick: handleOnClick }) {
+  const buttons = [
+    {
+      ariaLabel: 'archive beverage',
+      customClass: 'beverage-archive-button',
+      isFlat: true,
+      name: 'archive-beverage',
+      text: 'Archive Beverage',
+      onClick: () => handleOnClick('archive')
+    },
+    {
+      ariaLabel: 'edit beverage',
+      customClass: 'beverage-edit-button',
+      isFlat: true,
+      name: 'edit-beverage',
+      text: 'Edit Beverage',
+      onClick: () => handleOnClick('edit')
+    }
+  ]
+
   return (
     <div className={ `beverage-summary ${ customClass ?? '' }` }>
       <div className='number-values'>
@@ -21,26 +39,11 @@ function BeverageSummary({ abv, ibu, srm, description, customClass, onClick: han
         </span>
       </div>
       <p>{ description }</p>
-      <div className='beverage-button-container'>
-        <Button
-          text='Archive Beverage'
-          customClass='beverage-archive-button'
-          ariaLabel='archive beverage'
-          onClick={ () => handleOnClick('archive') }
-          isFlat={ true }
-        />
-        <Divider
-          color='secondary'
-          direction='vertical'
-        />
-        <Button
-          text='Edit Beverage'
-          customClass='beverage-edit-button'
-          ariaLabel='edit beverage'
-          onClick={ () => handleOnClick('edit') }
-          isFlat={ true }
-        />
-      </div>
+      <ButtonGroup
+        buttons={ buttons }
+        customClass='beverage-button-container'
+        dividerColor='primary-light'
+      />
     </div>
   )
 }
