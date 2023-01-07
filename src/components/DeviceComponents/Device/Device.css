@@ -1,12 +1,14 @@
 .device {
   --large-image-size: 20vw;
-  --medium-image-size: 15vw;
   --small-image-size: 10vw;
-  --outer-border-size: 2px;
+  --outer-border-width: 2px;
   --border-radius-size-internal: var(--border-radius-size, 15px);
+  --small-font-size-internal: var(--small-font-size, 1rem);
+  --medium-font-size-internal: var(--medium-font-size, 1.5rem);
+  --large-font-size-internal: var(--large-font-size, 2rem);
 
   display: flex;
-  margin: 2.5% 0;
+  margin: 2% 0;
   border-radius: var(--border-radius-size-internal);
   background-color: var(--light);
 }
@@ -15,18 +17,19 @@
   width: var(--large-image-size);
   aspect-ratio: 1;
   border-radius: var(--border-radius-size-internal) 0 0 var(--border-radius-size-internal);
-  border: var(--outer-border-size) solid var(--primary-light);
+  border: var(--outer-border-width) solid var(--primary-light);
   border-right: none;
 }
 
 .device-identifier {
-  --padding-size: 1%;
-
-  padding: var(--padding-size);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   flex-grow: 1;
-  font-size: var(--large-font-size);
-  border-top: var(--outer-border-size) solid var(--primary-light);
-  border-bottom: var(--outer-border-size) solid var(--primary-light);
+  font-size: var(--medium-font-size-internal);
+  border-top: var(--outer-border-width) solid var(--primary-light);
+  border-bottom: var(--outer-border-width) solid var(--primary-light);
 }
 
 .device-buttons {
@@ -36,7 +39,7 @@
 .device-edit-button,
 .draft-count-button {
   height: 50%;
-  font-size: var(--medium-font-size);
+  font-size: var(--small-font-size-internal);
 }
 
 .device-edit-button {
@@ -52,30 +55,32 @@
   .device {
     flex-direction: row;
     flex-wrap: wrap;
+    margin: 1% 0;
   }
 
   .device-image {
     border-bottom: none;
     border-bottom-left-radius: 0;
+    width: var(--small-image-size);
   }
 
   .device-identifier {
     border-bottom: none;
-    border-right: var(--outer-border-size) solid var(--primary-light);
+    border-right: var(--outer-border-width) solid var(--primary-light);
     border-radius: 0 var(--border-radius-size) 0 0;
   }
 
   .device-buttons {
     width: 100%;
   }
-
-  .device-edit-button {
-    border-radius: 0 0 0 var(--border-radius-size);
-  }
-
+  
   .device-edit-button,
   .draft-count-button {
     width: 50%;
+  }
+
+  .device-edit-button {
+    border-radius: 0 0 0 var(--border-radius-size);
   }
 }
 
@@ -83,38 +88,16 @@
   .device {
     width: 45%;
   }
+}
 
-  .device-image {
-    width: var(--medium-image-size);
-  }
-
+@media screen and (min-width: 1200px) {
   .device-identifier {
-    width: calc(calc(100% - var(--medium-image-size) - calc(var(--padding-size) * 2)) - calc(var(--outer-border-size) * 2));
-    font-size: var(--medium-font-size);
-  }
-
-  .device-edit-button,
-  .draft-count-button {
-    font-size: var(--small-font-size);
+    font-size: var(--large-font-size-internal);
   }
 }
 
 @media screen and (min-width: 1800px) {
   .device {
     width: 30%;
-  }
-
-  .device-image {
-    width: var(--small-image-size);
-  }
-
-  .device-identifier {
-    width: calc(calc(100% - var(--small-image-size) - calc(var(--padding-size) * 2)) - calc(var(--outer-border-size) * 2));
-    font-size: var(--small-font-size);
-  }
-
-  .device-edit-button,
-  .draft-count-button {
-    font-size: var(--extra-small-font-size);
   }
 }
