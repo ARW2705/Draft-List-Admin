@@ -1,25 +1,31 @@
 .form-list-container {
-  padding: 2%;
+  --inner-border-radius-size-internal: var(--inner-border-radius-size, 10px);
+  --border-radius-size-internal: var(--border-radius-size, 15px);
+  --small-font-size-internal: var(--small-font-size, 1rem);
+  --container-padding: 2%;
+
+  padding: var(--container-padding);
   border: 2px solid var(--gray);
-  border-radius: 15px;
+  border-radius: var(--border-radius-size-internal);
   background-color: white;
   margin-bottom: 20px;
 }
 
-.form-list-container > h3 {
+.form-list-container h3 {
   font-weight: normal;
   text-align: center;
   color: var(--gray-dark);
-  font-size: 1.25rem;
+  font-size: calc(var(--small-font-size-internal) * 1.25);
   font-weight: bold;
-  margin: 0;
+  margin: 0 0 var(--container-padding);
 }
 
 .form-list {
   list-style: none;
   padding: 0;
-  border: 2px solid var(--gray-light);
-  border-radius: 5px;
+  margin: 0;
+  border: 3px solid var(--gray-light);
+  border-radius: var(--inner-border-radius-size-internal);
   overflow: hidden;
 }
 
@@ -29,12 +35,12 @@
 
 .list-button {
   width: 100%;
-  font-size: 1.1rem;
+  font-size: var(--small-font-size-internal);
   border: 0;
   border-radius: 0;
   color: var(--primary-dark);
   margin: 0;
-  padding: 5px 0;
+  padding: 5px;
   background-color: var(--light);
 }
 
@@ -44,6 +50,6 @@
   background-color: var(--primary);
 }
 
-.list-button > span:not(:last-child)::after {
-  content: ' • ';
+.display-separator {
+  margin: 0 0.5%;
 }
