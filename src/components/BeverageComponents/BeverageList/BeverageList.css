@@ -1,5 +1,6 @@
 .beverage-list {
-  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .beverage-list
@@ -11,4 +12,13 @@
 
 .transparent-background {
   background: transparent;
+}
+
+
+@media screen and (min-width: 900px) {
+  .beverage-list {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
 }
