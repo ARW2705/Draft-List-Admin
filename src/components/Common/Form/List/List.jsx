@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { Fragment, useCallback, useEffect, useState } from 'react'
 
 import Spinner    from '../../Loaders/Spinner/Spinner'
 import Button     from '../../Button/Button'
@@ -37,20 +37,22 @@ function FormList(props) {
           list.map((item, index) => (
             <li key={ index } className='form-list-item'>
               <Button
-                content={<>
+                content={ <>
                   {
                     displayKeys.map((key, index) => {
                       let content = <span key={ key }>{ toTitleCase(item[key]) }</span>
                       if (index !== displayKeys.length - 1) {
-                        content = <>
-                          { content }
-                          <span className='display-separator'>•</span>
-                        </>
+                        content = (
+                          <Fragment key={ key }>
+                            { content }
+                            <span className='display-separator'>•</span>
+                          </Fragment>
+                        )
                       }
                       return content
                     })
                   }
-                </>}
+                </> }
                 onClick ={ () => handleClick(index) }
                 customClass={`list-button ${selectedIndex === index ? 'active' : ''}`}
                 name={`select ${name} button`}
