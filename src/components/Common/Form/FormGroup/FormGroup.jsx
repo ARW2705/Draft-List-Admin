@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 
-import buildFormElements from './build-form-elements'
-import buildFormGroup    from './build-form-group'
-import FormError         from '../FormError/FormError'
-import FormButtons       from '../FormButtons/FormButtons'
+import { buildFormComponents } from '../utilities/build-form-components'
+import controlFormGroup        from '../utilities/control-form-group'
+import FormError               from '../FormError/FormError'
+import FormButtons             from '../FormButtons/FormButtons'
 
 import { validateForm } from '../../../../shared/validators/validators'
 
@@ -50,7 +50,7 @@ function FormGroup(props) {
     }
   }
 
-  const formComponents = buildFormElements(formFields, handleOnChange)
+  const formComponents = buildFormComponents(formFields, handleOnChange)
 
   return (
     <>
@@ -75,4 +75,5 @@ function FormGroup(props) {
   )
 }
 
-export default buildFormGroup(FormGroup)
+
+export default controlFormGroup(FormGroup)
