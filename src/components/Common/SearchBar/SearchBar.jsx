@@ -58,7 +58,7 @@ function SearchBar({ label, handleOnSubmit, customClass }) {
         showResetButton
         && (
           <Button
-            text='reset'
+            text='Reset'
             isIcon={ true }
             isDisabled={ false }
             customClass='reset-button'
