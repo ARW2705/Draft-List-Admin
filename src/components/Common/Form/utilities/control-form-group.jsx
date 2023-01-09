@@ -1,8 +1,15 @@
 import React, { Component } from 'react'
 
 
-function buildForm(FormGroupComponent) {
-  class Form extends Component {
+/**
+ * Wrapper component for a Form Group to allow changes and validation
+ * between and/or in conjunction with multiple form fields
+ * 
+ * @param: FormGroupComponent - form group component to extend
+ * @return: FormGroup that allows form level changes and validation
+ */
+function controlFormGroup(FormGroupComponent) {
+  class ControlledFormGroup extends Component {
     constructor(props) {
       super(props)
       this.state = {
@@ -70,7 +77,7 @@ function buildForm(FormGroupComponent) {
     }
   }
 
-  return Form
+  return ControlledFormGroup
 }
 
-export default buildForm
+export default controlFormGroup
