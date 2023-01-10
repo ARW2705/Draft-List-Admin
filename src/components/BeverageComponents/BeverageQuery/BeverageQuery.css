@@ -1,12 +1,15 @@
 .beverage-query {
+  --small-font-size-internal: var(--small-font-size, 1rem);
+
   width: 100%;
 }
 
 .beverage-query
 .search-container {
   display: flex;
-  padding: 0 0.5rem;
-  margin-top: 1%;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 2%;
 }
 
 .beverage-query
@@ -15,7 +18,7 @@
   background-color: var(--primary);
   border: 2px solid var(--gray);
   align-items: center;
-  min-height: 48px;
+  font-size: var(--small-font-size--internal);
 }
 
 .beverage-query
@@ -25,13 +28,16 @@
   border: 2px solid var(--gray);
   border-radius: 10px;
   padding: 0 1%;
-  margin-right: 0.5rem;
+  margin-right: 10px;
   white-space: nowrap;
-  align-self: center;
-  min-height: 48px;
+}
+
+.beverage-query
+.beverage-search-bar {
+  margin: 0;
 }
 
 .beverage-query
 .search-bar-error {
-  min-width: 100%;
+  text-align: center;
 }

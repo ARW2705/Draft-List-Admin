@@ -68,19 +68,19 @@ function BeverageQuery({ onConfigUpdate }) {
         <SearchBar
           handleOnSubmit={ handleSearchOnSubmit }
           label={ searchLabel }
-          customClass='shrink-to-dropdown'
+          customClass='beverage-search-bar'
         />
-        {
-          searchError
-          && (
-            <FormError
-              customClass='search-bar-error'
-              name='search'
-              errors={ searchError }
-            />
-          )
-        }
       </div>
+      {
+        searchError
+        && (
+          <FormError
+            customClass='search-bar-error'
+            name='search'
+            errors={ searchError }
+          />
+        )
+      }
     </div>
   )
 }

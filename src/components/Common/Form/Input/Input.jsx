@@ -54,14 +54,17 @@ function FormInput(props) {
 
   useEffect(() => {
     if (touchStatus.touched) {
-      setErrorState(prevProps => ({ ...prevProps, show: true }))
+      setErrorState(prevProps => ({ ...prevProps, show: !!Object.keys(prevProps.errors).length }))
     }
   }, [touchStatus])
 
   const checkValidity = (name, rawValue) => {
     const value = attrs.type === 'number' ? parseFloat(rawValue) : rawValue
     const errors = validate(value, validators)
-    setErrorState(() => ({ errors, show: touchStatus.touched }))
+    setErrorState(() => ({
+      errors,
+      show: touchStatus.touched && !!Object.keys(errors).length
+    }))
     attrs.handleOnChange(name, value, errors)
   }
 

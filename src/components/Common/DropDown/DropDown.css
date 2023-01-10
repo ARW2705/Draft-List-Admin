@@ -1,10 +1,12 @@
 .drop-down-container {
+  --inner-border-radius-size-internal: var(--inner-border-radius-size, 10px);
   --border-radius-size-internal: var(--border-radius-size, 15px);
   --small-font-size-internal: var(--small-font-size, 1rem);
   --medium-font-size-internal: var(--medium-font-size, 1.5rem);
   --large-font-size-internal: var(--large-font-size, 2rem);
   --border-width: 2px;
 
+  min-height: 48px;
   display: flex;
   justify-content: center;
   position: relative;
@@ -13,8 +15,12 @@
   background-color: white;
 }
 
+.drop-down-container {
+  font-size: var(--small-font-size-internal);
+}
+
 .drop-down-container h3 {
-  font-size: var(--medium-font-size-internal);
+  align-self: center;
   margin: 1%;
 }
 
@@ -23,7 +29,7 @@
   padding: 0;
   margin: 0;
   border: var(--border-width) solid var(--primary);
-  border-radius: 15px;
+  border-radius: var(--inner-border-radius-size-internal);
   background-color: var(--background);
   position: absolute;
   top: calc(var(--border-width) * -1);

@@ -1,7 +1,10 @@
 .form-select-container {
+  --medium-font-size-internal: var(--medium-font-size, 1.5rem);
+  
   margin-bottom: 20px;
 }
 
 .form-select-dropdown {
   color: var(--primary);
+  font-size: var(--medium-font-size);
 }
