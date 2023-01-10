@@ -21,8 +21,9 @@ function SearchBar({ label, handleOnSubmit, customClass }) {
   }
 
   const handleKeyPress = event => {
-    event.stopPropagation()
     if (event.key.toLowerCase() === 'enter') {
+      event.preventDefault()
+      event.stopPropagation()
       setShowResetButton(true)
       handleOnSubmit(config.value)
     }
