@@ -10,7 +10,7 @@
   display: flex;
   margin: 2% 0;
   border-radius: var(--border-radius-size-internal);
-  background-color: var(--light);
+  background-color: var(--white);
 }
 
 .device-image {

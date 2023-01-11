@@ -7,7 +7,7 @@
 
   width: 100%;
   font-size: var(--medium-font-size);
-  background-color: var(--light);
+  background-color: var(--white);
   border-radius: var(--inner-border-radius-size-internal);
 }
 

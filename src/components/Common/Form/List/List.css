@@ -7,7 +7,7 @@
   padding: var(--container-padding);
   border: 2px solid var(--gray);
   border-radius: var(--border-radius-size-internal);
-  background-color: white;
+  background-color: var(--white-light);
   margin-bottom: 20px;
 }
 
@@ -41,12 +41,12 @@
   color: var(--primary-dark);
   margin: 0;
   padding: 5px;
-  background-color: var(--light);
+  background-color: var(--white);
 }
 
 .list-button:hover,
 .list-button.active {
-  color: var(--light);
+  color: var(--white);
   background-color: var(--primary);
 }
 
