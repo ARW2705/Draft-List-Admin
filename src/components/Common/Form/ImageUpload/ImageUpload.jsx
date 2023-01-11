@@ -12,7 +12,7 @@ function ImageUpload({ config, handleOnChange, customClass }) {
   const handleChange = (_, value) => setImage(value)
 
   return (
-    <div className='form-input-container image-upload'>
+    <div className='form-image-upload-container'>
       <FileInput
         config={ config }
         handleOnChange={ handleChange }
