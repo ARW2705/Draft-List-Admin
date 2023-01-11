@@ -14,6 +14,7 @@
   background-color: var(--primary);
   transition: all linear 10ms;
   font-size: var(--small-font-size-internal);
+  cursor: pointer;
 }
 
 .button:disabled,
