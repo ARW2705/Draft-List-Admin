@@ -1,0 +1,37 @@
+.form-file-input-container {
+  --inner-border-radius-size-internal: var(--inner-border-radius-size, 10px);
+  
+  --small-font-size-internal: var(--small-font-size, 1rem);
+  
+  --gray-internal: var(--gray, gray);
+  --white-light-internal: var(--white-light, white);
+  --primary-light-internal: var(--primary-light, white);
+  --primary-dark-internal: var(--primary-dark, black);
+
+  display: flex;
+  justify-content: center;
+}
+
+.form-file-input-container
+input {
+  display: none;
+}
+
+.form-file-input-label {
+  display: inline-block;
+  padding: 0.75rem;
+  margin: 15px 0;
+  border: 2px solid var(--gray-internal);
+  border-radius: var(--inner-border-radius-size-internal);
+  box-shadow: 0 3px 5px var(--primary-light-internal);
+  background-color: var(--white-light-internal);
+  font-size: var(--small-font-size-internal);
+  min-height: calc(48px - 1.5rem);
+  color: var(--primary-dark-internal);
+  cursor: pointer;
+}
+
+.form-file-input-label
+svg {
+  margin: 0 5px;
+}

@@ -1,22 +1,16 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { FaUpload } from 'react-icons/fa'
 
+import hyphenify   from '../../../../shared/utilities/hyphenify'
 import toTitleCase from '../../../../shared/utilities/title-case'
-import hyphenify from '../../../../shared/utilities/hyphenify'
 
 import './FileInput.css'
 
 
-function FormFileInput({ config, handleOnChange, customClass }) {
+function FormFileInput({ config, handleOnChange, customClass = '' }) {
   const { name, value, label } = config
-  const [ attrs, setAttrs ] = useState({
-    name,
-    handleOnChange,
-    value,
-    label: toTitleCase(label || name),
-    id: hyphenify(`form-input-${name}`),
-    customClass: customClass || ''
-  })
-
+  const displayLabel = `${toTitleCase(label || name)} Upload`
+  const id = hyphenify(`form-input-${name}`)
   const handleChange = event => {
     event.stopPropagation()
     try {
@@ -27,16 +21,17 @@ function FormFileInput({ config, handleOnChange, customClass }) {
   }
 
   return (
-    <div className={`form-input-container ${attrs.customClass}`}>
+    <div className={`form-file-input-container ${customClass}`}>
       <label
-        className='form-input'
-        htmlFor={ attrs.id }
+        className='form-file-input-label'
+        htmlFor={ id }
       >
-        { attrs.label }
+        <span>{ displayLabel }</span>
+        <FaUpload />
       </label>
       <input
-        id={ attrs.id }
-        name={ attrs.name }
+        id={ id }
+        name={ name }
         type='file'
         onChange={ handleChange }
       />
