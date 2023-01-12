@@ -11,13 +11,11 @@ function ImageUpload({ config, handleOnChange, customClass }) {
   const handleOnImageCrop = image => handleOnChange(config.name, image)
   const handleChange = (_, value) => setImage(value)
 
+  //TODO: scroll down to show image and crop button when changing
+  //from no image to image
+
   return (
     <div className='form-image-upload-container'>
-      <FileInput
-        config={ config }
-        handleOnChange={ handleChange }
-        customClass={ customClass }
-      />
       {
         image
         && (
@@ -27,6 +25,11 @@ function ImageUpload({ config, handleOnChange, customClass }) {
           />
         )
       }
+      <FileInput
+        config={ config }
+        handleOnChange={ handleChange }
+        customClass={ customClass }
+      />
     </div>
   )
 }
