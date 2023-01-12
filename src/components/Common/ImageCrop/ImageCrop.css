@@ -1,13 +1,20 @@
+.image-crop-container {
+  --border-radius-size-internal: var(--border-radius-size, 15px);
+  --inner-border-radius-size-internal: var(--inner-border-radius-size, 10px);
+
+  --gray-internal: var(--gray, gray);
+}
+
 .image-crop {
   padding: 1%;
-  border: 2px solid var(--gray);
-  border-radius: 15px;
+  border: 2px solid var(--gray-internal);
+  border-radius: var(--border-radius-size-internal);
   line-height: 0;
   margin-bottom: 5px;
 }
 
 .react-image-crop {
-  border-radius: 10px;
+  border-radius: var(--inner-border-radius-size-internal);
 }
 
 .crop-button {
