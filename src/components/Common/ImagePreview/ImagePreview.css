@@ -1,0 +1,20 @@
+.image-preview {
+  --border-radius-size-internal: var(--border-radius-size, 15px);
+
+  --gray-internal: var(--gray, gray);
+
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5px;
+}
+
+.image-preview
+img {
+  padding: 1%;
+  border: 2px solid var(--gray-internal);
+  border-radius: var(--border-radius-size-internal);
+}
+
+.revert-button {
+  margin: 0 auto;
+}

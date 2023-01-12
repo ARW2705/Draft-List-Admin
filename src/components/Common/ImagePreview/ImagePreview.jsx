@@ -6,26 +6,21 @@ import './ImagePreview.css'
 
 
 function ImagePreview({ preview, resetCrop }) {
-  const handleClick = () => {
-    resetCrop()
-  }
-
   return (
-    <div className='image-preview'>
-      <Button
-        text='Revert Crop'
-        name='revert-crop'
-        customClass='crop-button'
-        isDisabled={ false }
-        onClick={ handleClick }
-      />
-      <div>
+    <div className='image-preview-container'>
+      <div className='image-preview'>
         <img
-          className='crop-preview'
           src={ preview }
           alt='crop preview'
         />
       </div>
+      <Button
+        text='Revert Crop'
+        name='revert-crop'
+        customClass='revert-button'
+        isDisabled={ false }
+        onClick={ resetCrop }
+      />
     </div>
   )
 }
