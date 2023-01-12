@@ -1,0 +1,15 @@
+.image-crop {
+  padding: 1%;
+  border: 2px solid var(--gray);
+  border-radius: 15px;
+  line-height: 0;
+  margin-bottom: 5px;
+}
+
+.react-image-crop {
+  border-radius: 10px;
+}
+
+.crop-button {
+  margin: 0 auto;
+}

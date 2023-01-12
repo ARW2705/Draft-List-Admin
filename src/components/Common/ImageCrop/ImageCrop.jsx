@@ -57,6 +57,21 @@ function ImageCrop({ image, showCropPreview }) {
 
   return (
     <div className='image-crop-container'>
+      <div className='image-crop'>
+        <ReactCrop
+          className='react-image-crop'
+          crop={ crop }
+          onChange={ handleChange }
+          onComplete={ handleComplete }
+          aspect={ aspect }
+        >
+          <img
+            src={ imageSrc }
+            alt='preview with crop'
+            onLoad={ onImageLoad }
+          />
+        </ReactCrop>
+      </div>
       <Button
         text='Crop'
         name='image-crop'
@@ -64,18 +79,6 @@ function ImageCrop({ image, showCropPreview }) {
         isDisabled={ false }
         onClick={ handleClick }
       />
-      <ReactCrop
-        crop={ crop }
-        onChange={ handleChange }
-        onComplete={ handleComplete }
-        aspect={ aspect }
-      >
-        <img
-          src={ imageSrc }
-          alt='preview with crop'
-          onLoad={ onImageLoad }
-        />
-      </ReactCrop>
     </div>
   )
 }
