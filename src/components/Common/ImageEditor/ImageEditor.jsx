@@ -46,20 +46,17 @@ function ImageEditor({ image, onImageCrop }) {
       && (
         <div className='image-editor'>
           {
-            !preview
-            && (
-              <ImageCrop
-                image={ image }
-                showCropPreview={ showCropPreview }
-              />
-            )
-          }
-          {
             preview
-            && (
+            ? (
               <ImagePreview
                 preview={ preview }
                 resetCrop={ resetCrop }
+              />
+            )
+            : (
+              <ImageCrop
+                image={ image }
+                showCropPreview={ showCropPreview }
               />
             )
           }
