@@ -2,16 +2,16 @@ import React, { useEffect, useState } from 'react'
 
 import FormError from '../FormError/FormError'
 
-import { validate } from '../../../../shared/validators/validators'
 import hasValue     from '../../../../shared/utilities/has-value'
 import hyphenify    from '../../../../shared/utilities/hyphenify'
 import toTitleCase  from '../../../../shared/utilities/title-case'
+import { validate } from '../../../../shared/validators/validators'
 
 import './Input.css'
 
 
 function FormInput(props) {
-  const { config, validators, handleOnChange, customClass } = props
+  const { config, validators, handleOnChange } = props
   const { name, value, type, label, min, max } = config
 
   const [ attrs, setAttrs ] = useState({
@@ -21,7 +21,6 @@ function FormInput(props) {
     type: type || 'text',
     label: toTitleCase(label || name),
     id: hyphenify(`form-input-${name}`),
-    customClass: customClass || '',
     min,
     max
   })
@@ -34,6 +33,8 @@ function FormInput(props) {
     errors: {},
     show: false
   })
+  const [ placeholderClass, setPlaceholderClass ] = useState('default')
+
 
   useEffect(() => {
     if (hasValue(props.config, 'type')) {
@@ -53,59 +54,40 @@ function FormInput(props) {
   }, [props.config])
 
   useEffect(() => {
-    if (touchStatus.touched) {
-      setErrorState(prevProps => ({ ...prevProps, show: !!Object.keys(prevProps.errors).length }))
-    }
-  }, [touchStatus])
+    setErrorState(prevProps => ({ ...prevProps, show: !!Object.keys(prevProps.errors).length }))
+  }, [touchStatus.touched])
+
+  useEffect(() => {
+    const { touched, focus, pristine } = touchStatus
+    const isEmpty = touched && !focus && (value === null || value === undefined || value === '')
+    setPlaceholderClass(pristine || isEmpty ? 'default' : 'aside')
+  }, [touchStatus, value])
 
   const checkValidity = (name, rawValue) => {
     const value = attrs.type === 'number' ? parseFloat(rawValue) : rawValue
     const errors = validate(value, validators)
-    setErrorState(() => ({
-      errors,
-      show: touchStatus.touched && !!Object.keys(errors).length
-    }))
+    setErrorState({ errors, show: touchStatus.touched && !!Object.keys(errors).length })
     attrs.handleOnChange(name, value, errors)
   }
 
   const handleChange = ({ target }) => {
     const { name, value } = target
     checkValidity(name, value)
-    setAttrs(prevProps => {
-      return {
-        ...prevProps,
-        value
-      }
-    })
+    setAttrs({ ...attrs, value })
   }
 
-  const handleOnFocusOrBlur = event => {
-    const { type, target } = event
-    let update
-    if (type.toLowerCase() === 'focus') {
-      update = { ...update, pristine: false, focus: true }
-    } else if (type.toLowerCase() === 'blur') {
-      update = { ...update, touched: true, focus: false }
-      const { name, value } = target
-      checkValidity(name, value)
-    }
-
-    if (update) {
-      setTouchStatus(prevProps => {
-        return {
-          ...prevProps,
-          ...update
-        }
-      })
-    }
+  const handleBlur = ({ target }) => {
+    const { name, value } = target
+    checkValidity(name, value)
+    setTouchStatus({ ...touchStatus, touched: true, focus: false })
   }
 
-  const { touched, focus, pristine } = touchStatus
-  const isEmpty = touched && !focus && (value === null || value === undefined || value === '')
-  const placeholderClass = pristine || isEmpty ? 'default' : 'aside'
+  const handleFocus = () => {
+    setTouchStatus({ ...touchStatus, pristine: false, focus: true })
+  }
 
   return (
-    <div className={`form-input-container ${attrs.customClass}`}>
+    <div className='form-input-container'>
       <label
         className={ `form-input placeholder-${placeholderClass}` }
         htmlFor={ attrs.id }
@@ -120,8 +102,8 @@ function FormInput(props) {
         min={ attrs.min }
         max={ attrs.max }
         onChange={ handleChange }
-        onFocus={ handleOnFocusOrBlur }
-        onBlur={ handleOnFocusOrBlur }
+        onFocus={ handleFocus }
+        onBlur={ handleBlur }
         autoComplete='off'
       />
       {
