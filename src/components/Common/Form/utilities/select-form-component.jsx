@@ -4,9 +4,10 @@ import FormCheckbox  from '../Checkbox/Checkbox'
 import FormFileInput from '../FileInput/FileInput'
 import ImageUpload   from '../ImageUpload/ImageUpload'
 import FormInput     from '../Input/Input'
-import FormSelect    from '../Select/Select'
-import FormQuery     from '../Query/Query'
 import FormList      from '../List/List'
+import FormQuery     from '../Query/Query'
+import FormSelect    from '../Select/Select'
+import FormTextArea  from '../TextArea/TextArea'
 
 
 /**
@@ -22,15 +23,6 @@ function selectFormComponent(element, config, validators, handleOnChange) {
   const key = config.name
   
   switch(element) {
-    case 'input':
-      return (
-        <FormInput
-          key={ key }
-          config={ config }
-          validators={ validators }
-          handleOnChange={ handleOnChange }
-        />
-      )
     case 'checkbox':
       return (
         <FormCheckbox
@@ -58,9 +50,18 @@ function selectFormComponent(element, config, validators, handleOnChange) {
           handleOnChange={ handleOnChange }
         />
       )
-    case 'select':
+    case 'input':
       return (
-        <FormSelect
+        <FormInput
+          key={ key }
+          config={ config }
+          validators={ validators }
+          handleOnChange={ handleOnChange }
+        />
+      )
+    case 'list':
+      return (
+        <FormList
           key={ key }
           config={ config }
           validators={ validators }
@@ -76,9 +77,18 @@ function selectFormComponent(element, config, validators, handleOnChange) {
           handleOnChange={ handleOnChange }
         />
       )
-    case 'list':
+    case 'select':
       return (
-        <FormList
+        <FormSelect
+          key={ key }
+          config={ config }
+          validators={ validators }
+          handleOnChange={ handleOnChange }
+        />
+      )
+    case 'textarea':
+      return (
+        <FormTextArea
           key={ key }
           config={ config }
           validators={ validators }
