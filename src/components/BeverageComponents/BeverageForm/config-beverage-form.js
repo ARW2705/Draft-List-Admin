@@ -5,8 +5,9 @@ import { min, max, minLength, maxLength, required } from '../../../shared/valida
 export function configBeverageForm(beverage) {
   let fields = {
     description: {
+      element: 'textarea',
       value: beverage?.description || '',
-      validators: [minLength(2), maxLength(120)]
+      validators: [maxLength(120)]
     },
     abv: {
       value: beverage?.abv || '',
