@@ -51,18 +51,18 @@ function FormQuery(props) {
   const handleQueryOnSubmit = async searchTerm => {
     let result = <></>
     if (searchTerm !== null) {
-      const queryResult = await queryFn(searchTerm)
-      if (queryResult) {
+      const queryResults = await queryFn(searchTerm)
+      if (queryResults.length) {
         result = (
           <SimpleView
             keysToDisplay={ queryKeys }
-            data={ queryResult }
+            data={ queryResults }
           />
         )
-        checkValidity(name, queryResult[queryValue])
-        setAttrs(prevProps => ({...prevProps, value: queryResult[queryValue] }))
+        checkValidity(name, queryResults[queryValue])
+        setAttrs(prevProps => ({...prevProps, value: queryResults[queryValue] }))
       } else {
-        result = <div>{ `'${searchTerm}' not found` }</div>
+        result = <div>{ `Beverage '${searchTerm}' not found` }</div>
       }
     } else {
       checkValidity(name, '')
