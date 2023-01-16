@@ -3,6 +3,7 @@
 
   display: flex;
   flex-grow: 1;
+  justify-content: space-between;
   margin-top: 10px;
 }
 
@@ -31,7 +32,7 @@
 
 .reset-button {
   height: 100%;
-  margin: 15px 10px 0 0;
+  margin: 15px 5px 0 5px;
 }
 
 
