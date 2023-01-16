@@ -48,7 +48,7 @@ function FormQuery(props) {
     handleOnChange(name, value, errors)
   }
 
-  const handleSearchOnSubmit = async searchTerm => {
+  const handleQueryOnSubmit = async searchTerm => {
     let result = <></>
     if (searchTerm !== null) {
       const queryResult = await queryFn(searchTerm)
@@ -71,28 +71,24 @@ function FormQuery(props) {
     setSearchResult(result)
   }
 
-  const handleOnFocusOrBlur = event => {
-    const { type } = event
-    let touchStatusUpdate
-    if (type.toLowerCase() === 'focus') {
-      touchStatusUpdate = { touched: true, pristine: false, focus: true }
-    } else {
-      touchStatusUpdate = { touched: true, pristine: false, focus: false }
-      checkValidity(name, attrs.value)
-    }
+  const handleBlur = () => {
+    checkValidity(name, attrs.value)
+    setTouchStatus({ touched: true, pristine: false, focus: false })
+  }
 
-    setTouchStatus(touchStatusUpdate)
+  const handleFocus = () => {
+    setTouchStatus({ touched: true, pristine: false, focus: true })
   }
 
   return (
     <div
       className='form-query-container'
-      onFocus={ handleOnFocusOrBlur }
-      onBlur={ handleOnFocusOrBlur }
+      onFocus={ handleFocus }
+      onBlur={ handleBlur }
     >
       <h3>{ attrs.label || 'Search' }</h3>
       <SearchBar
-        handleOnSubmit={ handleSearchOnSubmit }
+        handleOnSubmit={ handleQueryOnSubmit }
         label={ attrs.label || 'Search' }
       />
       { searchResult ?? <></> }
@@ -109,8 +105,5 @@ function FormQuery(props) {
   )
 }
 
-function compare(prevProps, nextProps) {
-  return JSON.stringify(prevProps.config) === JSON.stringify(nextProps.config)
-}
 
-export default React.memo(FormQuery, compare)
+export default React.memo(FormQuery)
