@@ -52,7 +52,6 @@ function SearchBar({ handleOnSubmit, label = 'Search...', customClass = '' }) {
       <FormInput
         config={ config }
         handleOnChange={ handleOnChange }
-        value={ config.value }
         customClass='search-input'
       />
       {
