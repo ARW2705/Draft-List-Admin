@@ -4,9 +4,9 @@ import SearchBar  from '../../SearchBar/SearchBar'
 import SimpleView from '../../SimpleView/SimpleView'
 import FormError  from '../FormError/FormError'
 
-import { validate } from '../../../../shared/validators/validators'
 import hyphenify    from '../../../../shared/utilities/hyphenify'
 import toTitleCase  from '../../../../shared/utilities/title-case'
+import { validate } from '../../../../shared/validators/validators'
 
 import './Query.css'
 
@@ -37,14 +37,12 @@ function FormQuery(props) {
   }, [value])
 
   useEffect(() => {
-    if (touchStatus.touched) {
-      setErrorState(prevProps => ({ ...prevProps, show: true }))
-    }
-  }, [touchStatus])
+    setErrorState(prevProps => ({ ...prevProps, show: !!Object.keys(prevProps.errors).length }))
+  }, [touchStatus.touched])
 
   const checkValidity = (name, value) => {
     const errors = validate(value, validators)
-    setErrorState(() => ({ errors, show: touchStatus.touched }))
+    setErrorState(() => ({ errors, show: touchStatus.touched && !!Object.keys(errors).length }))
     handleOnChange(name, value, errors)
   }
 
@@ -52,7 +50,9 @@ function FormQuery(props) {
     let result = <></>
     if (searchTerm !== null) {
       const queryResults = await queryFn(searchTerm)
-      if (queryResults.length) {
+      if (!queryResults) {
+        result = <div>{ `Beverage '${searchTerm}' not found` }</div>
+      } else {
         result = (
           <SimpleView
             keysToDisplay={ queryKeys }
@@ -61,8 +61,6 @@ function FormQuery(props) {
         )
         checkValidity(name, queryResults[queryValue])
         setAttrs(prevProps => ({...prevProps, value: queryResults[queryValue] }))
-      } else {
-        result = <div>{ `Beverage '${searchTerm}' not found` }</div>
       }
     } else {
       checkValidity(name, '')
