@@ -2,17 +2,12 @@
   --small-font-size-internal: var(--small-font-size, 1rem);
 
   display: flex;
-  flex-grow: 1;
   justify-content: space-between;
   margin-top: 10px;
 }
 
 .search-input {
   flex-grow: 1;
-}
-
-.search-input > input {
-  width: calc(90% - 15px);
 }
 
 .search-input:hover {
@@ -27,21 +22,10 @@
 .search-button {
   height: 100%;
   padding: 0 5%;
-  margin: 15px 0 0;
+  margin: 15px 0 0 5px;
 }
 
 .reset-button {
   height: 100%;
-  margin: 15px 5px 0 5px;
-}
-
-
-@media screen and (min-width: 600px) {
-  .search-input {
-    margin-right: 10px;
-  }
-
-  .search-input > input {
-    width: auto;
-  }
+  margin: 15px 0 0 5px;
 }
