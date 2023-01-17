@@ -2,8 +2,7 @@ import store from '../../../app/store'
 
 import { selectBeverage, selectBeverageQuery } from '../../../services/beverage/store/beverage.selector'
 
-import createForm   from '../../../shared/form/create-form'
-import getPaginated from '../../../shared/utilities/get-paginated'
+import createForm from '../../../shared/form/create-form'
 import { required, pattern, eitherOr } from '../../../shared/validators/validators'
 
 
@@ -14,13 +13,17 @@ function buildDeviceList() {
 
 function buildBeverageList(preselect) {
   const { beverages } = store.getState()
-  const beverageList = getPaginated(beverages, 0, 5)
+  const shortListSize = 5
+  const beverageList = beverages.slice(0, shortListSize)
   if (!preselect) return beverageList
 
-  const dupIndex = beverageList.findIndex(beverage => beverage._id === preselect._id)
-  if (dupIndex === -1) return beverageList
-  
-  return [preselect, ...beverageList.slice(0, dupIndex), ...beverageList.slice(dupIndex + 1)]
+  const preselectIndex = beverages.findIndex(beverage => beverage._id === preselect._id)
+  if (preselectIndex === -1) return beverageList
+
+  if (preselectIndex < shortListSize) {
+    return [preselect, ...beverageList.slice(0, preselectIndex), ...beverageList.slice(preselectIndex + 1)]
+  }
+  return [preselect, ...beverageList.slice(0, 4)]
 }
 
 function buildContainerList() {
@@ -69,7 +72,7 @@ export function configDraftForm(draft) {
         queryFn: queryTerm => {
           const beverages = selectBeverageQuery(store.getState(), 'name', queryTerm)
           if (beverages.length) return beverages[0]
-          return beverages
+          return null
         },
         queryKeys: ['name', 'source', 'style'],
         queryValue: '_id'
