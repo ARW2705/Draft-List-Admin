@@ -11,7 +11,7 @@ import './Input.css'
 
 
 function FormInput(props) {
-  const { config, validators, handleOnChange } = props
+  const { config, validators, handleOnChange, customClass = '' } = props
   const { name, value, type, label, min, max } = config
 
   const [ attrs, setAttrs ] = useState({
@@ -87,7 +87,7 @@ function FormInput(props) {
   }
 
   return (
-    <div className='form-input-container'>
+    <div className={`form-input-container ${customClass}`}>
       <label
         className={ `form-input placeholder-${placeholderClass}` }
         htmlFor={ attrs.id }
@@ -119,8 +119,5 @@ function FormInput(props) {
   )
 }
 
-function compare(prevProps, nextProps) {
-  return JSON.stringify(prevProps.config) === JSON.stringify(nextProps.config)
-}
 
-export default React.memo(FormInput, compare)
+export default React.memo(FormInput)
