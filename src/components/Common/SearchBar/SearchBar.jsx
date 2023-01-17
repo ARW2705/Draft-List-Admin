@@ -6,12 +6,12 @@ import FormInput from '../Form/Input/Input'
 import './SearchBar.css'
 
 
-function SearchBar({ label, handleOnSubmit, customClass }) {
+function SearchBar({ handleOnSubmit, label = 'Search...', customClass = '' }) {
   const defaultConfig = {
+    label,
     name: 'search',
     value: '',
-    type: 'text',
-    label: label || 'Search...'
+    type: 'text'
   }
   const [ config, setConfig ] = useState(defaultConfig)
   const [ showResetButton, setShowResetButton ] = useState(false)
@@ -29,15 +29,15 @@ function SearchBar({ label, handleOnSubmit, customClass }) {
     }
   }
 
-  const handleOnClick = ({ name }) => {
-    if (name === 'search-button') {
-      setShowResetButton(true)
-      handleOnSubmit(config.value)
-    } else if (name === 'reset-button') {
-      setShowResetButton(false)
-      setConfig(defaultConfig)
-      handleOnSubmit(null)
-    }
+  const handleResetClick = () => {
+    setShowResetButton(false)
+    setConfig(defaultConfig)
+    handleOnSubmit(null)
+  }
+
+  const handleSearchClick = () => {
+    setShowResetButton(true)
+    handleOnSubmit(config.value)
   }
 
   useEffect(() => {
@@ -46,7 +46,7 @@ function SearchBar({ label, handleOnSubmit, customClass }) {
 
   return (
     <div
-      className={ `search-bar ${ customClass || '' }` }
+      className={ `search-bar ${customClass}` }
       onKeyDown={ handleKeyPress }
     >
       <FormInput
@@ -64,7 +64,7 @@ function SearchBar({ label, handleOnSubmit, customClass }) {
             isDisabled={ false }
             customClass='reset-button'
             name='reset-button'
-            onClick={ handleOnClick }
+            onClick={ handleResetClick }
           />
         )
       }
@@ -74,11 +74,11 @@ function SearchBar({ label, handleOnSubmit, customClass }) {
         isDisabled={ false }
         customClass='search-button'
         name='search-button'
-        onClick={ handleOnClick }
+        onClick={ handleSearchClick }
       />
     </div>
   )
 }
 
 
-export default SearchBar
+export default React.memo(SearchBar)
