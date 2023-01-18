@@ -6,7 +6,7 @@ import Button from '../Button/Button'
 import './ImageCrop.css'
 
 
-function ImageCrop({ image, showCropPreview }) {
+function ImageCrop({ image, showCropPreview, containerRef }) {
   const [ imageSrc, setImageSrc ] = useState('')
   const [ crop, setCrop ] = useState(null)
   const [ completedCrop, setCompletedCrop ] = useState(null)
@@ -56,7 +56,7 @@ function ImageCrop({ image, showCropPreview }) {
   }
 
   return (
-    <div className='image-crop-container'>
+    <div className='image-crop-container' ref={ containerRef }>
       <div className='image-crop'>
         <ReactCrop
           className='react-image-crop'

@@ -5,9 +5,9 @@ import Button from '../Button/Button'
 import './ImagePreview.css'
 
 
-function ImagePreview({ preview, resetCrop }) {
+function ImagePreview({ preview, resetCrop, containerRef }) {
   return (
-    <div className='image-preview-container'>
+    <div className='image-preview-container' ref={ containerRef }>
       <div className='image-preview'>
         <img
           src={ preview }
