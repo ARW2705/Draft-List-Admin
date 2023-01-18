@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
+
+import { useMediaQuery } from '../../../shared/hooks/media-query/media-query-hook'
 
 import ImageCrop    from '../ImageCrop/ImageCrop'
 import ImagePreview from '../ImagePreview/ImagePreview'
@@ -9,10 +11,26 @@ import './ImageEditor.css'
 
 function ImageEditor({ image, onImageCrop }) {
   const [ preview, setPreview ] = useState(null)
+  const previewRef = useRef()
+  const cropRef = useRef()
+  const isExtraSmallScreen = useMediaQuery('xs')
 
   useEffect(() => {
-    setPreview(null)
-  }, [image])
+    let targetRef = null
+    if (previewRef.current) targetRef = previewRef
+    if (cropRef.current) targetRef = cropRef
+
+    if (targetRef) {
+      const headerOffset = window.innerHeight * (isExtraSmallScreen ? 0.08 : 0.1)
+      setTimeout(() => {
+        document.querySelector('#app-root')
+          .scrollTo({
+            behavior: 'smooth',
+            top: targetRef.current.offsetTop - headerOffset
+          })
+      }, 100)
+    }
+  }, [image, preview, previewRef, cropRef, isExtraSmallScreen])
 
   const resetCrop = () => setPreview(null)
   const showCropPreview = (image64, crop) => {
@@ -39,31 +57,28 @@ function ImageEditor({ image, onImageCrop }) {
     onImageCrop(croppedImage)
   }
 
+  if (!image) return <></>
+
   return (
-    <>
-    {
-      image
-      && (
-        <div className='image-editor'>
-          {
-            preview
-            ? (
-              <ImagePreview
-                preview={ preview }
-                resetCrop={ resetCrop }
-              />
-            )
-            : (
-              <ImageCrop
-                image={ image }
-                showCropPreview={ showCropPreview }
-              />
-            )
-          }
-        </div>
-      )
-    }
-    </>
+    <div className='image-editor'>
+      {
+        preview
+        ? (
+          <ImagePreview
+            containerRef={ previewRef }
+            preview={ preview }
+            resetCrop={ resetCrop }
+          />
+        )
+        : (
+          <ImageCrop
+            containerRef={ cropRef }
+            image={ image }
+            showCropPreview={ showCropPreview }
+          />
+        )
+      }
+    </div>
   )
 }
 
